@@ -2,7 +2,6 @@ import os
 import json
 import re
 import time
-from difflib import SequenceMatcher
 from urllib.parse import quote
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -36,19 +35,15 @@ def get_gemini_client():
 
 def parse_retry_after(error_str):
     """從錯誤訊息中解析 retry-after 秒數，若無法解析預設回傳 60 秒。"""
-    # 格式1：JSON 中的 "retryDelay": "30s" 或 retryDelay: 45s（含空格）
-    match = re.search(r'retryDelay["\s]*:\s*["\s]*(\d+)s?', error_str, re.IGNORECASE)
+    match = re.search(r'retryDelay[\s"]*[:\s]+[\s"]*(\d+)s?', error_str, re.IGNORECASE)
     if match:
         return int(match.group(1))
-    # 格式2：retry_delay 下劃線格式
     match = re.search(r'retry[_-]delay[\s"]*[=:]+[\s"]*(\d+)', error_str, re.IGNORECASE)
     if match:
         return int(match.group(1))
-    # 格式3："retry after X seconds"
     match = re.search(r'retry after (\d+)', error_str, re.IGNORECASE)
     if match:
         return int(match.group(1))
-    # 預設 60 秒
     return 60
 
 class RateLimitError(Exception):
@@ -60,7 +55,7 @@ class RateLimitError(Exception):
 def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
     """
     呼叫 Gemini API，遇到暫時性錯誤（503/500）時自動重試。
-    遇到速率限制（429）時直接拋出 RateLimitError，讓呼叫端決定如何回應用戶。
+    遇到速率限制（429）時直接拋出 RateLimitError。
     """
     client = get_gemini_client()
     last_error = None
@@ -97,7 +92,8 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
 
     raise last_error
 
-# 載入備品資料
+# ─── 備品資料載入 ───────────────────────────────────────────────────────────────
+
 def load_spare_parts_data():
     """載入備品資料 JSON 檔案"""
     try:
@@ -110,157 +106,99 @@ def load_spare_parts_data():
         print(f"載入備品資料錯誤：{e}")
         return []
 
-# 全域備品資料
 SPARE_PARTS = load_spare_parts_data()
+GOOGLE_LENS_URL = "https://lens.google.com/"
 
-# 模糊搜尋相似度閾值（50%）
-FUZZY_THRESHOLD = 0.50
+# ─── 關鍵字搜尋 ─────────────────────────────────────────────────────────────────
 
-def extract_model_from_spec(text):
+def keyword_search_spare_parts(keywords):
     """
-    從規格或查詢字串中提取型號部分。
-    使用 regex 提取英數字 + 連字號 + 斜線的組合（如 FX2N-8EX-ES/UL、PM-T45）。
-    優先選取含連字號/斜線且含數字的最長型號，其次選含數字的英數混合字串。
-    若無法提取，回傳原始字串（轉小寫）。
+    以關鍵字清單對備品資料庫進行搜尋。
+    對每筆備品的規格和料號計算符合的關鍵字數量，
+    至少有 1 個符合才列出，按符合分數由高到低排列。
+    回傳 (part, score, matched_keywords) tuple 的清單。
     """
-    if not text:
-        return ''
-    # 提取所有英數字+連字號+斜線的組合（至少 3 字元）
-    matches = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-/\.]{2,}', text)
-    if not matches:
-        return text.lower().strip()[:50]
-
-    # 優先選取含連字號或斜線且含數字的型號（如 FX2N-8EX-ES/UL）
-    model_with_hyphen = [m for m in matches if ('-' in m or '/' in m) and any(c.isdigit() for c in m)]
-    if model_with_hyphen:
-        return max(model_with_hyphen, key=len).lower()
-
-    # 其次選取含數字的英數混合字串（如 E3Z61）
-    model_with_digit = [m for m in matches if any(c.isdigit() for c in m)]
-    if model_with_digit:
-        return max(model_with_digit, key=len).lower()
-
-    return max(matches, key=len).lower()
-
-def fuzzy_search_spare_parts(query, threshold=FUZZY_THRESHOLD):
-    """
-    使用 difflib.SequenceMatcher 對備品資料庫進行模糊搜尋。
-    比對策略（取最高分）：
-      1. 從查詢字串和規格欄位各自提取型號後再比對（最精準）
-      2. 查詢字串與完整規格比對
-      3. 查詢字串與料號比對
-    忽略大小寫，回傳按相似度由高到低排列的結果清單。
-    每個結果為 (part, score) tuple。
-    """
-    query_lower = query.lower().strip()
-    if not query_lower:
+    if not keywords:
         return []
 
-    # 從查詢字串中提取型號（用於型號對型號比對）
-    query_model = extract_model_from_spec(query)
+    # 全部轉小寫
+    kw_lower = [k.lower().strip() for k in keywords if k.strip()]
+    if not kw_lower:
+        return []
+
+    print(f"關鍵字搜尋：{kw_lower}")
 
     results = []
     for part in SPARE_PARTS:
         spec = part.get('specification', '').lower()
         part_num = part.get('part_number', '').lower()
+        combined = spec + ' ' + part_num
 
-        # 策略1：從規格中提取型號後，與查詢型號比對（最精準）
-        spec_model = extract_model_from_spec(spec)
-        score_model = SequenceMatcher(None, query_model, spec_model).ratio() if spec_model else 0
+        matched = [kw for kw in kw_lower if kw in combined]
 
-        # 策略2：查詢字串與完整規格比對
-        score_spec = SequenceMatcher(None, query_lower, spec).ratio()
+        if matched:
+            # 分數 = 符合數量 + 符合片段總長度（越長越精準）
+            score = len(matched) + sum(len(t) for t in matched) / 100
+            results.append((part, score, matched))
 
-        # 策略3：查詢字串與料號比對
-        score_part = SequenceMatcher(None, query_lower, part_num).ratio()
-
-        # 額外加分：若查詢字串（或型號）是規格/料號的子字串
-        if query_lower in spec or query_model in spec:
-            score_spec = max(score_spec, 0.85)
-        if query_lower in part_num or query_model in part_num:
-            score_part = max(score_part, 0.85)
-        # 型號對型號子字串加分
-        if spec_model and query_model in spec_model:
-            score_model = max(score_model, 0.85)
-
-        best_score = max(score_model, score_spec, score_part)
-        if best_score >= threshold:
-            results.append((part, best_score))
-
-    # 按相似度由高到低排序
     results.sort(key=lambda x: x[1], reverse=True)
     return results
 
-def format_spare_parts_for_prompt():
-    """將備品資料格式化為提示詞"""
-    formatted = "以下是備品資料庫中的所有備品：\n\n"
-    for part in SPARE_PARTS:
-        formatted += f"- 料號：{part.get('part_number', '')}\n"
-        formatted += f"  規格：{part.get('specification', '')}\n"
-        formatted += f"  倉庫位置：{part.get('warehouse_location', '')}\n"
-        formatted += f"  大分類儲位：{part.get('major_category', '')}\n"
-        formatted += f"  小分類儲位：{part.get('minor_category', '')}\n\n"
-    return formatted
+# ─── 搜尋連結建立 ───────────────────────────────────────────────────────────────
 
-def build_spec_search_link(keyword):
-    """根據關鍵字建立產品規格 Google 搜尋連結"""
-    encoded = quote(keyword)
-    return f"https://www.google.com/search?q={encoded}+規格+datasheet"
-
-GOOGLE_LENS_URL = "https://lens.google.com/"
-
-# 已知品牌名稱集合（純英文，不含連字號），用於排除搜尋關鍵字選取
-KNOWN_BRANDS = {
-    'panasonic', 'mitsubishi', 'omron', 'siemens', 'schneider', 'keyence',
-    'fanuc', 'yaskawa', 'allen', 'bradley', 'rockwell', 'automation',
-    'fuji', 'hitachi', 'toshiba', 'yokogawa', 'idec', 'autonics',
-    'delta', 'weintek', 'proface', 'advantech', 'phoenix', 'contact',
-    'wago', 'beckhoff', 'pilz', 'sick', 'banner', 'pepperl', 'fuchs',
-    'turck', 'balluff', 'ifm', 'leuze', 'datalogic', 'cognex'
-}
-
-def extract_keyword_from_query(user_query):
+def build_spec_search_link(brand, model):
     """
-    從用戶輸入中提取最適合作為搜尋關鍵字的型號或料號。
-    優先選取含連字號/斜線的型號（如 PM-T45、FX2N-8EX-ES/UL），
-    其次選取含數字的英數混合字串（如 E3Z61），
-    再次排除已知品牌名稱選其他字串，
-    最後才使用最長字串（可能是品牌名）。
+    根據品牌和型號建立 Google 搜尋連結（只用英文，不帶中文）。
+    優先使用 brand + model 組合，若兩者都為空則回傳空字串。
     """
-    # 先將「PM - T45」這類帶空格的型號合併（去除空格後再處理）
-    normalized = re.sub(r'([A-Za-z]+)\s*-\s*([A-Za-z0-9])', r'\1-\2', user_query)
-    matches = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-/\.]{2,}', normalized)
-    if not matches:
-        return user_query.strip()[:50]
+    parts = []
+    if brand and brand.strip():
+        parts.append(brand.strip())
+    if model and model.strip():
+        parts.append(model.strip())
 
-    # 優先選取含連字號或斜線且含數字的型號（如 PM-T45、FX2N-8EX-ES/UL）
-    model_with_hyphen = [m for m in matches if ('-' in m or '/' in m) and any(c.isdigit() for c in m)]
-    if model_with_hyphen:
-        return max(model_with_hyphen, key=len)
+    if not parts:
+        return ''
 
-    # 其次選取含數字的英數混合字串（如 E3Z61、6ES7）
-    model_with_digit = [m for m in matches if any(c.isdigit() for c in m)]
-    if model_with_digit:
-        return max(model_with_digit, key=len)
+    query_str = ' '.join(parts) + ' 規格 datasheet'
+    # quote 只對非 ASCII 字元編碼，空格變 +
+    encoded = quote(query_str, safe='')
+    return f"https://www.google.com/search?q={encoded}"
 
-    # 過濾掉已知品牌名稱，選其他字串
-    non_brand = [m for m in matches if m.lower() not in KNOWN_BRANDS]
-    if non_brand:
-        return max(non_brand, key=len)
+# ─── 回覆格式化 ─────────────────────────────────────────────────────────────────
 
-    # 最後才用最長的字串（可能是品牌名）
-    return max(matches, key=len)
+def format_found_response(part, brand, model, is_image=False):
+    """查到備品時的回覆格式"""
+    spec = part.get('specification', '')
+    part_num = part.get('part_number', '')
+    warehouse = part.get('warehouse_location', '')
+    major = part.get('major_category', '')
+    minor = part.get('minor_category', '')
 
-def format_fuzzy_results(fuzzy_results, keyword, is_image=False):
-    """
-    將模糊搜尋結果格式化為回覆訊息。
-    is_image=True 時附加 Google Lens 連結。
-    """
-    count = len(fuzzy_results)
-    lines = [f"找不到完全符合的備品，以下是相似的備品，請確認：\n"]
+    lines = [
+        "查詢到以下備品資訊：",
+        f"料號：{part_num}",
+        f"規格：{spec}",
+        f"倉庫位置：{warehouse}",
+        f"大分類儲位：{major}",
+        f"小分類儲位：{minor}",
+    ]
 
+    spec_url = build_spec_search_link(brand, model)
+    if spec_url:
+        lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
+
+    if is_image:
+        lines.append(f"\n🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
+
+    return "\n".join(lines)
+
+def format_fuzzy_response(results, brand, model, is_image=False):
+    """找到相似備品時的回覆格式"""
     number_emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣']
-    for i, (part, score) in enumerate(fuzzy_results[:5]):  # 最多顯示 5 筆
+    lines = ["找不到完全符合的備品，以下是相似的備品，請確認：\n"]
+
+    for i, (part, score, matched) in enumerate(results[:5]):
         emoji = number_emojis[i] if i < len(number_emojis) else f"{i+1}."
         lines.append(
             f"{emoji} 規格：{part.get('specification', '')}\n"
@@ -270,83 +208,79 @@ def format_fuzzy_results(fuzzy_results, keyword, is_image=False):
             f"   小分類儲位：{part.get('minor_category', '')}"
         )
 
-    # 取第一筆的規格作為搜尋關鍵字（最相似的那筆）
-    best_spec = fuzzy_results[0][0].get('specification', keyword)
-    # 從規格中提取型號作為搜尋關鍵字
-    search_kw = extract_keyword_from_query(best_spec) if best_spec else keyword
-    spec_url = build_spec_search_link(search_kw)
+    spec_url = build_spec_search_link(brand, model)
+    if spec_url:
+        lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
 
-    lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
     if is_image:
         lines.append(f"\n🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
 
     return "\n".join(lines)
 
-def format_not_found_response(keyword, is_image=False):
-    """查無備品且模糊搜尋也無結果時的回覆"""
-    spec_url = build_spec_search_link(keyword)
-    lines = [
-        "資料庫中查無此備品，為您提供以下搜尋連結：\n",
-        f"📋 產品規格查詢：\n{spec_url}"
-    ]
+def format_not_found_response(brand, model, is_image=False):
+    """查無備品時的回覆格式"""
+    spec_url = build_spec_search_link(brand, model)
+    lines = ["資料庫中查無此備品，為您提供以下搜尋連結：\n"]
+
+    if spec_url:
+        lines.append(f"📋 產品規格查詢：\n{spec_url}")
+
     if is_image:
         lines.append(f"\n🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
+
     return "\n".join(lines)
 
-def query_spare_parts_text(user_query):
-    """使用 Gemini 進行文字查詢，查到備品附規格連結，查無備品先做模糊搜尋再附搜尋連結"""
-    spare_parts_info = format_spare_parts_for_prompt()
-    keyword = extract_keyword_from_query(user_query)
+def image_unreadable_response():
+    """圖片完全無法辨識時的回覆"""
+    return (
+        "無法從照片辨識備品資訊，您可以使用 Google Lens 以圖搜尋：\n\n"
+        f"🔍 Google Lens（以圖搜圖）：{GOOGLE_LENS_URL}"
+    )
 
-    prompt = f"""你是一個備品查詢助手。你的職責是幫助使用者查詢備品的位置資訊。
+# ─── Gemini 呼叫 ────────────────────────────────────────────────────────────────
 
-備品資料庫規則：
-1. 使用者可能會輸入料號或規格關鍵字來查詢備品
-2. 如果查詢到相符的備品，請以以下格式回覆（每個欄位一行）：
-
-查詢到以下備品資訊：
-料號：[料號]
-規格：[規格]
-倉庫位置：[倉庫位置]
-大分類儲位：[大分類儲位]
-小分類儲位：[小分類儲位]
-
-3. 如果查詢到多筆相符的備品，每筆之間用空行分隔，並在最前面加上「共找到 X 筆備品資訊：」
-4. 如果查無此備品資料，只需回答：「NOT_FOUND」（不需要其他說明）
-5. 如果使用者的問題超出備品查詢範圍，回答：「我只能回答備品位置相關的查詢，其他問題無法回答」
-6. 回答要簡潔清楚，適合在 LINE 上閱讀，不要加入多餘的說明文字
-
-{spare_parts_info}
-
-使用者查詢：{user_query}"""
+def extract_product_info_from_text(user_query):
+    """
+    使用 Gemini 從用戶文字輸入中提取產品型號資訊。
+    回傳 dict：{"brand": "...", "model": "...", "keywords": [...]}
+    若無法解析則回傳 {"brand": "", "model": "", "keywords": []}
+    """
+    prompt = (
+        "請從以下用戶輸入中提取產品的品牌名稱和型號資訊。\n"
+        "只提取有意義的型號資訊（品牌名、產品型號、系列號），"
+        "不要提取生產日期、產地、序號、條碼、CE認證等無關資訊。\n"
+        "請以 JSON 格式回傳：\n"
+        "{\"brand\": \"品牌名\", \"model\": \"型號\", \"keywords\": [\"關鍵字1\", \"關鍵字2\"]}\n"
+        "keywords 應包含品牌名、型號、以及型號的各個片段（如 FX2N-8EX-ES/UL 應包含 FX2N、8EX、ES、FX2N-8EX-ES/UL）。\n"
+        "如果完全無法識別，回傳：{\"brand\": \"\", \"model\": \"\", \"keywords\": []}\n"
+        "只回傳 JSON，不要其他說明。\n\n"
+        f"用戶輸入：{user_query}"
+    )
 
     try:
         result = call_gemini_with_retry(prompt)
         result = result.strip()
-
-        if result == 'NOT_FOUND' or '查無此備品' in result:
-            # 先嘗試模糊搜尋
-            fuzzy_results = fuzzy_search_spare_parts(keyword)
-            if fuzzy_results:
-                print(f"模糊搜尋找到 {len(fuzzy_results)} 筆相似備品（關鍵字：{keyword}）")
-                return format_fuzzy_results(fuzzy_results, keyword, is_image=False)
-            else:
-                print(f"模糊搜尋也無結果（關鍵字：{keyword}）")
-                return format_not_found_response(keyword, is_image=False)
-        else:
-            spec_match = re.search(r'規格：(.+)', result)
-            search_keyword = spec_match.group(1).strip() if spec_match else keyword
-            spec_url = build_spec_search_link(search_keyword)
-            return f"{result}\n\n📋 產品規格查詢：\n{spec_url}"
-
-    except RateLimitError as e:
-        return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
+        # 移除 markdown code block（如果有）
+        result = re.sub(r'^```(?:json)?\s*', '', result, flags=re.MULTILINE)
+        result = re.sub(r'\s*```$', '', result, flags=re.MULTILINE)
+        data = json.loads(result.strip())
+        brand = data.get('brand', '') or ''
+        model = data.get('model', '') or ''
+        keywords = data.get('keywords', []) or []
+        # 確保 keywords 是字串清單
+        keywords = [str(k) for k in keywords if k]
+        return {"brand": brand, "model": model, "keywords": keywords}
     except Exception as e:
-        print(f"Gemini 文字查詢失敗：{str(e)[:200]}")
-        return "抱歉，查詢過程中發生錯誤，請稍後再試"
+        print(f"Gemini 文字解析失敗：{str(e)[:200]}")
+        # fallback：直接用用戶輸入作為關鍵字
+        return {"brand": "", "model": user_query.strip(), "keywords": [user_query.strip()]}
 
-def extract_text_from_image(image_bytes, mime_type='image/jpeg'):
-    """使用 Gemini Vision 從圖片中提取文字（支援動態 mime_type）"""
+def extract_product_info_from_image(image_bytes, mime_type='image/jpeg'):
+    """
+    使用 Gemini Vision 從圖片中提取產品型號資訊。
+    回傳 dict：{"brand": "...", "model": "...", "keywords": [...]}
+    若完全無法辨識則回傳 None。
+    """
     from google.genai import types
 
     print(f"圖片大小：{len(image_bytes)} bytes，格式：{mime_type}")
@@ -357,98 +291,122 @@ def extract_text_from_image(image_bytes, mime_type='image/jpeg'):
 
     image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
 
-    # 積極辨識 prompt：即使角度不完美也要盡力提取
     prompt_text = (
-        "請仔細觀察這張工業設備或電子元件的照片，盡力辨識並提取所有可見的文字資訊。\n"
-        "特別注意：品牌名稱（如 Panasonic、OMRON、Mitsubishi）、型號（如 PM-T45、FX2N-8EX）、"
-        "料號、規格標籤上的英數字組合。\n"
-        "即使照片角度不完美或部分文字模糊，也請盡力辨識並回傳所有能看到的文字。\n"
-        "只需回傳辨識到的文字內容，不需要其他說明或解釋。\n"
-        "如果完全無法辨識任何文字，才回傳：UNREADABLE"
+        "請仔細觀察這張工業設備或電子元件的照片，提取產品的品牌名稱和型號資訊。\n"
+        "只提取有意義的型號資訊（品牌名、產品型號、系列號），"
+        "不要提取生產日期、產地、序號、條碼、CE認證等無關資訊。\n"
+        "即使照片角度不完美或部分文字模糊，也請盡力辨識。\n"
+        "請以 JSON 格式回傳：\n"
+        "{\"brand\": \"品牌名\", \"model\": \"型號\", \"keywords\": [\"關鍵字1\", \"關鍵字2\"]}\n"
+        "keywords 應包含品牌名、型號、以及型號的各個片段（如 FX2N-8EX-ES/UL 應包含 FX2N、8EX、ES、FX2N-8EX-ES/UL）。\n"
+        "如果完全無法辨識任何型號資訊，回傳：{\"brand\": \"\", \"model\": \"\", \"keywords\": []}\n"
+        "只回傳 JSON，不要其他說明。"
     )
 
     result = call_gemini_with_retry([prompt_text, image_part])
-    print(f"從圖片提取的文字：{result[:200]}")
-    return result
+    result = result.strip()
+    print(f"Gemini 圖片辨識原始回應：{result[:300]}")
+
+    # 移除 markdown code block
+    result = re.sub(r'^```(?:json)?\s*', '', result, flags=re.MULTILINE)
+    result = re.sub(r'\s*```$', '', result, flags=re.MULTILINE)
+
+    data = json.loads(result.strip())
+    brand = data.get('brand', '') or ''
+    model = data.get('model', '') or ''
+    keywords = data.get('keywords', []) or []
+    keywords = [str(k) for k in keywords if k]
+
+    print(f"提取結果：brand={brand}, model={model}, keywords={keywords}")
+    return {"brand": brand, "model": model, "keywords": keywords}
+
+# ─── 主要查詢邏輯 ────────────────────────────────────────────────────────────────
+
+def query_spare_parts_text(user_query):
+    """文字查詢主流程"""
+    try:
+        info = extract_product_info_from_text(user_query)
+    except RateLimitError as e:
+        return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
+    except Exception as e:
+        print(f"文字解析失敗：{str(e)[:200]}")
+        return "抱歉，查詢過程中發生錯誤，請稍後再試。"
+
+    brand = info.get('brand', '')
+    model = info.get('model', '')
+    keywords = info.get('keywords', [])
+
+    print(f"文字查詢 → brand={brand}, model={model}, keywords={keywords}")
+
+    if not keywords:
+        return "無法識別查詢的備品型號，請輸入料號或型號（例如：FX2N-8EX 或 SH5056001）。"
+
+    results = keyword_search_spare_parts(keywords)
+
+    if not results:
+        return format_not_found_response(brand, model, is_image=False)
+
+    # 找到最高分的結果
+    best_part, best_score, best_matched = results[0]
+
+    # 判斷是否為精確符合（最長關鍵字符合 = 完整型號符合）
+    longest_kw = max(keywords, key=len) if keywords else ''
+    spec_lower = best_part.get('specification', '').lower()
+    part_num_lower = best_part.get('part_number', '').lower()
+    is_exact = (model.lower() in spec_lower or
+                model.lower() in part_num_lower or
+                longest_kw.lower() in spec_lower or
+                longest_kw.lower() in part_num_lower)
+
+    if is_exact or best_score >= 2.0:
+        return format_found_response(best_part, brand, model, is_image=False)
+    else:
+        return format_fuzzy_response(results, brand, model, is_image=False)
 
 def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
-    """從圖片中提取資訊並查詢備品，查到備品附規格連結，查無備品先做模糊搜尋，辨識失敗附 Google Lens"""
-    # 圖片辨識失敗時的通用回覆（含 Google Lens）
-    def image_fail_response(extra_keyword=None):
-        lines = ["無法從照片辨識備品資訊，您可以使用 Google Lens 以圖搜尋：",
-                 f"\n🔍 Google Lens（以圖搜圖）：{GOOGLE_LENS_URL}"]
-        if extra_keyword:
-            spec_url = build_spec_search_link(extra_keyword)
-            lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
-        return "".join(lines)
-
+    """圖片查詢主流程"""
     try:
-        extracted_text = extract_text_from_image(image_bytes, mime_type)
+        info = extract_product_info_from_image(image_bytes, mime_type)
     except RateLimitError as e:
         return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
     except Exception as e:
-        print(f"圖片文字提取失敗：{str(e)[:200]}")
-        return image_fail_response()
+        print(f"圖片辨識失敗：{str(e)[:200]}")
+        return image_unreadable_response()
 
-    # Gemini 完全無法辨識
-    if not extracted_text or not extracted_text.strip() or extracted_text.strip() == 'UNREADABLE':
-        return image_fail_response()
+    brand = info.get('brand', '')
+    model = info.get('model', '')
+    keywords = info.get('keywords', [])
 
-    spare_parts_info = format_spare_parts_for_prompt()
-    keyword = extract_keyword_from_query(extracted_text)
+    print(f"圖片查詢 → brand={brand}, model={model}, keywords={keywords}")
 
-    prompt = f"""你是一個備品查詢助手。根據從圖片中辨識到的文字，查詢備品資訊。
+    # 若 brand 和 model 都為空，視為無法辨識
+    if not brand and not model and not keywords:
+        return image_unreadable_response()
 
-備品資料庫規則：
-1. 根據辨識文字中的料號、型號或規格來查詢備品（允許模糊比對，例如 PM-T45 可比對到含 PM-T45 的規格）
-2. 如果查詢到相符的備品，請以以下格式回覆（每個欄位一行）：
+    if not keywords:
+        return format_not_found_response(brand, model, is_image=True)
 
-查詢到以下備品資訊：
-料號：[料號]
-規格：[規格]
-倉庫位置：[倉庫位置]
-大分類儲位：[大分類儲位]
-小分類儲位：[小分類儲位]
+    results = keyword_search_spare_parts(keywords)
 
-3. 如果查詢到多筆相符的備品，每筆之間用空行分隔，並在最前面加上「共找到 X 筆備品資訊：」
-4. 如果查無此備品資料，只需回答：「NOT_FOUND」（不需要其他說明）
-5. 回答要簡潔清楚，適合在 LINE 上閱讀，不要加入多餘的說明文字
+    if not results:
+        return format_not_found_response(brand, model, is_image=True)
 
-{spare_parts_info}
+    # 判斷是否為精確符合
+    longest_kw = max(keywords, key=len) if keywords else ''
+    best_part, best_score, best_matched = results[0]
+    spec_lower = best_part.get('specification', '').lower()
+    part_num_lower = best_part.get('part_number', '').lower()
+    is_exact = (model.lower() in spec_lower or
+                model.lower() in part_num_lower or
+                longest_kw.lower() in spec_lower or
+                longest_kw.lower() in part_num_lower)
 
-從圖片辨識到的文字如下：
-{extracted_text}
+    if is_exact or best_score >= 2.0:
+        return format_found_response(best_part, brand, model, is_image=True)
+    else:
+        return format_fuzzy_response(results, brand, model, is_image=True)
 
-請根據這些文字查詢對應的備品資訊。"""
-
-    try:
-        result = call_gemini_with_retry(prompt)
-        result = result.strip()
-
-        if result == 'NOT_FOUND' or '查無此備品' in result:
-            # 先嘗試模糊搜尋
-            fuzzy_results = fuzzy_search_spare_parts(keyword)
-            if fuzzy_results:
-                print(f"圖片查詢模糊搜尋找到 {len(fuzzy_results)} 筆相似備品（關鍵字：{keyword}）")
-                return format_fuzzy_results(fuzzy_results, keyword, is_image=True)
-            else:
-                print(f"圖片查詢模糊搜尋也無結果（關鍵字：{keyword}）")
-                return format_not_found_response(keyword, is_image=True)
-        else:
-            spec_match = re.search(r'規格：(.+)', result)
-            search_keyword = spec_match.group(1).strip() if spec_match else keyword
-            spec_url = build_spec_search_link(search_keyword)
-            return (
-                f"{result}\n\n"
-                f"📋 產品規格查詢：\n{spec_url}\n\n"
-                f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}"
-            )
-
-    except RateLimitError as e:
-        return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
-    except Exception as e:
-        print(f"備品查詢失敗：{str(e)[:200]}")
-        return image_fail_response(keyword)
+# ─── Flask 路由 ─────────────────────────────────────────────────────────────────
 
 @app.route("/callback", methods=['POST'])
 def callback():
