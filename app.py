@@ -123,13 +123,6 @@ def format_spare_parts_for_prompt():
         formatted += f"  小分類儲位：{part.get('minor_category', '')}\n\n"
     return formatted
 
-def build_google_search_links(keyword):
-    """根據關鍵字建立備品位置和規格兩個 Google 搜尋連結"""
-    encoded = quote(keyword)
-    location_url = f"https://www.google.com/search?q={encoded}+備品+倉庫位置"
-    spec_url = f"https://www.google.com/search?q={encoded}+規格+datasheet"
-    return location_url, spec_url
-
 def build_spec_search_link(keyword):
     """根據關鍵字建立產品規格 Google 搜尋連結"""
     encoded = quote(keyword)
@@ -177,10 +170,9 @@ def query_spare_parts_text(user_query):
         result = result.strip()
 
         if result == 'NOT_FOUND' or '查無此備品' in result:
-            location_url, spec_url = build_google_search_links(keyword)
+            spec_url = build_spec_search_link(keyword)
             return (
                 f"資料庫中查無此備品，為您提供以下搜尋連結：\n\n"
-                f"🔍 備品位置查詢：\n{location_url}\n\n"
                 f"📋 產品規格查詢：\n{spec_url}"
             )
         else:
@@ -258,10 +250,9 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
         result = result.strip()
 
         if result == 'NOT_FOUND' or '查無此備品' in result:
-            location_url, spec_url = build_google_search_links(keyword)
+            spec_url = build_spec_search_link(keyword)
             return (
                 f"資料庫中查無此備品，為您提供以下搜尋連結：\n\n"
-                f"🔍 備品位置查詢：\n{location_url}\n\n"
                 f"📋 產品規格查詢：\n{spec_url}"
             )
         else:
