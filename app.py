@@ -111,12 +111,25 @@ GOOGLE_LENS_URL = "https://lens.google.com/"
 
 # ─── 關鍵字搜尋 ─────────────────────────────────────────────────────────────────
 
+def _is_ascii_only(s):
+    """判斷字串是否只含 ASCII 字元（用於區分中文品牌名與英數字型號片段）"""
+    try:
+        s.encode('ascii')
+        return True
+    except UnicodeEncodeError:
+        return False
+
 def keyword_search_spare_parts(keywords):
     """
     以關鍵字清單對備品資料庫進行搜尋。
-    對每筆備品的規格和料號計算符合的關鍵字數量，
-    至少有 1 個符合才列出，按符合分數由高到低排列。
-    回傳 (part, score, matched_keywords) tuple 的清單。
+
+    評分規則：
+    - 「有效關鍵字」定義：純 ASCII 字元且長度 ≥ 3（排除中文品牌名及 ES/UL 等過短通用後綴）。
+    - 備品必須有 ≥ 1 個「有效關鍵字」符合才列入結果。
+      此設計讓 FX2N 這類型號前綴就能觸發相似搜尋，
+      同時排除只有 ES/UL 等通用後綴符合的不相關備品。
+    - 分數 = 有效符合數 + 所有符合片段總長度 / 100（越長越精準）。
+    - 回傳 (part, score, matched_keywords) tuple 的清單。
     """
     if not keywords:
         return []
@@ -134,12 +147,17 @@ def keyword_search_spare_parts(keywords):
         part_num = part.get('part_number', '').lower()
         combined = spec + ' ' + part_num
 
-        matched = [kw for kw in kw_lower if kw in combined]
+        # 所有符合的關鍵字（包含中文品牌名和短片段，用於分數計算）
+        all_matched = [kw for kw in kw_lower if kw in combined]
 
-        if matched:
-            # 分數 = 符合數量 + 符合片段總長度（越長越精準）
-            score = len(matched) + sum(len(t) for t in matched) / 100
-            results.append((part, score, matched))
+        # 「有效符合」：純 ASCII 且長度 ≥ 3，排除中文品牌名及 ES/UL 等過短通用後綴
+        effective_matched = [kw for kw in all_matched if _is_ascii_only(kw) and len(kw) >= 3]
+
+        # 必須有 ≥ 1 個有效關鍵字符合才列入結果
+        if len(effective_matched) >= 1:
+            # 分數 = 有效符合數 + 所有符合片段總長度 / 100
+            score = len(effective_matched) + sum(len(t) for t in all_matched) / 100
+            results.append((part, score, all_matched))
 
     results.sort(key=lambda x: x[1], reverse=True)
     return results
