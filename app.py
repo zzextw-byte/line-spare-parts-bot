@@ -2,6 +2,7 @@ import os
 import json
 import re
 import time
+from urllib.parse import quote
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -33,26 +34,19 @@ def get_gemini_client():
     return _gemini_client
 
 def parse_retry_after(error_str):
-    """
-    從錯誤訊息中解析 retry-after 秒數。
-    Gemini API 的 429 錯誤訊息可能包含 retryDelay 或 retry_delay 欄位。
-    若無法解析，預設回傳 60 秒。
-    """
-    # 嘗試從 JSON 格式的錯誤訊息中解析 retryDelay（例如 "retryDelay": "30s"）
-    match = re.search(r'"retryDelay"\s*:\s*"(\d+)s?"', error_str)
+    """從錯誤訊息中解析 retry-after 秒數，若無法解析預設回傳 60 秒。"""
+    # 格式1：JSON 中的 "retryDelay": "30s" 或 retryDelay: 45s（含空格）
+    match = re.search(r'retryDelay["\s]*:\s*["\s]*(\d+)s?', error_str, re.IGNORECASE)
     if match:
         return int(match.group(1))
-
-    # 嘗試解析 retry_delay（下劃線格式）
-    match = re.search(r'retry[_-]delay["\s:]+(\d+)', error_str, re.IGNORECASE)
+    # 格式2：retry_delay 下劃線格式
+    match = re.search(r'retry[_-]delay[\s"]*[=:]+[\s"]*(\d+)', error_str, re.IGNORECASE)
     if match:
         return int(match.group(1))
-
-    # 嘗試解析 "retry after X seconds" 格式
+    # 格式3："retry after X seconds"
     match = re.search(r'retry after (\d+)', error_str, re.IGNORECASE)
     if match:
         return int(match.group(1))
-
     # 預設 60 秒
     return 60
 
@@ -83,15 +77,13 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
             error_str = str(e)
 
             if '429' in error_str:
-                # 速率限制：解析等待時間並立即通知用戶，不重試
                 wait_seconds = parse_retry_after(error_str)
                 print(f"Gemini API 429 速率限制，建議等待 {wait_seconds} 秒")
                 raise RateLimitError(wait_seconds)
 
             elif '503' in error_str or '500' in error_str:
-                # 暫時性服務錯誤：等待後重試
                 if attempt < max_retries - 1:
-                    wait_time = (attempt + 1) * 5  # 5s, 10s
+                    wait_time = (attempt + 1) * 5
                     print(f"Gemini API 服務暫時不可用，{wait_time} 秒後重試（第 {attempt + 1}/{max_retries} 次）")
                     time.sleep(wait_time)
                 else:
@@ -99,7 +91,6 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
                     raise
 
             else:
-                # 其他錯誤：直接拋出
                 print(f"Gemini API 錯誤：{error_str[:200]}")
                 raise
 
@@ -132,9 +123,32 @@ def format_spare_parts_for_prompt():
         formatted += f"  小分類儲位：{part.get('minor_category', '')}\n\n"
     return formatted
 
+def build_google_search_links(keyword):
+    """根據關鍵字建立備品位置和規格兩個 Google 搜尋連結"""
+    encoded = quote(keyword)
+    location_url = f"https://www.google.com/search?q={encoded}+備品+倉庫位置"
+    spec_url = f"https://www.google.com/search?q={encoded}+規格+datasheet"
+    return location_url, spec_url
+
+def build_spec_search_link(keyword):
+    """根據關鍵字建立產品規格 Google 搜尋連結"""
+    encoded = quote(keyword)
+    return f"https://www.google.com/search?q={encoded}+規格+datasheet"
+
+def extract_keyword_from_query(user_query):
+    """
+    從用戶輸入中提取最適合作為搜尋關鍵字的型號或料號。
+    優先取英數字混合的型號（如 FX2N-8EX），否則使用原始輸入（截斷至 50 字元）。
+    """
+    matches = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-/\.]{2,}', user_query)
+    if matches:
+        return max(matches, key=len)
+    return user_query.strip()[:50]
+
 def query_spare_parts_text(user_query):
-    """使用 Gemini 進行文字查詢"""
+    """使用 Gemini 進行文字查詢，查到備品附規格連結，查無備品附兩個搜尋連結"""
     spare_parts_info = format_spare_parts_for_prompt()
+    keyword = extract_keyword_from_query(user_query)
 
     prompt = f"""你是一個備品查詢助手。你的職責是幫助使用者查詢備品的位置資訊。
 
@@ -150,7 +164,7 @@ def query_spare_parts_text(user_query):
 小分類儲位：[小分類儲位]
 
 3. 如果查詢到多筆相符的備品，每筆之間用空行分隔，並在最前面加上「共找到 X 筆備品資訊：」
-4. 如果查無此備品資料，回答：「查無此備品資料，請確認料號或規格是否正確」
+4. 如果查無此備品資料，只需回答：「NOT_FOUND」（不需要其他說明）
 5. 如果使用者的問題超出備品查詢範圍，回答：「我只能回答備品位置相關的查詢，其他問題無法回答」
 6. 回答要簡潔清楚，適合在 LINE 上閱讀，不要加入多餘的說明文字
 
@@ -159,7 +173,22 @@ def query_spare_parts_text(user_query):
 使用者查詢：{user_query}"""
 
     try:
-        return call_gemini_with_retry(prompt)
+        result = call_gemini_with_retry(prompt)
+        result = result.strip()
+
+        if result == 'NOT_FOUND' or '查無此備品' in result:
+            location_url, spec_url = build_google_search_links(keyword)
+            return (
+                f"資料庫中查無此備品，為您提供以下搜尋連結：\n\n"
+                f"🔍 備品位置查詢：\n{location_url}\n\n"
+                f"📋 產品規格查詢：\n{spec_url}"
+            )
+        else:
+            spec_match = re.search(r'規格：(.+)', result)
+            search_keyword = spec_match.group(1).strip() if spec_match else keyword
+            spec_url = build_spec_search_link(search_keyword)
+            return f"{result}\n\n📋 產品規格查詢：\n{spec_url}"
+
     except RateLimitError as e:
         return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
     except Exception as e:
@@ -172,7 +201,6 @@ def extract_text_from_image(image_bytes, mime_type='image/jpeg'):
 
     print(f"圖片大小：{len(image_bytes)} bytes，格式：{mime_type}")
 
-    # 確保 mime_type 是支援的格式
     supported_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
     if mime_type not in supported_types:
         mime_type = 'image/jpeg'
@@ -180,13 +208,12 @@ def extract_text_from_image(image_bytes, mime_type='image/jpeg'):
     image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
     prompt_text = "請從這張圖片中提取所有可見的文字，特別是料號、規格、型號等備品相關資訊。只需要回傳提取到的文字，不需要其他說明。"
 
-    # 此函數讓 RateLimitError 向上傳遞，由呼叫端統一處理
     result = call_gemini_with_retry([prompt_text, image_part])
     print(f"從圖片提取的文字：{result[:200]}")
     return result
 
 def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
-    """從圖片中提取資訊並查詢備品"""
+    """從圖片中提取資訊並查詢備品，查到備品附規格連結，查無備品附兩個搜尋連結"""
     try:
         extracted_text = extract_text_from_image(image_bytes, mime_type)
     except RateLimitError as e:
@@ -199,6 +226,7 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
         return "無法辨識照片中的備品資訊，請確認照片清晰度或改用文字輸入料號"
 
     spare_parts_info = format_spare_parts_for_prompt()
+    keyword = extract_keyword_from_query(extracted_text)
 
     prompt = f"""你是一個備品查詢助手。根據從圖片中提取的文字，查詢備品資訊。
 
@@ -214,7 +242,7 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
 小分類儲位：[小分類儲位]
 
 3. 如果查詢到多筆相符的備品，每筆之間用空行分隔，並在最前面加上「共找到 X 筆備品資訊：」
-4. 如果查無此備品資料，回答：「查無此備品資料，請確認照片中的料號或規格是否正確」
+4. 如果查無此備品資料，只需回答：「NOT_FOUND」（不需要其他說明）
 5. 如果無法從照片中辨識出有效的備品資訊，回答：「無法辨識照片中的備品資訊，請確認照片清晰度或改用文字輸入料號」
 6. 回答要簡潔清楚，適合在 LINE 上閱讀，不要加入多餘的說明文字
 
@@ -226,7 +254,22 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
 請根據這些文字查詢對應的備品資訊。"""
 
     try:
-        return call_gemini_with_retry(prompt)
+        result = call_gemini_with_retry(prompt)
+        result = result.strip()
+
+        if result == 'NOT_FOUND' or '查無此備品' in result:
+            location_url, spec_url = build_google_search_links(keyword)
+            return (
+                f"資料庫中查無此備品，為您提供以下搜尋連結：\n\n"
+                f"🔍 備品位置查詢：\n{location_url}\n\n"
+                f"📋 產品規格查詢：\n{spec_url}"
+            )
+        else:
+            spec_match = re.search(r'規格：(.+)', result)
+            search_keyword = spec_match.group(1).strip() if spec_match else keyword
+            spec_url = build_spec_search_link(search_keyword)
+            return f"{result}\n\n📋 產品規格查詢：\n{spec_url}"
+
     except RateLimitError as e:
         return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
     except Exception as e:
@@ -266,10 +309,8 @@ def handle_image_message(event):
     """處理圖片訊息"""
     print(f"收到圖片訊息，message_id：{event.message.id}")
     try:
-        # 取得圖片內容
         message_content = line_bot_api.get_message_content(event.message.id)
         image_bytes = message_content.content
-        # 動態取得 mime_type（不寫死為 image/jpeg）
         content_type = message_content.content_type or 'image/jpeg'
         mime_type = content_type.split(';')[0].strip()
         print(f"圖片 content_type：{content_type}，使用 mime_type：{mime_type}")
