@@ -168,7 +168,7 @@ def build_spec_search_link(brand, model):
 # ─── 回覆格式化 ─────────────────────────────────────────────────────────────────
 
 def format_found_response(part, brand, model, is_image=False):
-    """查到備品時的回覆格式"""
+    """查到備品時的回覆格式（情況 A：完全符合）"""
     spec = part.get('specification', '')
     part_num = part.get('part_number', '')
     warehouse = part.get('warehouse_location', '')
@@ -176,7 +176,7 @@ def format_found_response(part, brand, model, is_image=False):
     minor = part.get('minor_category', '')
 
     lines = [
-        "查詢到以下備品資訊：",
+        "✅ 查詢到備品：",
         f"料號：{part_num}",
         f"規格：{spec}",
         f"倉庫位置：{warehouse}",
@@ -188,45 +188,45 @@ def format_found_response(part, brand, model, is_image=False):
     if spec_url:
         lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
 
-    if is_image:
-        lines.append(f"\n🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
+    lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
 
     return "\n".join(lines)
 
 def format_fuzzy_response(results, brand, model, is_image=False):
-    """找到相似備品時的回覆格式"""
-    number_emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣']
-    lines = ["找不到完全符合的備品，以下是相似的備品，請確認：\n"]
+    """找到相似備品時的回覆格式（情況 B：相似符合）"""
+    # 顯示辨識到的型號
+    identified = (f"{brand} {model}".strip()) if (brand or model) else ''
+    header = f"⚠️ 辨識型號：{identified}\n資料庫中找到相似備品（請確認是否為同一備品）：" if identified else "⚠️ 資料庫中找到相似備品（請確認是否為同一備品）："
+    lines = [header, ""]
 
-    for i, (part, score, matched) in enumerate(results[:5]):
-        emoji = number_emojis[i] if i < len(number_emojis) else f"{i+1}."
+    for i, (part, score, matched) in enumerate(results[:3]):
         lines.append(
-            f"{emoji} 規格：{part.get('specification', '')}\n"
-            f"   料號：{part.get('part_number', '')}\n"
-            f"   倉庫位置：{part.get('warehouse_location', '')}\n"
-            f"   大分類儲位：{part.get('major_category', '')}\n"
-            f"   小分類儲位：{part.get('minor_category', '')}"
+            f"料號：{part.get('part_number', '')}\n"
+            f"規格：{part.get('specification', '')}\n"
+            f"倉庫位置：{part.get('warehouse_location', '')}\n"
+            f"大分類儲位：{part.get('major_category', '')}\n"
+            f"小分類儲位：{part.get('minor_category', '')}"
         )
 
     spec_url = build_spec_search_link(brand, model)
     if spec_url:
         lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
 
-    if is_image:
-        lines.append(f"\n🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
+    lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
 
     return "\n".join(lines)
 
 def format_not_found_response(brand, model, is_image=False):
-    """查無備品時的回覆格式"""
-    spec_url = build_spec_search_link(brand, model)
-    lines = ["資料庫中查無此備品，為您提供以下搜尋連結：\n"]
+    """查無備品時的回覆格式（情況 C：完全找不到）"""
+    identified = (f"{brand} {model}".strip()) if (brand or model) else ''
+    header = f"❌ 資料庫中查無此備品（辨識型號：{identified}）" if identified else "❌ 資料庫中查無此備品"
+    lines = [header, ""]
 
+    spec_url = build_spec_search_link(brand, model)
     if spec_url:
         lines.append(f"📋 產品規格查詢：\n{spec_url}")
 
-    if is_image:
-        lines.append(f"\n🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
+    lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
 
     return "\n".join(lines)
 
