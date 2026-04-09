@@ -1,7 +1,6 @@
 import os
 import json
-import base64
-import io
+import time
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -32,6 +31,45 @@ def get_gemini_client():
         _gemini_client = genai.Client(api_key=GEMINI_API_KEY)
     return _gemini_client
 
+def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
+    """呼叫 Gemini API，遇到速率限制或暫時錯誤時自動重試"""
+    client = get_gemini_client()
+    last_error = None
+
+    for attempt in range(max_retries):
+        try:
+            response = client.models.generate_content(
+                model=model,
+                contents=contents
+            )
+            return response.text
+        except Exception as e:
+            last_error = e
+            error_str = str(e)
+            error_code = ''
+
+            # 解析錯誤碼
+            if '429' in error_str:
+                error_code = '429'
+            elif '503' in error_str:
+                error_code = '503'
+            elif '500' in error_str:
+                error_code = '500'
+
+            if error_code in ('429', '503', '500') and attempt < max_retries - 1:
+                # 速率限制：等待時間隨重試次數增加
+                wait_time = (attempt + 1) * 5  # 5s, 10s, 15s
+                print(f"Gemini API {error_code} 錯誤，{wait_time} 秒後重試（第 {attempt + 1}/{max_retries} 次）")
+                time.sleep(wait_time)
+            else:
+                # 非暫時性錯誤或已達最大重試次數，直接拋出
+                print(f"Gemini API 錯誤（嘗試 {attempt + 1}/{max_retries}）: {error_str[:200]}")
+                if attempt == max_retries - 1:
+                    break
+                raise
+
+    raise last_error
+
 # 載入備品資料
 def load_spare_parts_data():
     """載入備品資料 JSON 檔案"""
@@ -40,6 +78,9 @@ def load_spare_parts_data():
             return json.load(f)
     except FileNotFoundError:
         print("警告：找不到 spare_parts_data.json 檔案")
+        return []
+    except Exception as e:
+        print(f"載入備品資料錯誤：{e}")
         return []
 
 # 全域備品資料
@@ -58,11 +99,9 @@ def format_spare_parts_for_prompt():
 
 def query_spare_parts_text(user_query):
     """使用 Gemini 進行文字查詢"""
-    from google.genai import types
-
     spare_parts_info = format_spare_parts_for_prompt()
 
-    system_prompt = """你是一個備品查詢助手。你的職責是幫助使用者查詢備品的位置資訊。
+    prompt = f"""你是一個備品查詢助手。你的職責是幫助使用者查詢備品的位置資訊。
 
 備品資料庫規則：
 1. 使用者可能會輸入料號或規格關鍵字來查詢備品
@@ -71,53 +110,55 @@ def query_spare_parts_text(user_query):
 4. 如果使用者的問題超出備品查詢範圍，回答：「我只能回答備品位置相關的查詢，其他問題無法回答」
 5. 回答要簡潔清楚，適合在 LINE 上閱讀
 
-""" + spare_parts_info
+{spare_parts_info}
+
+使用者查詢：{user_query}"""
 
     try:
-        client = get_gemini_client()
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=system_prompt + "\n\n使用者查詢：" + user_query
-        )
-        return response.text
+        result = call_gemini_with_retry(prompt)
+        return result
     except Exception as e:
-        print(f"Gemini API 錯誤：{str(e)}")
+        error_str = str(e)
+        print(f"Gemini 文字查詢最終失敗：{error_str[:200]}")
+        if '429' in error_str:
+            return "系統目前使用量較高，請稍候約 1 分鐘後再試"
         return "抱歉，查詢過程中發生錯誤，請稍後再試"
 
-def extract_text_from_image(image_data):
-    """使用 Gemini Vision 從圖片中提取文字"""
+def extract_text_from_image(image_bytes, mime_type='image/jpeg'):
+    """使用 Gemini Vision 從圖片中提取文字（支援動態 mime_type）"""
     from google.genai import types
 
+    print(f"圖片大小：{len(image_bytes)} bytes，格式：{mime_type}")
+
+    # 確保 mime_type 是支援的格式
+    supported_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+    if mime_type not in supported_types:
+        mime_type = 'image/jpeg'  # 預設為 JPEG
+
+    image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
+
+    prompt_text = "請從這張圖片中提取所有可見的文字，特別是料號、規格、型號等備品相關資訊。只需要回傳提取到的文字，不需要其他說明。"
+
     try:
-        client = get_gemini_client()
-        image_part = types.Part.from_bytes(data=image_data, mime_type='image/jpeg')
-
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=[
-                "請從這張圖片中提取所有可見的文字，特別是料號、規格、型號等備品相關資訊。只需要回傳提取到的文字，不需要其他說明。",
-                image_part
-            ]
-        )
-
-        extracted_text = response.text
-        print(f"從圖片提取的文字：{extracted_text}")
-        return extracted_text
+        result = call_gemini_with_retry([prompt_text, image_part])
+        print(f"從圖片提取的文字：{result[:200]}")
+        return result
     except Exception as e:
-        print(f"圖片處理錯誤：{str(e)}")
+        error_str = str(e)
+        print(f"圖片文字提取失敗：{error_str[:200]}")
         return None
 
-def query_spare_parts_from_image(image_data):
+def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     """從圖片中提取資訊並查詢備品"""
 
-    extracted_text = extract_text_from_image(image_data)
+    extracted_text = extract_text_from_image(image_bytes, mime_type)
 
     if not extracted_text:
         return "無法辨識照片中的備品資訊，請確認照片清晰度或改用文字輸入料號"
 
     spare_parts_info = format_spare_parts_for_prompt()
 
-    system_prompt = """你是一個備品查詢助手。根據從圖片中提取的文字，查詢備品資訊。
+    prompt = f"""你是一個備品查詢助手。根據從圖片中提取的文字，查詢備品資訊。
 
 備品資料庫規則：
 1. 根據提取的文字中的料號或規格來查詢備品
@@ -126,24 +167,26 @@ def query_spare_parts_from_image(image_data):
 4. 如果無法從照片中辨識出有效的備品資訊，回答：「無法辨識照片中的備品資訊，請確認照片清晰度或改用文字輸入料號」
 5. 回答要簡潔清楚，適合在 LINE 上閱讀
 
-""" + spare_parts_info
+{spare_parts_info}
+
+從圖片提取的文字如下：
+{extracted_text}
+
+請根據這些文字查詢對應的備品資訊。"""
 
     try:
-        client = get_gemini_client()
-        query_prompt = system_prompt + f"\n\n從圖片提取的文字如下：\n{extracted_text}\n\n請根據這些文字查詢對應的備品資訊。"
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=query_prompt
-        )
-        return response.text
+        result = call_gemini_with_retry(prompt)
+        return result
     except Exception as e:
-        print(f"Gemini API 錯誤：{str(e)}")
+        error_str = str(e)
+        print(f"備品查詢最終失敗：{error_str[:200]}")
+        if '429' in error_str:
+            return "系統目前使用量較高，請稍候約 1 分鐘後再試"
         return "抱歉，查詢過程中發生錯誤，請稍後再試"
 
 @app.route("/callback", methods=['POST'])
 def callback():
     """LINE Webhook 回調處理"""
-
     signature = request.headers.get('X-Line-Signature', '')
     body = request.get_data(as_text=True)
 
@@ -153,7 +196,7 @@ def callback():
         print("簽名驗證失敗")
         abort(400)
     except Exception as e:
-        print(f"錯誤：{str(e)}")
+        print(f"Webhook 處理錯誤：{str(e)}")
         abort(500)
 
     return 'OK'
@@ -162,6 +205,7 @@ def callback():
 def handle_text_message(event):
     """處理文字訊息"""
     user_message = event.message.text.strip()
+    print(f"收到文字訊息：{user_message}")
     response_text = query_spare_parts_text(user_message)
     line_bot_api.reply_message(
         event.reply_token,
@@ -171,10 +215,18 @@ def handle_text_message(event):
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
     """處理圖片訊息"""
+    print(f"收到圖片訊息，message_id：{event.message.id}")
     try:
+        # 取得圖片內容和 content_type
         message_content = line_bot_api.get_message_content(event.message.id)
-        image_data = message_content.content
-        response_text = query_spare_parts_from_image(image_data)
+        image_bytes = message_content.content
+        # 動態取得 mime_type（不寫死為 image/jpeg）
+        content_type = message_content.content_type or 'image/jpeg'
+        # 只保留 mime_type 的主要部分（去掉 charset 等附加資訊）
+        mime_type = content_type.split(';')[0].strip()
+        print(f"圖片 content_type：{content_type}，使用 mime_type：{mime_type}")
+
+        response_text = query_spare_parts_from_image(image_bytes, mime_type)
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=response_text)
@@ -183,7 +235,7 @@ def handle_image_message(event):
         print(f"圖片處理錯誤：{str(e)}")
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="無法辨識照片中的備品資訊，請確認照片清晰度或改用文字輸入料號")
+            TextSendMessage(text="無法辨識照片，請確認照片清晰度或改用文字輸入料號")
         )
 
 @app.route("/health", methods=['GET'])
