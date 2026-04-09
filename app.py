@@ -160,9 +160,9 @@ def build_spec_search_link(brand, model):
     if not parts:
         return ''
 
-    query_str = ' '.join(parts) + ' 規格 datasheet'
-    # quote 只對非 ASCII 字元編碼，空格變 +
-    encoded = quote(query_str, safe='')
+    query_str = ' '.join(parts) + ' datasheet specifications'
+    # 將空格替換為 +，並對特殊字元進行編碼
+    encoded = quote(query_str.replace(' ', '+'), safe='+')
     return f"https://www.google.com/search?q={encoded}"
 
 # ─── 回覆格式化 ─────────────────────────────────────────────────────────────────
