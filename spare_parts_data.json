@@ -1,0 +1,29 @@
+[
+  {
+    "spare_part_id": "67C000067",
+    "part_number": "SCA000002",
+    "specification": "數位流量感測器 KEYENCE FD-Q32C（需搭配配料號#SCA001002、#SCA002002—詳購入）",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁儲位",
+    "minor_category": "001",
+    "quantity": 5
+  },
+  {
+    "spare_part_id": "67H000097",
+    "part_number": "SH5079000",
+    "specification": "PLC模組 三菱 FX3U-48MT/ES-A",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁儲位",
+    "minor_category": "001",
+    "quantity": 2
+  },
+  {
+    "spare_part_id": "67H000098",
+    "part_number": "SH5056001",
+    "specification": "PLC模組 三菱 FX2N-8EX-ES/UL",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁儲位",
+    "minor_category": "001",
+    "quantity": 1
+  }
+]
