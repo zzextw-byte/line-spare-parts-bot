@@ -144,6 +144,33 @@ def keyword_search_spare_parts(keywords):
     results.sort(key=lambda x: x[1], reverse=True)
     return results
 
+# ─── 完全符合判斷 ───────────────────────────────────────────────────────────────
+
+def is_exact_match(queried_model, part):
+    """
+    嚴格判斷查詢型號是否與資料庫備品完全符合。
+    queried_model 必須與備品規格中的型號片段或料號「完全相同」（忽略大小寫），
+    不允許子字串包含，避免 FX2N-8ER-ES 誤判為 FX2N-8EX-ES/UL 的完全符合。
+    """
+    if not queried_model or not queried_model.strip():
+        return False
+
+    q = queried_model.strip().lower()
+
+    # 與料號嚴格比對
+    part_num = part.get('part_number', '').strip().lower()
+    if q == part_num:
+        return True
+
+    # 從規格欄位提取所有英數字型號片段，逐一嚴格比對
+    spec = part.get('specification', '')
+    spec_models = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-\/\.]{2,}', spec)
+    for sm in spec_models:
+        if q == sm.lower():
+            return True
+
+    return False
+
 # ─── 搜尋連結建立 ───────────────────────────────────────────────────────────────
 
 def build_spec_search_link(brand, model):
@@ -349,16 +376,8 @@ def query_spare_parts_text(user_query):
     # 找到最高分的結果
     best_part, best_score, best_matched = results[0]
 
-    # 判斷是否為精確符合（最長關鍵字符合 = 完整型號符合）
-    longest_kw = max(keywords, key=len) if keywords else ''
-    spec_lower = best_part.get('specification', '').lower()
-    part_num_lower = best_part.get('part_number', '').lower()
-    is_exact = (model.lower() in spec_lower or
-                model.lower() in part_num_lower or
-                longest_kw.lower() in spec_lower or
-                longest_kw.lower() in part_num_lower)
-
-    if is_exact or best_score >= 2.0:
+    # 嚴格判斷是否完全符合：queried model 必須與資料庫型號完全相同
+    if is_exact_match(model, best_part):
         return format_found_response(best_part, brand, model, is_image=False)
     else:
         return format_fuzzy_response(results, brand, model, is_image=False)
@@ -391,17 +410,9 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     if not results:
         return format_not_found_response(brand, model, is_image=True)
 
-    # 判斷是否為精確符合
-    longest_kw = max(keywords, key=len) if keywords else ''
+    # 嚴格判斷是否完全符合：queried model 必須與資料庫型號完全相同
     best_part, best_score, best_matched = results[0]
-    spec_lower = best_part.get('specification', '').lower()
-    part_num_lower = best_part.get('part_number', '').lower()
-    is_exact = (model.lower() in spec_lower or
-                model.lower() in part_num_lower or
-                longest_kw.lower() in spec_lower or
-                longest_kw.lower() in part_num_lower)
-
-    if is_exact or best_score >= 2.0:
+    if is_exact_match(model, best_part):
         return format_found_response(best_part, brand, model, is_image=True)
     else:
         return format_fuzzy_response(results, brand, model, is_image=True)
