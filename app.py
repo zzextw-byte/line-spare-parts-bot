@@ -9,7 +9,6 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, ImageMessage, TextSendMessage
 import google.generativeai as genai
-from PIL import Image
 
 # 初始化 Flask 應用
 app = Flask(__name__)
@@ -79,17 +78,23 @@ def query_spare_parts_text(user_query):
         return "抱歉，查詢過程中發生錯誤，請稍後再試"
 
 def extract_text_from_image(image_data):
-    """使用 Gemini Vision 從圖片中提取文字"""
+    """使用 Gemini Vision 從圖片中提取文字（直接使用 bytes，不需要 Pillow）"""
     
     try:
-        # 將圖片轉換為 PIL Image 物件
-        image = Image.open(io.BytesIO(image_data))
-        
-        # 使用 Gemini Vision 進行 OCR
+        # 直接使用 bytes 資料，透過 inline_data 傳送給 Gemini
         model = genai.GenerativeModel('gemini-2.5-flash')
+        
+        # 使用 base64 編碼的 inline_data 方式傳送圖片
+        image_part = {
+            "inline_data": {
+                "mime_type": "image/jpeg",
+                "data": base64.b64encode(image_data).decode('utf-8')
+            }
+        }
+        
         response = model.generate_content([
             "請從這張圖片中提取所有可見的文字，特別是料號、規格、型號等備品相關資訊。只需要回傳提取到的文字，不需要其他說明。",
-            image
+            image_part
         ])
         
         extracted_text = response.text
