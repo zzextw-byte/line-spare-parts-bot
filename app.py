@@ -1,5 +1,6 @@
 import os
 import json
+import re
 import time
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -31,8 +32,41 @@ def get_gemini_client():
         _gemini_client = genai.Client(api_key=GEMINI_API_KEY)
     return _gemini_client
 
+def parse_retry_after(error_str):
+    """
+    從錯誤訊息中解析 retry-after 秒數。
+    Gemini API 的 429 錯誤訊息可能包含 retryDelay 或 retry_delay 欄位。
+    若無法解析，預設回傳 60 秒。
+    """
+    # 嘗試從 JSON 格式的錯誤訊息中解析 retryDelay（例如 "retryDelay": "30s"）
+    match = re.search(r'"retryDelay"\s*:\s*"(\d+)s?"', error_str)
+    if match:
+        return int(match.group(1))
+
+    # 嘗試解析 retry_delay（下劃線格式）
+    match = re.search(r'retry[_-]delay["\s:]+(\d+)', error_str, re.IGNORECASE)
+    if match:
+        return int(match.group(1))
+
+    # 嘗試解析 "retry after X seconds" 格式
+    match = re.search(r'retry after (\d+)', error_str, re.IGNORECASE)
+    if match:
+        return int(match.group(1))
+
+    # 預設 60 秒
+    return 60
+
+class RateLimitError(Exception):
+    """速率限制例外，攜帶建議等待秒數"""
+    def __init__(self, wait_seconds):
+        self.wait_seconds = wait_seconds
+        super().__init__(f"Rate limit exceeded, retry after {wait_seconds}s")
+
 def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
-    """呼叫 Gemini API，遇到速率限制或暫時錯誤時自動重試"""
+    """
+    呼叫 Gemini API，遇到暫時性錯誤（503/500）時自動重試。
+    遇到速率限制（429）時直接拋出 RateLimitError，讓呼叫端決定如何回應用戶。
+    """
     client = get_gemini_client()
     last_error = None
 
@@ -43,29 +77,30 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
                 contents=contents
             )
             return response.text
+
         except Exception as e:
             last_error = e
             error_str = str(e)
-            error_code = ''
 
-            # 解析錯誤碼
             if '429' in error_str:
-                error_code = '429'
-            elif '503' in error_str:
-                error_code = '503'
-            elif '500' in error_str:
-                error_code = '500'
+                # 速率限制：解析等待時間並立即通知用戶，不重試
+                wait_seconds = parse_retry_after(error_str)
+                print(f"Gemini API 429 速率限制，建議等待 {wait_seconds} 秒")
+                raise RateLimitError(wait_seconds)
 
-            if error_code in ('429', '503', '500') and attempt < max_retries - 1:
-                # 速率限制：等待時間隨重試次數增加
-                wait_time = (attempt + 1) * 5  # 5s, 10s, 15s
-                print(f"Gemini API {error_code} 錯誤，{wait_time} 秒後重試（第 {attempt + 1}/{max_retries} 次）")
-                time.sleep(wait_time)
+            elif '503' in error_str or '500' in error_str:
+                # 暫時性服務錯誤：等待後重試
+                if attempt < max_retries - 1:
+                    wait_time = (attempt + 1) * 5  # 5s, 10s
+                    print(f"Gemini API 服務暫時不可用，{wait_time} 秒後重試（第 {attempt + 1}/{max_retries} 次）")
+                    time.sleep(wait_time)
+                else:
+                    print(f"Gemini API 服務暫時不可用，已達最大重試次數")
+                    raise
+
             else:
-                # 非暫時性錯誤或已達最大重試次數，直接拋出
-                print(f"Gemini API 錯誤（嘗試 {attempt + 1}/{max_retries}）: {error_str[:200]}")
-                if attempt == max_retries - 1:
-                    break
+                # 其他錯誤：直接拋出
+                print(f"Gemini API 錯誤：{error_str[:200]}")
                 raise
 
     raise last_error
@@ -115,13 +150,11 @@ def query_spare_parts_text(user_query):
 使用者查詢：{user_query}"""
 
     try:
-        result = call_gemini_with_retry(prompt)
-        return result
+        return call_gemini_with_retry(prompt)
+    except RateLimitError as e:
+        return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
     except Exception as e:
-        error_str = str(e)
-        print(f"Gemini 文字查詢最終失敗：{error_str[:200]}")
-        if '429' in error_str:
-            return "系統目前使用量較高，請稍候約 1 分鐘後再試"
+        print(f"Gemini 文字查詢失敗：{str(e)[:200]}")
         return "抱歉，查詢過程中發生錯誤，請稍後再試"
 
 def extract_text_from_image(image_bytes, mime_type='image/jpeg'):
@@ -133,27 +166,27 @@ def extract_text_from_image(image_bytes, mime_type='image/jpeg'):
     # 確保 mime_type 是支援的格式
     supported_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
     if mime_type not in supported_types:
-        mime_type = 'image/jpeg'  # 預設為 JPEG
+        mime_type = 'image/jpeg'
 
     image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
-
     prompt_text = "請從這張圖片中提取所有可見的文字，特別是料號、規格、型號等備品相關資訊。只需要回傳提取到的文字，不需要其他說明。"
 
-    try:
-        result = call_gemini_with_retry([prompt_text, image_part])
-        print(f"從圖片提取的文字：{result[:200]}")
-        return result
-    except Exception as e:
-        error_str = str(e)
-        print(f"圖片文字提取失敗：{error_str[:200]}")
-        return None
+    # 此函數讓 RateLimitError 向上傳遞，由呼叫端統一處理
+    result = call_gemini_with_retry([prompt_text, image_part])
+    print(f"從圖片提取的文字：{result[:200]}")
+    return result
 
 def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     """從圖片中提取資訊並查詢備品"""
+    try:
+        extracted_text = extract_text_from_image(image_bytes, mime_type)
+    except RateLimitError as e:
+        return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
+    except Exception as e:
+        print(f"圖片文字提取失敗：{str(e)[:200]}")
+        return "無法辨識照片中的備品資訊，請確認照片清晰度或改用文字輸入料號"
 
-    extracted_text = extract_text_from_image(image_bytes, mime_type)
-
-    if not extracted_text:
+    if not extracted_text or not extracted_text.strip():
         return "無法辨識照片中的備品資訊，請確認照片清晰度或改用文字輸入料號"
 
     spare_parts_info = format_spare_parts_for_prompt()
@@ -175,13 +208,11 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
 請根據這些文字查詢對應的備品資訊。"""
 
     try:
-        result = call_gemini_with_retry(prompt)
-        return result
+        return call_gemini_with_retry(prompt)
+    except RateLimitError as e:
+        return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
     except Exception as e:
-        error_str = str(e)
-        print(f"備品查詢最終失敗：{error_str[:200]}")
-        if '429' in error_str:
-            return "系統目前使用量較高，請稍候約 1 分鐘後再試"
+        print(f"備品查詢失敗：{str(e)[:200]}")
         return "抱歉，查詢過程中發生錯誤，請稍後再試"
 
 @app.route("/callback", methods=['POST'])
@@ -217,12 +248,11 @@ def handle_image_message(event):
     """處理圖片訊息"""
     print(f"收到圖片訊息，message_id：{event.message.id}")
     try:
-        # 取得圖片內容和 content_type
+        # 取得圖片內容
         message_content = line_bot_api.get_message_content(event.message.id)
         image_bytes = message_content.content
         # 動態取得 mime_type（不寫死為 image/jpeg）
         content_type = message_content.content_type or 'image/jpeg'
-        # 只保留 mime_type 的主要部分（去掉 charset 等附加資訊）
         mime_type = content_type.split(';')[0].strip()
         print(f"圖片 content_type：{content_type}，使用 mime_type：{mime_type}")
 
