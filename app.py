@@ -56,7 +56,7 @@ class RateLimitError(Exception):
         self.wait_seconds = wait_seconds
         super().__init__(f"Rate limit exceeded, retry after {wait_seconds}s")
 
-def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
+def call_gemini_with_retry(contents, model='gemini-2.0-flash', max_retries=3):
     """
     呼叫 Gemini API，遇到暫時性錯誤（503/500）時自動重試。
     遇到速率限制（429）時直接拋出 RateLimitError，讓呼叫端決定如何回應用戶。
