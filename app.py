@@ -113,13 +113,42 @@ def load_spare_parts_data():
 # 全域備品資料
 SPARE_PARTS = load_spare_parts_data()
 
-# 模糊搜尋相似度閾值（60%）
-FUZZY_THRESHOLD = 0.60
+# 模糊搜尋相似度閾值（50%）
+FUZZY_THRESHOLD = 0.50
+
+def extract_model_from_spec(text):
+    """
+    從規格或查詢字串中提取型號部分。
+    使用 regex 提取英數字 + 連字號 + 斜線的組合（如 FX2N-8EX-ES/UL、PM-T45）。
+    優先選取含連字號/斜線且含數字的最長型號，其次選含數字的英數混合字串。
+    若無法提取，回傳原始字串（轉小寫）。
+    """
+    if not text:
+        return ''
+    # 提取所有英數字+連字號+斜線的組合（至少 3 字元）
+    matches = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-/\.]{2,}', text)
+    if not matches:
+        return text.lower().strip()[:50]
+
+    # 優先選取含連字號或斜線且含數字的型號（如 FX2N-8EX-ES/UL）
+    model_with_hyphen = [m for m in matches if ('-' in m or '/' in m) and any(c.isdigit() for c in m)]
+    if model_with_hyphen:
+        return max(model_with_hyphen, key=len).lower()
+
+    # 其次選取含數字的英數混合字串（如 E3Z61）
+    model_with_digit = [m for m in matches if any(c.isdigit() for c in m)]
+    if model_with_digit:
+        return max(model_with_digit, key=len).lower()
+
+    return max(matches, key=len).lower()
 
 def fuzzy_search_spare_parts(query, threshold=FUZZY_THRESHOLD):
     """
     使用 difflib.SequenceMatcher 對備品資料庫進行模糊搜尋。
-    同時比對「規格」和「料號」欄位，取最高相似度。
+    比對策略（取最高分）：
+      1. 從查詢字串和規格欄位各自提取型號後再比對（最精準）
+      2. 查詢字串與完整規格比對
+      3. 查詢字串與料號比對
     忽略大小寫，回傳按相似度由高到低排列的結果清單。
     每個結果為 (part, score) tuple。
     """
@@ -127,23 +156,34 @@ def fuzzy_search_spare_parts(query, threshold=FUZZY_THRESHOLD):
     if not query_lower:
         return []
 
+    # 從查詢字串中提取型號（用於型號對型號比對）
+    query_model = extract_model_from_spec(query)
+
     results = []
     for part in SPARE_PARTS:
         spec = part.get('specification', '').lower()
         part_num = part.get('part_number', '').lower()
 
-        # 計算與規格的相似度
+        # 策略1：從規格中提取型號後，與查詢型號比對（最精準）
+        spec_model = extract_model_from_spec(spec)
+        score_model = SequenceMatcher(None, query_model, spec_model).ratio() if spec_model else 0
+
+        # 策略2：查詢字串與完整規格比對
         score_spec = SequenceMatcher(None, query_lower, spec).ratio()
-        # 計算與料號的相似度
+
+        # 策略3：查詢字串與料號比對
         score_part = SequenceMatcher(None, query_lower, part_num).ratio()
 
-        # 額外加分：若查詢字串是規格或料號的子字串（部分包含）
-        if query_lower in spec:
+        # 額外加分：若查詢字串（或型號）是規格/料號的子字串
+        if query_lower in spec or query_model in spec:
             score_spec = max(score_spec, 0.85)
-        if query_lower in part_num:
+        if query_lower in part_num or query_model in part_num:
             score_part = max(score_part, 0.85)
+        # 型號對型號子字串加分
+        if spec_model and query_model in spec_model:
+            score_model = max(score_model, 0.85)
 
-        best_score = max(score_spec, score_part)
+        best_score = max(score_model, score_spec, score_part)
         if best_score >= threshold:
             results.append((part, best_score))
 
