@@ -2,6 +2,7 @@ import os
 import json
 import re
 import time
+from difflib import SequenceMatcher
 from urllib.parse import quote
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -112,6 +113,44 @@ def load_spare_parts_data():
 # 全域備品資料
 SPARE_PARTS = load_spare_parts_data()
 
+# 模糊搜尋相似度閾值（60%）
+FUZZY_THRESHOLD = 0.60
+
+def fuzzy_search_spare_parts(query, threshold=FUZZY_THRESHOLD):
+    """
+    使用 difflib.SequenceMatcher 對備品資料庫進行模糊搜尋。
+    同時比對「規格」和「料號」欄位，取最高相似度。
+    忽略大小寫，回傳按相似度由高到低排列的結果清單。
+    每個結果為 (part, score) tuple。
+    """
+    query_lower = query.lower().strip()
+    if not query_lower:
+        return []
+
+    results = []
+    for part in SPARE_PARTS:
+        spec = part.get('specification', '').lower()
+        part_num = part.get('part_number', '').lower()
+
+        # 計算與規格的相似度
+        score_spec = SequenceMatcher(None, query_lower, spec).ratio()
+        # 計算與料號的相似度
+        score_part = SequenceMatcher(None, query_lower, part_num).ratio()
+
+        # 額外加分：若查詢字串是規格或料號的子字串（部分包含）
+        if query_lower in spec:
+            score_spec = max(score_spec, 0.85)
+        if query_lower in part_num:
+            score_part = max(score_part, 0.85)
+
+        best_score = max(score_spec, score_part)
+        if best_score >= threshold:
+            results.append((part, best_score))
+
+    # 按相似度由高到低排序
+    results.sort(key=lambda x: x[1], reverse=True)
+    return results
+
 def format_spare_parts_for_prompt():
     """將備品資料格式化為提示詞"""
     formatted = "以下是備品資料庫中的所有備品：\n\n"
@@ -172,8 +211,50 @@ def extract_keyword_from_query(user_query):
     # 最後才用最長的字串（可能是品牌名）
     return max(matches, key=len)
 
+def format_fuzzy_results(fuzzy_results, keyword, is_image=False):
+    """
+    將模糊搜尋結果格式化為回覆訊息。
+    is_image=True 時附加 Google Lens 連結。
+    """
+    count = len(fuzzy_results)
+    lines = [f"找不到完全符合的備品，以下是相似的備品，請確認：\n"]
+
+    number_emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣']
+    for i, (part, score) in enumerate(fuzzy_results[:5]):  # 最多顯示 5 筆
+        emoji = number_emojis[i] if i < len(number_emojis) else f"{i+1}."
+        lines.append(
+            f"{emoji} 規格：{part.get('specification', '')}\n"
+            f"   料號：{part.get('part_number', '')}\n"
+            f"   倉庫位置：{part.get('warehouse_location', '')}\n"
+            f"   大分類儲位：{part.get('major_category', '')}\n"
+            f"   小分類儲位：{part.get('minor_category', '')}"
+        )
+
+    # 取第一筆的規格作為搜尋關鍵字（最相似的那筆）
+    best_spec = fuzzy_results[0][0].get('specification', keyword)
+    # 從規格中提取型號作為搜尋關鍵字
+    search_kw = extract_keyword_from_query(best_spec) if best_spec else keyword
+    spec_url = build_spec_search_link(search_kw)
+
+    lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
+    if is_image:
+        lines.append(f"\n🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
+
+    return "\n".join(lines)
+
+def format_not_found_response(keyword, is_image=False):
+    """查無備品且模糊搜尋也無結果時的回覆"""
+    spec_url = build_spec_search_link(keyword)
+    lines = [
+        "資料庫中查無此備品，為您提供以下搜尋連結：\n",
+        f"📋 產品規格查詢：\n{spec_url}"
+    ]
+    if is_image:
+        lines.append(f"\n🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
+    return "\n".join(lines)
+
 def query_spare_parts_text(user_query):
-    """使用 Gemini 進行文字查詢，查到備品附規格連結，查無備品附搜尋連結"""
+    """使用 Gemini 進行文字查詢，查到備品附規格連結，查無備品先做模糊搜尋再附搜尋連結"""
     spare_parts_info = format_spare_parts_for_prompt()
     keyword = extract_keyword_from_query(user_query)
 
@@ -204,11 +285,14 @@ def query_spare_parts_text(user_query):
         result = result.strip()
 
         if result == 'NOT_FOUND' or '查無此備品' in result:
-            spec_url = build_spec_search_link(keyword)
-            return (
-                f"資料庫中查無此備品，為您提供以下搜尋連結：\n\n"
-                f"📋 產品規格查詢：\n{spec_url}"
-            )
+            # 先嘗試模糊搜尋
+            fuzzy_results = fuzzy_search_spare_parts(keyword)
+            if fuzzy_results:
+                print(f"模糊搜尋找到 {len(fuzzy_results)} 筆相似備品（關鍵字：{keyword}）")
+                return format_fuzzy_results(fuzzy_results, keyword, is_image=False)
+            else:
+                print(f"模糊搜尋也無結果（關鍵字：{keyword}）")
+                return format_not_found_response(keyword, is_image=False)
         else:
             spec_match = re.search(r'規格：(.+)', result)
             search_keyword = spec_match.group(1).strip() if spec_match else keyword
@@ -233,7 +317,7 @@ def extract_text_from_image(image_bytes, mime_type='image/jpeg'):
 
     image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
 
-    # 改善 prompt：更積極辨識，即使角度不完美也要盡力提取
+    # 積極辨識 prompt：即使角度不完美也要盡力提取
     prompt_text = (
         "請仔細觀察這張工業設備或電子元件的照片，盡力辨識並提取所有可見的文字資訊。\n"
         "特別注意：品牌名稱（如 Panasonic、OMRON、Mitsubishi）、型號（如 PM-T45、FX2N-8EX）、"
@@ -248,7 +332,7 @@ def extract_text_from_image(image_bytes, mime_type='image/jpeg'):
     return result
 
 def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
-    """從圖片中提取資訊並查詢備品，查到備品附規格連結，查無備品附搜尋連結，辨識失敗附 Google Lens"""
+    """從圖片中提取資訊並查詢備品，查到備品附規格連結，查無備品先做模糊搜尋，辨識失敗附 Google Lens"""
     # 圖片辨識失敗時的通用回覆（含 Google Lens）
     def image_fail_response(extra_keyword=None):
         lines = ["無法從照片辨識備品資訊，您可以使用 Google Lens 以圖搜尋：",
@@ -302,12 +386,14 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
         result = result.strip()
 
         if result == 'NOT_FOUND' or '查無此備品' in result:
-            spec_url = build_spec_search_link(keyword)
-            return (
-                f"資料庫中查無此備品，為您提供以下搜尋連結：\n\n"
-                f"📋 產品規格查詢：\n{spec_url}\n\n"
-                f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}"
-            )
+            # 先嘗試模糊搜尋
+            fuzzy_results = fuzzy_search_spare_parts(keyword)
+            if fuzzy_results:
+                print(f"圖片查詢模糊搜尋找到 {len(fuzzy_results)} 筆相似備品（關鍵字：{keyword}）")
+                return format_fuzzy_results(fuzzy_results, keyword, is_image=True)
+            else:
+                print(f"圖片查詢模糊搜尋也無結果（關鍵字：{keyword}）")
+                return format_not_found_response(keyword, is_image=True)
         else:
             spec_match = re.search(r'規格：(.+)', result)
             search_keyword = spec_match.group(1).strip() if spec_match else keyword
