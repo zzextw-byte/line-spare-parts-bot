@@ -128,15 +128,45 @@ def build_spec_search_link(keyword):
     encoded = quote(keyword)
     return f"https://www.google.com/search?q={encoded}+規格+datasheet"
 
+# 已知品牌名稱集合（純英文，不含連字號），用於排除搜尋關鍵字選取
+KNOWN_BRANDS = {
+    'panasonic', 'mitsubishi', 'omron', 'siemens', 'schneider', 'keyence',
+    'fanuc', 'yaskawa', 'allen', 'bradley', 'rockwell', 'automation',
+    'fuji', 'hitachi', 'toshiba', 'yokogawa', 'idec', 'autonics',
+    'delta', 'weintek', 'proface', 'advantech', 'phoenix', 'contact',
+    'wago', 'beckhoff', 'pilz', 'sick', 'banner', 'pepperl', 'fuchs',
+    'turck', 'balluff', 'ifm', 'leuze', 'datalogic', 'cognex'
+}
+
 def extract_keyword_from_query(user_query):
     """
     從用戶輸入中提取最適合作為搜尋關鍵字的型號或料號。
-    優先取英數字混合的型號（如 FX2N-8EX），否則使用原始輸入（截斷至 50 字元）。
+    優先選取含連字號/斜線的型號（如 PM-T45、FX2N-8EX-ES/UL），
+    其次選取含數字的英數混合字串（如 E3Z61），
+    再次排除已知品牌名稱選其他字串，
+    最後才使用最長字串（可能是品牌名）。
     """
     matches = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-/\.]{2,}', user_query)
-    if matches:
-        return max(matches, key=len)
-    return user_query.strip()[:50]
+    if not matches:
+        return user_query.strip()[:50]
+
+    # 優先選取含連字號或斜線且含數字的型號（如 PM-T45、FX2N-8EX-ES/UL）
+    model_with_hyphen = [m for m in matches if ('-' in m or '/' in m) and any(c.isdigit() for c in m)]
+    if model_with_hyphen:
+        return max(model_with_hyphen, key=len)
+
+    # 其次選取含數字的英數混合字串（如 E3Z61、6ES7）
+    model_with_digit = [m for m in matches if any(c.isdigit() for c in m)]
+    if model_with_digit:
+        return max(model_with_digit, key=len)
+
+    # 過濾掉已知品牌名稱，選其他字串
+    non_brand = [m for m in matches if m.lower() not in KNOWN_BRANDS]
+    if non_brand:
+        return max(non_brand, key=len)
+
+    # 最後才用最長的字串（可能是品牌名）
+    return max(matches, key=len)
 
 def query_spare_parts_text(user_query):
     """使用 Gemini 進行文字查詢，查到備品附規格連結，查無備品附兩個搜尋連結"""
