@@ -56,7 +56,7 @@ class RateLimitError(Exception):
         self.wait_seconds = wait_seconds
         super().__init__(f"Rate limit exceeded, retry after {wait_seconds}s")
 
-def call_gemini_with_retry(contents, model='gemini-2.0-flash', max_retries=3):
+def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
     """
     呼叫 Gemini API，遇到暫時性錯誤（503/500）時自動重試。
     遇到速率限制（429）時直接拋出 RateLimitError，讓呼叫端決定如何回應用戶。
@@ -128,6 +128,8 @@ def build_spec_search_link(keyword):
     encoded = quote(keyword)
     return f"https://www.google.com/search?q={encoded}+規格+datasheet"
 
+GOOGLE_LENS_URL = "https://lens.google.com/"
+
 # 已知品牌名稱集合（純英文，不含連字號），用於排除搜尋關鍵字選取
 KNOWN_BRANDS = {
     'panasonic', 'mitsubishi', 'omron', 'siemens', 'schneider', 'keyence',
@@ -146,7 +148,9 @@ def extract_keyword_from_query(user_query):
     再次排除已知品牌名稱選其他字串，
     最後才使用最長字串（可能是品牌名）。
     """
-    matches = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-/\.]{2,}', user_query)
+    # 先將「PM - T45」這類帶空格的型號合併（去除空格後再處理）
+    normalized = re.sub(r'([A-Za-z]+)\s*-\s*([A-Za-z0-9])', r'\1-\2', user_query)
+    matches = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-/\.]{2,}', normalized)
     if not matches:
         return user_query.strip()[:50]
 
@@ -169,7 +173,7 @@ def extract_keyword_from_query(user_query):
     return max(matches, key=len)
 
 def query_spare_parts_text(user_query):
-    """使用 Gemini 進行文字查詢，查到備品附規格連結，查無備品附兩個搜尋連結"""
+    """使用 Gemini 進行文字查詢，查到備品附規格連結，查無備品附搜尋連結"""
     spare_parts_info = format_spare_parts_for_prompt()
     keyword = extract_keyword_from_query(user_query)
 
@@ -228,32 +232,51 @@ def extract_text_from_image(image_bytes, mime_type='image/jpeg'):
         mime_type = 'image/jpeg'
 
     image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
-    prompt_text = "請從這張圖片中提取所有可見的文字，特別是料號、規格、型號等備品相關資訊。只需要回傳提取到的文字，不需要其他說明。"
+
+    # 改善 prompt：更積極辨識，即使角度不完美也要盡力提取
+    prompt_text = (
+        "請仔細觀察這張工業設備或電子元件的照片，盡力辨識並提取所有可見的文字資訊。\n"
+        "特別注意：品牌名稱（如 Panasonic、OMRON、Mitsubishi）、型號（如 PM-T45、FX2N-8EX）、"
+        "料號、規格標籤上的英數字組合。\n"
+        "即使照片角度不完美或部分文字模糊，也請盡力辨識並回傳所有能看到的文字。\n"
+        "只需回傳辨識到的文字內容，不需要其他說明或解釋。\n"
+        "如果完全無法辨識任何文字，才回傳：UNREADABLE"
+    )
 
     result = call_gemini_with_retry([prompt_text, image_part])
     print(f"從圖片提取的文字：{result[:200]}")
     return result
 
 def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
-    """從圖片中提取資訊並查詢備品，查到備品附規格連結，查無備品附兩個搜尋連結"""
+    """從圖片中提取資訊並查詢備品，查到備品附規格連結，查無備品附搜尋連結，辨識失敗附 Google Lens"""
+    # 圖片辨識失敗時的通用回覆（含 Google Lens）
+    def image_fail_response(extra_keyword=None):
+        lines = ["無法從照片辨識備品資訊，您可以使用 Google Lens 以圖搜尋：",
+                 f"\n🔍 Google Lens（以圖搜圖）：{GOOGLE_LENS_URL}"]
+        if extra_keyword:
+            spec_url = build_spec_search_link(extra_keyword)
+            lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
+        return "".join(lines)
+
     try:
         extracted_text = extract_text_from_image(image_bytes, mime_type)
     except RateLimitError as e:
         return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
     except Exception as e:
         print(f"圖片文字提取失敗：{str(e)[:200]}")
-        return "無法辨識照片中的備品資訊，請確認照片清晰度或改用文字輸入料號"
+        return image_fail_response()
 
-    if not extracted_text or not extracted_text.strip():
-        return "無法辨識照片中的備品資訊，請確認照片清晰度或改用文字輸入料號"
+    # Gemini 完全無法辨識
+    if not extracted_text or not extracted_text.strip() or extracted_text.strip() == 'UNREADABLE':
+        return image_fail_response()
 
     spare_parts_info = format_spare_parts_for_prompt()
     keyword = extract_keyword_from_query(extracted_text)
 
-    prompt = f"""你是一個備品查詢助手。根據從圖片中提取的文字，查詢備品資訊。
+    prompt = f"""你是一個備品查詢助手。根據從圖片中辨識到的文字，查詢備品資訊。
 
 備品資料庫規則：
-1. 根據提取的文字中的料號或規格來查詢備品
+1. 根據辨識文字中的料號、型號或規格來查詢備品（允許模糊比對，例如 PM-T45 可比對到含 PM-T45 的規格）
 2. 如果查詢到相符的備品，請以以下格式回覆（每個欄位一行）：
 
 查詢到以下備品資訊：
@@ -265,12 +288,11 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
 
 3. 如果查詢到多筆相符的備品，每筆之間用空行分隔，並在最前面加上「共找到 X 筆備品資訊：」
 4. 如果查無此備品資料，只需回答：「NOT_FOUND」（不需要其他說明）
-5. 如果無法從照片中辨識出有效的備品資訊，回答：「無法辨識照片中的備品資訊，請確認照片清晰度或改用文字輸入料號」
-6. 回答要簡潔清楚，適合在 LINE 上閱讀，不要加入多餘的說明文字
+5. 回答要簡潔清楚，適合在 LINE 上閱讀，不要加入多餘的說明文字
 
 {spare_parts_info}
 
-從圖片提取的文字如下：
+從圖片辨識到的文字如下：
 {extracted_text}
 
 請根據這些文字查詢對應的備品資訊。"""
@@ -283,19 +305,24 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
             spec_url = build_spec_search_link(keyword)
             return (
                 f"資料庫中查無此備品，為您提供以下搜尋連結：\n\n"
-                f"📋 產品規格查詢：\n{spec_url}"
+                f"📋 產品規格查詢：\n{spec_url}\n\n"
+                f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}"
             )
         else:
             spec_match = re.search(r'規格：(.+)', result)
             search_keyword = spec_match.group(1).strip() if spec_match else keyword
             spec_url = build_spec_search_link(search_keyword)
-            return f"{result}\n\n📋 產品規格查詢：\n{spec_url}"
+            return (
+                f"{result}\n\n"
+                f"📋 產品規格查詢：\n{spec_url}\n\n"
+                f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}"
+            )
 
     except RateLimitError as e:
         return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
     except Exception as e:
         print(f"備品查詢失敗：{str(e)[:200]}")
-        return "抱歉，查詢過程中發生錯誤，請稍後再試"
+        return image_fail_response(keyword)
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -345,7 +372,7 @@ def handle_image_message(event):
         print(f"圖片處理錯誤：{str(e)}")
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="無法辨識照片，請確認照片清晰度或改用文字輸入料號")
+            TextSendMessage(text=f"無法辨識照片，您可以使用 Google Lens 以圖搜尋：\n\n🔍 Google Lens（以圖搜圖）：{GOOGLE_LENS_URL}")
         )
 
 @app.route("/health", methods=['GET'])
