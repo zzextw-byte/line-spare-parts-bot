@@ -3,6 +3,7 @@ import json
 import re
 import time
 from datetime import datetime
+from pytz import timezone
 from urllib.parse import quote
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -15,7 +16,7 @@ app = Flask(__name__)
 # LINE API 設定
 CHANNEL_SECRET = os.getenv('LINE_CHANNEL_SECRET', '')
 CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', '')
-ADMIN_USER_ID = os.getenv('ADMIN_USER_ID', '')  # 管理員 User ID
+ADMIN_USER_ID = 'wmhsieh'  # 管理員 LINE User ID
 
 # 初始化 LINE Bot
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
@@ -328,6 +329,52 @@ def image_unreadable_response():
         f"🔍 Google Lens（以圖搜圖）：{GOOGLE_LENS_URL}"
     )
 
+# ─── 查詢記錄推播 ─────────────────────────────────────────────────────────────────
+
+def push_query_notification(user_id, query_type, query_content, result_status):
+    """
+    推播查詢記錄給管理員。
+    
+    Args:
+        user_id: 查詢使用者的 LINE User ID
+        query_type: 查詢類型（"文字" 或 "照片"）
+        query_content: 查詢內容（文字或 "照片查詢"）
+        result_status: 查詢結果狀態（"找到備品" 或 "相似備品" 或 "查無備品" 或 "無法辨識"）
+    """
+    # 若查詢者本身是管理員，則不推播
+    if user_id == ADMIN_USER_ID:
+        print(f"查詢者是管理員，跳過推播")
+        return
+    
+    try:
+        # 取得台灣時間 (UTC+8)
+        tz = timezone('Asia/Taipei')
+        timestamp = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
+        
+        # 根據查詢類型設定顯示文字
+        if query_type == "照片":
+            query_display = "照片查詢"
+        else:
+            query_display = query_content
+        
+        # 建立推播訊息
+        notification_message = (
+            f"📋 查詢記錄\n"
+            f"👤 使用者：{user_id}\n"
+            f"🕐 時間：{timestamp}\n"
+            f"🔍 查詢內容：{query_display}\n"
+            f"📌 查詢結果：{result_status}"
+        )
+        
+        # 推播給管理員
+        line_bot_api.push_message(
+            ADMIN_USER_ID,
+            TextSendMessage(text=notification_message)
+        )
+        print(f"已推播查詢記錄給管理員")
+    except Exception as e:
+        print(f"推播查詢記錄失敗：{str(e)}")
+
 # ─── Gemini 呼叫 ──────────────────────────────────────────────────────────────────
 
 def extract_product_info_from_text(user_query):
@@ -410,62 +457,6 @@ def extract_product_info_from_image(image_bytes, mime_type='image/jpeg'):
 
     print(f"提取結果：brand={brand}, model={model}, keywords={keywords}")
     return {"brand": brand, "model": model, "keywords": keywords}
-
-# ─── 查詢記錄推播 ─────────────────────────────────────────────────────────────────
-
-def push_query_notification(user_id, display_name, query_type, query_content, result_status):
-    """
-    推播查詢記錄給管理員。
-    
-    Args:
-        user_id: 查詢使用者的 LINE User ID
-        display_name: 使用者顯示名稱
-        query_type: 查詢類型（"文字查詢" 或 "照片查詢"）
-        query_content: 查詢內容（文字或 "照片查詢"）
-        result_status: 查詢結果狀態（"找到" 或 "未找到" 或 "相似"）
-    """
-    if not ADMIN_USER_ID:
-        print("管理員 ID 未設定，跳過推播")
-        return
-    
-    try:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
-        # 根據查詢類型設定顯示文字
-        if query_type == "照片":
-            query_display = "照片查詢"
-        else:
-            query_display = query_content
-        
-        # 建立推播訊息
-        notification_message = (
-            f"📋 查詢記錄\n"
-            f"👤 使用者：{display_name}（{user_id}）\n"
-            f"🕐 時間：{timestamp}\n"
-            f"🔍 查詢內容：{query_display}\n"
-            f"📌 查詢結果：{result_status}"
-        )
-        
-        # 推播給管理員
-        line_bot_api.push_message(
-            ADMIN_USER_ID,
-            TextSendMessage(text=notification_message)
-        )
-        print(f"已推播查詢記錄給管理員：{notification_message}")
-    except Exception as e:
-        print(f"推播查詢記錄失敗：{str(e)}")
-
-def get_user_display_name(user_id):
-    """
-    取得使用者的顯示名稱。
-    若無法取得則回傳 user_id。
-    """
-    try:
-        profile = line_bot_api.get_profile(user_id)
-        return profile.display_name
-    except Exception as e:
-        print(f"無法取得使用者資訊：{str(e)}")
-        return user_id
 
 # ─── 主要查詢邏輯 ────────────────────────────────────────────────────────────────
 
@@ -584,15 +575,6 @@ def handle_text_message(event):
     
     print(f"收到文字訊息：{user_message}（User ID：{user_id}）")
     
-    # 檢查是否為「我的ID」指令
-    if user_message == "我的ID":
-        response_text = f"您的 LINE User ID：\n{user_id}"
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=response_text)
-        )
-        return
-    
     # 執行備品查詢
     response_text = query_spare_parts_text(user_message)
     line_bot_api.reply_message(
@@ -602,19 +584,18 @@ def handle_text_message(event):
     
     # 推播查詢記錄給管理員
     try:
-        display_name = get_user_display_name(user_id)
-        
         # 判斷查詢結果狀態
         if "✅" in response_text:
-            result_status = "找到"
+            result_status = "找到備品"
         elif "⚠️" in response_text:
-            result_status = "相似"
+            result_status = "相似備品"
+        elif "❌" in response_text:
+            result_status = "查無備品"
         else:
-            result_status = "未找到"
+            result_status = "無法辨識"
         
         push_query_notification(
             user_id=user_id,
-            display_name=display_name,
             query_type="文字",
             query_content=user_message,
             result_status=result_status
@@ -643,19 +624,18 @@ def handle_image_message(event):
         
         # 推播查詢記錄給管理員
         try:
-            display_name = get_user_display_name(user_id)
-            
             # 判斷查詢結果狀態
             if "✅" in response_text:
-                result_status = "找到"
+                result_status = "找到備品"
             elif "⚠️" in response_text:
-                result_status = "相似"
+                result_status = "相似備品"
+            elif "❌" in response_text:
+                result_status = "查無備品"
             else:
-                result_status = "未找到"
+                result_status = "無法辨識"
             
             push_query_notification(
                 user_id=user_id,
-                display_name=display_name,
                 query_type="照片",
                 query_content="照片查詢",
                 result_status=result_status
