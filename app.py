@@ -2,8 +2,6 @@ import os
 import json
 import re
 import time
-from datetime import datetime
-from pytz import timezone
 from urllib.parse import quote
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
@@ -16,7 +14,6 @@ app = Flask(__name__)
 # LINE API 設定
 CHANNEL_SECRET = os.getenv('LINE_CHANNEL_SECRET', '')
 CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', '')
-ADMIN_USER_ID = 'wmhsieh'  # 管理員 LINE User ID
 
 # 初始化 LINE Bot
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
@@ -329,51 +326,7 @@ def image_unreadable_response():
         f"🔍 Google Lens（以圖搜圖）：{GOOGLE_LENS_URL}"
     )
 
-# ─── 查詢記錄推播 ─────────────────────────────────────────────────────────────────
 
-def push_query_notification(user_id, query_type, query_content, result_status):
-    """
-    推播查詢記錄給管理員。
-    
-    Args:
-        user_id: 查詢使用者的 LINE User ID
-        query_type: 查詢類型（"文字" 或 "照片"）
-        query_content: 查詢內容（文字或 "照片查詢"）
-        result_status: 查詢結果狀態（"找到備品" 或 "相似備品" 或 "查無備品" 或 "無法辨識"）
-    """
-    # 若查詢者本身是管理員，則不推播
-    if user_id == ADMIN_USER_ID:
-        print(f"查詢者是管理員，跳過推播")
-        return
-    
-    try:
-        # 取得台灣時間 (UTC+8)
-        tz = timezone('Asia/Taipei')
-        timestamp = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
-        
-        # 根據查詢類型設定顯示文字
-        if query_type == "照片":
-            query_display = "照片查詢"
-        else:
-            query_display = query_content
-        
-        # 建立推播訊息
-        notification_message = (
-            f"📋 查詢記錄\n"
-            f"👤 使用者：{user_id}\n"
-            f"🕐 時間：{timestamp}\n"
-            f"🔍 查詢內容：{query_display}\n"
-            f"📌 查詢結果：{result_status}"
-        )
-        
-        # 推播給管理員
-        line_bot_api.push_message(
-            ADMIN_USER_ID,
-            TextSendMessage(text=notification_message)
-        )
-        print(f"已推播查詢記錄給管理員")
-    except Exception as e:
-        print(f"推播查詢記錄失敗：{str(e)}")
 
 # ─── Gemini 呼叫 ──────────────────────────────────────────────────────────────────
 
@@ -581,27 +534,6 @@ def handle_text_message(event):
         event.reply_token,
         TextSendMessage(text=response_text)
     )
-    
-    # 推播查詢記錄給管理員
-    try:
-        # 判斷查詢結果狀態
-        if "✅" in response_text:
-            result_status = "找到備品"
-        elif "⚠️" in response_text:
-            result_status = "相似備品"
-        elif "❌" in response_text:
-            result_status = "查無備品"
-        else:
-            result_status = "無法辨識"
-        
-        push_query_notification(
-            user_id=user_id,
-            query_type="文字",
-            query_content=user_message,
-            result_status=result_status
-        )
-    except Exception as e:
-        print(f"推播查詢記錄時出錯：{str(e)}")
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
@@ -621,27 +553,6 @@ def handle_image_message(event):
             event.reply_token,
             TextSendMessage(text=response_text)
         )
-        
-        # 推播查詢記錄給管理員
-        try:
-            # 判斷查詢結果狀態
-            if "✅" in response_text:
-                result_status = "找到備品"
-            elif "⚠️" in response_text:
-                result_status = "相似備品"
-            elif "❌" in response_text:
-                result_status = "查無備品"
-            else:
-                result_status = "無法辨識"
-            
-            push_query_notification(
-                user_id=user_id,
-                query_type="照片",
-                query_content="照片查詢",
-                result_status=result_status
-            )
-        except Exception as e:
-            print(f"推播查詢記錄時出錯：{str(e)}")
             
     except Exception as e:
         print(f"圖片處理錯誤：{str(e)}")
