@@ -109,6 +109,19 @@ def load_spare_parts_data():
 SPARE_PARTS = load_spare_parts_data()
 GOOGLE_LENS_URL = "https://lens.google.com/"
 
+# ─── 料號直接查詢 ────────────────────────────────────────────────────────────────
+
+def find_part_by_number(query):
+    """
+    以料號直接查詢備品（忽略大小寫、trim 前後空白）。
+    若找到則回傳 part dict，否則回傳 None。
+    """
+    q = query.strip().lower()
+    for part in SPARE_PARTS:
+        if part.get('part_number', '').strip().lower() == q:
+            return part
+    return None
+
 # ─── 關鍵字搜尋 ─────────────────────────────────────────────────────────────────
 
 def _is_ascii_only(s):
@@ -134,7 +147,7 @@ def keyword_search_spare_parts(keywords):
     if not keywords:
         return []
 
-    # 全部轉小寫
+    # 全部轉小寫並 trim
     kw_lower = [k.lower().strip() for k in keywords if k.strip()]
     if not kw_lower:
         return []
@@ -189,6 +202,20 @@ def is_exact_match(queried_model, part):
 
     return False
 
+# ─── 規格型號提取（用於搜尋連結）────────────────────────────────────────────────
+
+def extract_model_from_spec(spec):
+    """
+    從規格字串中提取最長的英數字型號片段（含連字號/斜線），
+    作為 Google 搜尋連結的型號關鍵字。
+    例如：'PLC模組 三菱 FX2N-8EX-ES/UL' → 'FX2N-8EX-ES/UL'
+    """
+    candidates = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-\/\.]{2,}', spec)
+    if not candidates:
+        return ''
+    # 回傳最長的候選（通常是完整型號）
+    return max(candidates, key=len)
+
 # ─── 搜尋連結建立 ───────────────────────────────────────────────────────────────
 
 def build_spec_search_link(brand, model):
@@ -196,16 +223,16 @@ def build_spec_search_link(brand, model):
     根據品牌和型號建立 Google 搜尋連結（只用英文，不帶中文）。
     優先使用 brand + model 組合，若兩者都為空則回傳空字串。
     """
-    parts = []
+    parts_list = []
     if brand and brand.strip():
-        parts.append(brand.strip())
+        parts_list.append(brand.strip())
     if model and model.strip():
-        parts.append(model.strip())
+        parts_list.append(model.strip())
 
-    if not parts:
+    if not parts_list:
         return ''
 
-    query_str = ' '.join(parts) + ' datasheet specifications'
+    query_str = ' '.join(parts_list) + ' datasheet specifications'
     # 將空格替換為 +，並對特殊字元進行編碼
     encoded = quote(query_str.replace(' ', '+'), safe='+')
     return f"https://www.google.com/search?q={encoded}"
@@ -213,7 +240,11 @@ def build_spec_search_link(brand, model):
 # ─── 回覆格式化 ─────────────────────────────────────────────────────────────────
 
 def format_found_response(part, brand, model, is_image=False):
-    """查到備品時的回覆格式（情況 A：完全符合）"""
+    """
+    查到備品時的回覆格式（情況 A：完全符合）。
+    - is_image=True：附產品規格搜尋連結和 Google Lens 連結（搜尋連結用規格型號）
+    - is_image=False：只顯示備品資訊，不附任何連結
+    """
     spec = part.get('specification', '')
     part_num = part.get('part_number', '')
     warehouse = part.get('warehouse_location', '')
@@ -229,19 +260,28 @@ def format_found_response(part, brand, model, is_image=False):
         f"小分類儲位：{minor}",
     ]
 
-    spec_url = build_spec_search_link(brand, model)
-    if spec_url:
-        lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
-
-    lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
+    if is_image:
+        # 搜尋連結使用規格中的型號，而非 Gemini 辨識的 model（可能不準）
+        spec_model = extract_model_from_spec(spec)
+        spec_url = build_spec_search_link(brand, spec_model)
+        if spec_url:
+            lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
+        lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
 
     return "\n".join(lines)
 
 def format_fuzzy_response(results, brand, model, is_image=False):
-    """找到相似備品時的回覆格式（情況 B：相似符合）"""
-    # 顯示辨識到的型號
+    """
+    找到相似備品時的回覆格式（情況 B：相似符合）。
+    - is_image=True：附產品規格搜尋連結和 Google Lens 連結
+    - is_image=False：只顯示備品資訊，不附任何連結
+    """
     identified = (f"{brand} {model}".strip()) if (brand or model) else ''
-    header = f"⚠️ 辨識型號：{identified}\n資料庫中找到相似備品（請確認是否為同一備品）：" if identified else "⚠️ 資料庫中找到相似備品（請確認是否為同一備品）："
+    header = (
+        f"⚠️ 辨識型號：{identified}\n資料庫中找到相似備品（請確認是否為同一備品）："
+        if identified else
+        "⚠️ 資料庫中找到相似備品（請確認是否為同一備品）："
+    )
     lines = [header, ""]
 
     for i, (part, score, matched) in enumerate(results[:3]):
@@ -253,25 +293,29 @@ def format_fuzzy_response(results, brand, model, is_image=False):
             f"小分類儲位：{part.get('minor_category', '')}"
         )
 
-    spec_url = build_spec_search_link(brand, model)
-    if spec_url:
-        lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
-
-    lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
+    if is_image:
+        spec_url = build_spec_search_link(brand, model)
+        if spec_url:
+            lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
+        lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
 
     return "\n".join(lines)
 
 def format_not_found_response(brand, model, is_image=False):
-    """查無備品時的回覆格式（情況 C：完全找不到）"""
+    """
+    查無備品時的回覆格式（情況 C：完全找不到）。
+    - is_image=True：附產品規格搜尋連結和 Google Lens 連結
+    - is_image=False：只顯示查無結果訊息，不附任何連結
+    """
     identified = (f"{brand} {model}".strip()) if (brand or model) else ''
     header = f"❌ 資料庫中查無此備品（辨識型號：{identified}）" if identified else "❌ 資料庫中查無此備品"
     lines = [header, ""]
 
-    spec_url = build_spec_search_link(brand, model)
-    if spec_url:
-        lines.append(f"📋 產品規格查詢：\n{spec_url}")
-
-    lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
+    if is_image:
+        spec_url = build_spec_search_link(brand, model)
+        if spec_url:
+            lines.append(f"📋 產品規格查詢：\n{spec_url}")
+        lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
 
     return "\n".join(lines)
 
@@ -368,7 +412,26 @@ def extract_product_info_from_image(image_bytes, mime_type='image/jpeg'):
 # ─── 主要查詢邏輯 ────────────────────────────────────────────────────────────────
 
 def query_spare_parts_text(user_query):
-    """文字查詢主流程"""
+    """
+    文字查詢主流程。
+    先 trim 輸入，再嘗試直接料號比對（忽略大小寫）；
+    若非料號格式，才呼叫 Gemini 解析型號後進行關鍵字搜尋。
+    文字查詢一律不附搜尋連結。
+    """
+    # Step 1：trim 前後空白
+    user_query = user_query.strip()
+    if not user_query:
+        return "請輸入料號或型號（例如：FX2N-8EX 或 SH5056001）。"
+
+    print(f"文字查詢（trim 後）：'{user_query}'")
+
+    # Step 2：直接料號查詢快速路徑（忽略大小寫）
+    part = find_part_by_number(user_query)
+    if part:
+        print(f"料號直接命中：{part.get('part_number')}")
+        return format_found_response(part, brand='', model='', is_image=False)
+
+    # Step 3：呼叫 Gemini 解析型號關鍵字
     try:
         info = extract_product_info_from_text(user_query)
     except RateLimitError as e:
@@ -391,17 +454,18 @@ def query_spare_parts_text(user_query):
     if not results:
         return format_not_found_response(brand, model, is_image=False)
 
-    # 找到最高分的結果
+    # 找到最高分的結果，嚴格判斷是否完全符合
     best_part, best_score, best_matched = results[0]
-
-    # 嚴格判斷是否完全符合：queried model 必須與資料庫型號完全相同
     if is_exact_match(model, best_part):
         return format_found_response(best_part, brand, model, is_image=False)
     else:
         return format_fuzzy_response(results, brand, model, is_image=False)
 
 def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
-    """圖片查詢主流程"""
+    """
+    圖片查詢主流程。
+    圖片查詢會附產品規格搜尋連結（使用規格型號）和 Google Lens 連結。
+    """
     try:
         info = extract_product_info_from_image(image_bytes, mime_type)
     except RateLimitError as e:
