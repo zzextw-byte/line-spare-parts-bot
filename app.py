@@ -67,26 +67,38 @@ def call_with_timeout(func, timeout, *args, **kwargs):
     except FuturesTimeoutError:
         raise TimeoutError(f"Function call timed out after {timeout} seconds")
 
-def call_gemini_with_retry(contents, model='gemini-2.5-flash', total_timeout=28):
+# 全域查詢 deadline（用於多次 Gemini 呼叫共用總時限）
+import threading
+_query_deadline = threading.local()
+
+def set_query_deadline(timeout=28):
+    """設定本次查詢的 deadline（從現在起 timeout 秒後）"""
+    _query_deadline.value = time.time() + timeout
+
+def get_remaining_time():
+    """取得距離 deadline 的剩餘秒數"""
+    deadline = getattr(_query_deadline, 'value', None)
+    if deadline is None:
+        return 25  # 預設
+    return max(0, deadline - time.time())
+
+def call_gemini_with_retry(contents, model='gemini-2.5-flash'):
     """
     呼叫 Gemini API，使用 concurrent.futures 實作單次 timeout。
-    遇到 503/500 過載時在 total_timeout 秒內持續重試（每次間隔 2 秒）。
-    超過總時限才拋出 GeminiOverloadError。
+    遇到 503/500 時在剩餘時間內持續重試（每次間隔 2 秒）。
+    超過 deadline 才拋出 GeminiOverloadError。
     遇到速率限制（429）時直接拋出 RateLimitError。
     """
-    start_time = time.time()
     attempt = 0
 
     while True:
-        elapsed = time.time() - start_time
-        remaining = total_timeout - elapsed
+        remaining = get_remaining_time()
         if remaining <= 2:
-            print(f"Gemini API 已超過 {total_timeout} 秒總時限，放棄重試")
+            print(f"Gemini API 已超過查詢總時限，放棄重試")
             raise GeminiOverloadError()
 
         attempt += 1
-        # 單次呼叫 timeout 不超過剩餘時間
-        single_timeout = min(15, remaining - 1)
+        single_timeout = min(12, remaining - 1)
 
         try:
             def _call():
@@ -98,8 +110,7 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', total_timeout=28)
             return response.text
 
         except TimeoutError:
-            print(f"Gemini API 呼叫超時（第 {attempt} 次，已耗時 {elapsed:.0f}s）")
-            # 不 sleep，直接重試
+            print(f"Gemini API 呼叫超時（第 {attempt} 次，剩餘 {remaining:.0f}s）")
             continue
 
         except GeminiOverloadError:
@@ -114,7 +125,7 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', total_timeout=28)
                 raise RateLimitError(wait_seconds)
 
             elif '503' in error_str or '500' in error_str:
-                print(f"Gemini API 503/500（第 {attempt} 次，已耗時 {elapsed:.0f}s），2 秒後重試")
+                print(f"Gemini API 503/500（第 {attempt} 次，剩餘 {remaining:.0f}s），2 秒後重試")
                 time.sleep(2)
                 continue
 
@@ -728,6 +739,9 @@ def handle_text_message(event):
     
     print(f"收到文字訊息：{user_message}（User ID：{user_id}）")
     
+    # 設定 28 秒總時限（LINE reply token 有效期約 30 秒）
+    set_query_deadline(28)
+    
     # 執行備品查詢
     response_text = query_spare_parts_text(user_message)
     line_bot_api.reply_message(
@@ -740,6 +754,9 @@ def handle_image_message(event):
     """處理圖片訊息"""
     user_id = event.source.user_id
     print(f"收到圖片訊息，message_id：{event.message.id}（User ID：{user_id}）")
+    
+    # 設定 28 秒總時限（LINE reply token 有效期約 30 秒，圖片辨識 + AI 二次判斷共用）
+    set_query_deadline(28)
     
     try:
         message_content = line_bot_api.get_message_content(event.message.id)
