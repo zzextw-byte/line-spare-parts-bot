@@ -3,6 +3,7 @@ import json
 import re
 import time
 from urllib.parse import quote
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -52,21 +53,39 @@ class RateLimitError(Exception):
         self.wait_seconds = wait_seconds
         super().__init__(f"Rate limit exceeded, retry after {wait_seconds}s")
 
-def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
+def call_with_timeout(func, timeout, *args, **kwargs):
+    """多線程安全的 timeout 機制"""
+    try:
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(func, *args, **kwargs)
+            return future.result(timeout=timeout)
+    except FuturesTimeoutError:
+        raise TimeoutError(f"Function call timed out after {timeout} seconds")
+
+def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, timeout=10):
     """
-    呼叫 Gemini API，遇到暫時性錯誤（503/500）時自動重試。
+    呼叫 Gemini API，使用 concurrent.futures 實作 timeout 機制。
+    遇到暫時性錯誤（503/500）時自動重試。
     遇到速率限制（429）時直接拋出 RateLimitError。
     """
-    client = get_gemini_client()
     last_error = None
 
     for attempt in range(max_retries):
         try:
-            response = client.models.generate_content(
-                model=model,
-                contents=contents
-            )
+            def _call():
+                return get_gemini_client().models.generate_content(
+                    model=model,
+                    contents=contents
+                )
+            response = call_with_timeout(_call, timeout)
             return response.text
+
+        except TimeoutError:
+            print(f"Gemini API 呼叫超時（第 {attempt + 1}/{max_retries} 次）")
+            last_error = TimeoutError(f"Gemini API call timed out after {timeout} seconds")
+            if attempt < max_retries - 1:
+                continue
+            raise last_error
 
         except Exception as e:
             last_error = e
@@ -88,6 +107,9 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
 
             else:
                 print(f"Gemini API 錯誤：{error_str[:200]}")
+                if attempt < max_retries - 1:
+                    time.sleep(1)
+                    continue
                 raise
 
     raise last_error
