@@ -2,6 +2,7 @@ import os
 import json
 import re
 import time
+import threading
 from urllib.parse import quote
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from flask import Flask, request, abort
@@ -617,8 +618,8 @@ def query_spare_parts_text(user_query):
         return format_found_response(best_part, brand, model, is_image=False)
     else:
         # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
-        # 第二次：AI 比對，給獨立 15 秒（過載時 fallback 顯示模糊結果）
-        deadline_ai = time.time() + 15
+        # 第二次：AI 比對，給獨立 30 秒（過載時 fallback 顯示模糊結果）
+        deadline_ai = time.time() + 30
         try:
             ai_result = ai_select_best_match(model, brand, results, deadline=deadline_ai)
             
@@ -648,8 +649,8 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     圖片查詢會附產品規格搜尋連結（使用規格型號）。
     第一次圖片辨識給 28 秒，第二次 AI 比對給獨立 15 秒（過載時 fallback 顯示模糊結果）。
     """
-    # 第一次：圖片辨識，給 28 秒
-    deadline_img = time.time() + 28
+    # 第一次：圖片辨識，給 55 秒（用 push_message 不受 30 秒限制）
+    deadline_img = time.time() + 55
 
     try:
         info = extract_product_info_from_image(image_bytes, mime_type, deadline=deadline_img)
@@ -685,8 +686,8 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
         return format_found_response(best_part, brand, model, is_image=True)
     else:
         # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
-        # 第二次：AI 比對，給獨立 15 秒（過載時 fallback 顯示模糊結果）
-        deadline_ai = time.time() + 15
+        # 第二次：AI 比對，給獨立 30 秒（過載時 fallback 顯示模糊結果）
+        deadline_ai = time.time() + 30
         try:
             ai_result = ai_select_best_match(model, brand, results, deadline=deadline_ai)
             
@@ -746,35 +747,55 @@ def handle_text_message(event):
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
-    """處理圖片訊息"""
+    """處理圖片訊息：先 reply 查詢中，背景執行查詢後用 push_message 回覆"""
     user_id = event.source.user_id
-    print(f"收到圖片訊息，message_id：{event.message.id}（User ID：{user_id}）")
-    
+    message_id = event.message.id
+    reply_token = event.reply_token
+    print(f"收到圖片訊息，message_id：{message_id}（User ID：{user_id}）")
+
+    # Step 1: 先下載圖片
     try:
-        message_content = line_bot_api.get_message_content(event.message.id)
+        message_content = line_bot_api.get_message_content(message_id)
         image_bytes = message_content.content
         content_type = message_content.content_type or 'image/jpeg'
         mime_type = content_type.split(';')[0].strip()
         print(f"圖片 content_type：{content_type}，使用 mime_type：{mime_type}")
-
-        response_text = query_spare_parts_from_image(image_bytes, mime_type)
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=response_text)
-        )
-            
-    except GeminiOverloadError:
-        print(f"圖片處理：Gemini 過載")
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="Gemini AI 目前過載中，請稍後再試一次。")
-        )
     except Exception as e:
-        print(f"圖片處理錯誤：{str(e)}")
+        print(f"圖片下載失敗：{str(e)}")
         line_bot_api.reply_message(
-            event.reply_token,
+            reply_token,
             TextSendMessage(text="無法辨識照片，請改用文字輸入料號或型號。")
         )
+        return
+
+    # Step 2: 先用 reply_message 回覆「查詢中」
+    line_bot_api.reply_message(
+        reply_token,
+        TextSendMessage(text="查詢中")
+    )
+
+    # Step 3: 背景 thread 執行查詢，用 push_message 回覆結果
+    def _background_query():
+        try:
+            response_text = query_spare_parts_from_image(image_bytes, mime_type)
+            line_bot_api.push_message(
+                user_id,
+                TextSendMessage(text=response_text)
+            )
+            print(f"圖片查詢完成，已 push 結果給 {user_id}")
+        except Exception as e:
+            print(f"背景圖片查詢錯誤：{str(e)}")
+            try:
+                line_bot_api.push_message(
+                    user_id,
+                    TextSendMessage(text="Gemini AI 目前過載中，請稍後再試一次。")
+                )
+            except Exception as e2:
+                print(f"push 過載訊息失敗：{str(e2)}")
+
+    t = threading.Thread(target=_background_query)
+    t.daemon = True
+    t.start()
 
 @app.route("/health", methods=['GET'])
 def health_check():
