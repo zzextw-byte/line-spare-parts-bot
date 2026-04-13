@@ -67,38 +67,45 @@ def call_with_timeout(func, timeout, *args, **kwargs):
     except FuturesTimeoutError:
         raise TimeoutError(f"Function call timed out after {timeout} seconds")
 
-def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, timeout=25):
+def call_gemini_with_retry(contents, model='gemini-2.5-flash', total_timeout=28):
     """
-    呼叫 Gemini API，使用 concurrent.futures 實作 timeout 機制。
-    遇到 503 過載時直接拋出 GeminiOverloadError（不重試，直接告知用戶）。
+    呼叫 Gemini API，使用 concurrent.futures 實作單次 timeout。
+    遇到 503/500 過載時在 total_timeout 秒內持續重試（每次間隔 2 秒）。
+    超過總時限才拋出 GeminiOverloadError。
     遇到速率限制（429）時直接拋出 RateLimitError。
-    遇到其他暫時性錯誤時自動重試。
     """
-    last_error = None
+    start_time = time.time()
+    attempt = 0
 
-    for attempt in range(max_retries):
+    while True:
+        elapsed = time.time() - start_time
+        remaining = total_timeout - elapsed
+        if remaining <= 2:
+            print(f"Gemini API 已超過 {total_timeout} 秒總時限，放棄重試")
+            raise GeminiOverloadError()
+
+        attempt += 1
+        # 單次呼叫 timeout 不超過剩餘時間
+        single_timeout = min(15, remaining - 1)
+
         try:
             def _call():
                 return get_gemini_client().models.generate_content(
                     model=model,
                     contents=contents
                 )
-            response = call_with_timeout(_call, timeout)
+            response = call_with_timeout(_call, single_timeout)
             return response.text
 
         except TimeoutError:
-            print(f"Gemini API 呼叫超時（第 {attempt + 1}/{max_retries} 次）")
-            last_error = TimeoutError(f"Gemini API call timed out after {timeout} seconds")
-            if attempt < max_retries - 1:
-                continue
-            # 超時也告知用戶
-            raise GeminiOverloadError()
+            print(f"Gemini API 呼叫超時（第 {attempt} 次，已耗時 {elapsed:.0f}s）")
+            # 不 sleep，直接重試
+            continue
 
         except GeminiOverloadError:
             raise
 
         except Exception as e:
-            last_error = e
             error_str = str(e)
 
             if '429' in error_str:
@@ -106,27 +113,14 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, ti
                 print(f"Gemini API 429 速率限制，建議等待 {wait_seconds} 秒")
                 raise RateLimitError(wait_seconds)
 
-            elif '503' in error_str:
-                print(f"Gemini API 503 過載，直接通知用戶")
-                raise GeminiOverloadError()
-
-            elif '500' in error_str:
-                if attempt < max_retries - 1:
-                    wait_time = (attempt + 1) * 2
-                    print(f"Gemini API 500 錯誤，{wait_time} 秒後重試（第 {attempt + 1}/{max_retries} 次）")
-                    time.sleep(wait_time)
-                else:
-                    print(f"Gemini API 500 錯誤，已達最大重試次數")
-                    raise
+            elif '503' in error_str or '500' in error_str:
+                print(f"Gemini API 503/500（第 {attempt} 次，已耗時 {elapsed:.0f}s），2 秒後重試")
+                time.sleep(2)
+                continue
 
             else:
                 print(f"Gemini API 錯誤：{error_str[:200]}")
-                if attempt < max_retries - 1:
-                    time.sleep(1)
-                    continue
                 raise
-
-    raise last_error
 
 # ─── 備品資料載入 ───────────────────────────────────────────────────────────────
 
