@@ -153,6 +153,17 @@ def _is_ascii_only(s):
     except UnicodeEncodeError:
         return False
 
+def _normalize_format(s):
+    """
+    正規化字串格式：將連字號、底線、斜線、空格統一移除，便於比對。
+    例如：「S2 060 9」、「S2-060-9」、「S2_060_9」都會變成「S20609」
+    """
+    if not s:
+        return ""
+    # 移除連字號、底線、斜線、空格
+    normalized = re.sub(r'[-_/\s]', '', s)
+    return normalized.lower()
+
 def keyword_search_spare_parts(keywords, model=''):
     """
     以關鍵字清單對備品資料庫進行搜尋。
@@ -190,10 +201,27 @@ def keyword_search_spare_parts(keywords, model=''):
         combined = spec + ' ' + part_num
 
         # 所有符合的關鍵字（包含中文品牌名和短片段，用於分數計算）
-        all_matched = [kw for kw in kw_lower if kw in combined]
+        # 支援中文品牌名和正規化後的型號比對
+        all_matched = []
+        combined_normalized = _normalize_format(combined)
+        
+        for kw in kw_lower:
+            # 直接比對（原始方式）
+            if kw in combined:
+                all_matched.append(kw)
+            # 正規化後比對（處理連字號、空格等差異）
+            elif _normalize_format(kw) in combined_normalized and _normalize_format(kw):
+                all_matched.append(kw)
 
         # 「有效符合」：純 ASCII 且長度 ≥ 3，排除中文品牌名及 ES/UL 等過短通用後綴
         effective_matched = [kw for kw in all_matched if _is_ascii_only(kw) and len(kw) >= 3]
+        
+        # 如果沒有有效的 ASCII 關鍵字，但有中文品牌名符合，也列入結果
+        if len(effective_matched) == 0:
+            # 檢查是否有中文品牌名符合
+            chinese_matched = [kw for kw in all_matched if not _is_ascii_only(kw)]
+            if chinese_matched:
+                effective_matched = chinese_matched
 
         # 必須有 ≥ 1 個有效關鍵字符合才列入結果
         if len(effective_matched) >= 1:
@@ -219,22 +247,26 @@ def is_exact_match(queried_model, part):
     嚴格判斷查詢型號是否與資料庫備品完全符合。
     queried_model 必須與備品規格中的型號片段或料號「完全相同」（忽略大小寫），
     不允許子字串包含，避免 FX2N-8ER-ES 誤判為 FX2N-8EX-ES/UL 的完全符合。
+    支援正規化比對（連字號、空格等差異）。
     """
     if not queried_model or not queried_model.strip():
         return False
 
     q = queried_model.strip().lower()
+    q_normalized = _normalize_format(q)
 
-    # 與料號嚴格比對
+    # 與料號嚴格比對（包括正規化後的比對）
     part_num = part.get('part_number', '').strip().lower()
-    if q == part_num:
+    if q == part_num or q_normalized == _normalize_format(part_num):
         return True
 
     # 從規格欄位提取所有英數字型號片段，逐一嚴格比對
     spec = part.get('specification', '')
     spec_models = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-\/\.]{2,}', spec)
     for sm in spec_models:
-        if q == sm.lower():
+        sm_lower = sm.lower()
+        sm_normalized = _normalize_format(sm_lower)
+        if q == sm_lower or q_normalized == sm_normalized:
             return True
 
     return False
