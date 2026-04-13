@@ -217,6 +217,66 @@ def is_exact_match(queried_model, part):
 
     return False
 
+# ─── AI 二次判斷（從搜尋結果中選出最佳匹配）──────────────────────────────────────
+
+def ai_select_best_match(query_model, query_brand, results):
+    """
+    使用 Gemini 從搜尋結果中選出最佳匹配。
+    
+    - 把用戶查詢的型號和前 10 筆搜尋結果的料號+規格組成 prompt
+    - 問 Gemini 哪一筆最符合
+    - 如果有明確最符合的，回傳該筆備品；如果無法確定，回傳 None
+    """
+    if not results or not query_model:
+        return None
+    
+    # 取前 10 筆結果
+    top_results = results[:10]
+    
+    # 組成備品清單文字
+    parts_text = ""
+    for i, (part, score, matched) in enumerate(top_results, start=1):
+        part_num = part.get('part_number', '')
+        spec = part.get('specification', '')
+        parts_text += f"{i}. 料號：{part_num}，規格：{spec}\n"
+    
+    # 組成 prompt
+    brand_text = f" {query_brand}" if query_brand else ""
+    prompt = f"""用戶查詢的型號是：{brand_text} {query_model}
+
+以下是搜尋到的備品清單：
+{parts_text}
+請判斷哪一筆最符合用戶查詢的型號。
+- 如果有明確最符合的，只回傳該筆的料號（例如：SH5056001）
+- 如果無法確定，回傳：UNCERTAIN
+
+只回傳料號或 UNCERTAIN，不要其他說明。"""
+    
+    try:
+        response = call_gemini_with_retry(prompt)
+        result = response.strip().upper()
+        
+        # 檢查是否是 UNCERTAIN
+        if result == "UNCERTAIN":
+            print(f"AI 二次判斷：無法確定最佳匹配")
+            return None
+        
+        # 嘗試從結果中找到對應的備品
+        for part, score, matched in top_results:
+            if part.get('part_number', '').upper() == result:
+                print(f"AI 二次判斷：選中料號 {result}")
+                return part
+        
+        print(f"AI 二次判斷：回傳的料號 {result} 未在結果中找到")
+        return None
+        
+    except RateLimitError as e:
+        print(f"AI 二次判斷：遇到速率限制，等待 {e.wait_seconds} 秒")
+        raise
+    except Exception as e:
+        print(f"AI 二次判斷失敗：{str(e)[:200]}")
+        return None
+
 # ─── 規格型號提取（用於搜尋連結）────────────────────────────────────────────────
 
 def extract_model_from_spec(spec):
@@ -477,11 +537,25 @@ def query_spare_parts_text(user_query):
     if not results:
         return format_not_found_response(brand, model, is_image=False)
 
-    # 找到最高分的結果，嚴格判斷是否完全符合
+    # 找到最高分的結果，子橛判斷是否完全符合
     best_part, best_score, best_matched = results[0]
     if is_exact_match(model, best_part):
         return format_found_response(best_part, brand, model, is_image=False)
     else:
+        # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
+        try:
+            ai_selected_part = ai_select_best_match(model, brand, results)
+            if ai_selected_part:
+                # AI 選出了明確的最佳匹配
+                return format_found_response(ai_selected_part, brand, model, is_image=False)
+        except RateLimitError as e:
+            # 如果 AI 二次判斷遇到速率限制，直接拋出來
+            raise
+        except Exception as e:
+            # AI 二次判斷失敗，繼續顯示相似備品
+            print(f"AI 二次判斷失敗，顯示相似備品清單")
+        
+        # AI 無法確定或失敗，顯示相似備品清單
         return format_fuzzy_response(results, brand, model, is_image=False)
 
 def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
@@ -520,6 +594,20 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     if is_exact_match(model, best_part):
         return format_found_response(best_part, brand, model, is_image=True)
     else:
+        # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
+        try:
+            ai_selected_part = ai_select_best_match(model, brand, results)
+            if ai_selected_part:
+                # AI 選出了明確的最佳匹配
+                return format_found_response(ai_selected_part, brand, model, is_image=True)
+        except RateLimitError as e:
+            # 如果 AI 二次判斷遇到速率限制，直接拋出來
+            raise
+        except Exception as e:
+            # AI 二次判斷失敗，繼續顯示相似備品
+            print(f"AI 二次判斷失敗，顯示相似備品清單")
+        
+        # AI 無法確定或失敗，顯示相似備品清單
         return format_fuzzy_response(results, brand, model, is_image=True)
 
 # ─── Flask 路由 ─────────────────────────────────────────────────────────────────
