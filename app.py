@@ -131,7 +131,7 @@ def _is_ascii_only(s):
     except UnicodeEncodeError:
         return False
 
-def keyword_search_spare_parts(keywords):
+def keyword_search_spare_parts(keywords, model=''):
     """
     以關鍵字清單對備品資料庫進行搜尋。
 
@@ -141,6 +141,7 @@ def keyword_search_spare_parts(keywords):
       此設計讓 FX2N 這類型號前綴就能觸發相似搜尋，
       同時排除只有 ES/UL 等通用後綴符合的不相關備品。
     - 分數 = 有效符合數 + 所有符合片段總長度 / 100（越長越精準）。
+    - 如果 model 不為空，且備品 specification 中有完全符合的型號，則 score += 10。
     - 回傳 (part, score, matched_keywords) tuple 的清單。
     """
     if not keywords:
@@ -152,6 +153,13 @@ def keyword_search_spare_parts(keywords):
         return []
 
     print(f"關鍵字搜尋：{kw_lower}")
+
+    # 提取 model 中的所有型號片段（用於完全符合判斷）
+    model_patterns = []
+    if model:
+        # 正則提取符合 [A-Za-z0-9][A-Za-z0-9\-\/\.]{2,} 的型號
+        model_patterns = re.findall(r'[A-Za-z0-9][A-Za-z0-9\-\/\.]{2,}', model)
+        model_patterns = [p.lower() for p in model_patterns]  # 轉小寫以便比對
 
     results = []
     for part in SPARE_PARTS:
@@ -169,6 +177,14 @@ def keyword_search_spare_parts(keywords):
         if len(effective_matched) >= 1:
             # 分數 = 有效符合數 + 所有符合片段總長度 / 100
             score = len(effective_matched) + sum(len(t) for t in all_matched) / 100
+            
+            # 如果 model 不空，檢查是否有完全符合的型號，有的話 score += 10
+            if model_patterns:
+                for pattern in model_patterns:
+                    if pattern in combined:
+                        score += 10
+                        break  # 只需計算一次
+            
             results.append((part, score, all_matched))
 
     results.sort(key=lambda x: x[1], reverse=True)
@@ -275,10 +291,18 @@ def format_fuzzy_response(results, brand, model, is_image=False):
     - is_image=False：只顯示備品資訊，不附任何連結
     """
     identified = (f"{brand} {model}".strip()) if (brand or model) else ''
+    total_count = len(results)
+    
+    # 根據結果總數決定標題文字
+    if total_count > 3:
+        count_text = f"資料庫中找到 {total_count} 筆相似備品，顯示前 3 筆（請確認是否為同一備品）："
+    else:
+        count_text = f"資料庫中找到 {total_count} 筆相似備品（請確認是否為同一備品）："
+    
     header = (
-        f"⚠️ 辨識型號：{identified}\n資料庫中找到相似備品（請確認是否為同一備品）："
+        f"⚠️ 辨識型號：{identified}\n{count_text}"
         if identified else
-        "⚠️ 資料庫中找到相似備品（請確認是否為同一備品）："
+        f"⚠️ {count_text}"
     )
     lines = [header, ""]
 
@@ -448,7 +472,7 @@ def query_spare_parts_text(user_query):
     if not keywords:
         return "無法識別查詢的備品型號，請輸入料號或型號（例如：FX2N-8EX 或 SH5056001）。"
 
-    results = keyword_search_spare_parts(keywords)
+    results = keyword_search_spare_parts(keywords, model)
 
     if not results:
         return format_not_found_response(brand, model, is_image=False)
@@ -486,7 +510,7 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     if not keywords:
         return format_not_found_response(brand, model, is_image=True)
 
-    results = keyword_search_spare_parts(keywords)
+    results = keyword_search_spare_parts(keywords, model)
 
     if not results:
         return format_not_found_response(brand, model, is_image=True)
