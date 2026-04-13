@@ -7,6 +7,7 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, ImageMessage, TextSendMessage
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 
 # 初始化 Flask 應用
 app = Flask(__name__)
@@ -52,6 +53,19 @@ class RateLimitError(Exception):
         self.wait_seconds = wait_seconds
         super().__init__(f"Rate limit exceeded, retry after {wait_seconds}s")
 
+
+def call_with_timeout(func, timeout, *args, **kwargs):
+    """
+    在獨立線程中執行函數，並設定 timeout。
+    這是多線程安全的方式，適用於 gunicorn worker 環境。
+    """
+    try:
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(func, *args, **kwargs)
+            return future.result(timeout=timeout)
+    except FuturesTimeoutError:
+        raise TimeoutError(f"Function call timed out after {timeout} seconds")
+
 def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, timeout=10):
     """
     呼叫 Gemini API，遇到暫時性錯誤（503/500）時自動重試。
@@ -63,8 +77,7 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, ti
         max_retries: 最大重試次數
         timeout: 單次呼叫的 timeout 秒數（預設 10 秒）
     """
-    import signal
-    
+        
     def timeout_handler(signum, frame):
         raise TimeoutError(f"Gemini API 呼叫超時（{timeout} 秒）")
     
