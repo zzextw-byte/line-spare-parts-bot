@@ -223,9 +223,11 @@ def ai_select_best_match(query_model, query_brand, results):
     """
     使用 Gemini 從搜尋結果中選出最佳匹配。
     
-    - 把用戶查詢的型號和前 10 筆搜尋結果的料號+規格組成 prompt
-    - 問 Gemini 哪一筆最符合
-    - 如果有明確最符合的，回傳該筆備品；如果無法確定，回傳 None
+    回傳值：
+    - 'NONE'：搜尋結果中沒有任何相關備品
+    - 'UNCERTAIN'：無法確定哪個最好
+    - 料號：明確選中的備品料號
+    - None：AI 判斷失敗或異常
     """
     if not results or not query_model:
         return None
@@ -246,20 +248,28 @@ def ai_select_best_match(query_model, query_brand, results):
 
 以下是搜尋到的備品清單：
 {parts_text}
-請判斷哪一筆最符合用戶查詢的型號。
-- 如果有明確最符合的，只回傳該筆的料號（例如：SH5056001）
-- 如果無法確定，回傳：UNCERTAIN
+請判斷搜尋結果中是否有與用戶查詢的型號相關的備品。
 
-只回傳料號或 UNCERTAIN，不要其他說明。"""
+判斷規則：
+- 只有當某筆備品確實是用戶查詢的同一產品、同系列產品或同類型產品時，才回傳該料號
+- 如果搜尋結果中沒有任何一筆與用戶查詢的型號是同類型或同系列的產品，回傳：NONE
+- 如果有多筆可能相關但無法確定哪個最好，回傳：UNCERTAIN
+
+只回傳料號、NONE 或 UNCERTAIN，不要其他說明。"""
     
     try:
         response = call_gemini_with_retry(prompt)
         result = response.strip().upper()
         
-        # 檢查是否是 UNCERTAIN
+        # 檢查是否是 NONE（沒有相關備品）
+        if result == "NONE":
+            print(f"AI 二次判斷：搜尋結果中沒有相關備品")
+            return "NONE"
+        
+        # 檢查是否是 UNCERTAIN（無法確定）
         if result == "UNCERTAIN":
             print(f"AI 二次判斷：無法確定最佳匹配")
-            return None
+            return "UNCERTAIN"
         
         # 嘗試從結果中找到對應的備品
         for part, score, matched in top_results:
@@ -544,10 +554,18 @@ def query_spare_parts_text(user_query):
     else:
         # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
         try:
-            ai_selected_part = ai_select_best_match(model, brand, results)
-            if ai_selected_part:
+            ai_result = ai_select_best_match(model, brand, results)
+            
+            # 處理 AI 的回傳值
+            if ai_result == "NONE":
+                # 搜尋結果中沒有任何相關備品
+                return format_not_found_response(brand, model, is_image=False)
+            elif ai_result == "UNCERTAIN":
+                # 無法確定，顯示相似備品清單
+                return format_fuzzy_response(results, brand, model, is_image=False)
+            elif ai_result is not None and isinstance(ai_result, dict):
                 # AI 選出了明確的最佳匹配
-                return format_found_response(ai_selected_part, brand, model, is_image=False)
+                return format_found_response(ai_result, brand, model, is_image=False)
         except RateLimitError as e:
             # 如果 AI 二次判斷遇到速率限制，直接拋出來
             raise
@@ -555,7 +573,7 @@ def query_spare_parts_text(user_query):
             # AI 二次判斷失敗，繼續顯示相似備品
             print(f"AI 二次判斷失敗，顯示相似備品清單")
         
-        # AI 無法確定或失敗，顯示相似備品清單
+        # 預設：AI 無法確定或失敗，顯示相似備品清單
         return format_fuzzy_response(results, brand, model, is_image=False)
 
 def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
@@ -596,10 +614,18 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     else:
         # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
         try:
-            ai_selected_part = ai_select_best_match(model, brand, results)
-            if ai_selected_part:
+            ai_result = ai_select_best_match(model, brand, results)
+            
+            # 處理 AI 的回傳值
+            if ai_result == "NONE":
+                # 搜尋結果中沒有任何相關備品
+                return format_not_found_response(brand, model, is_image=True)
+            elif ai_result == "UNCERTAIN":
+                # 無法確定，顯示相似備品清單
+                return format_fuzzy_response(results, brand, model, is_image=True)
+            elif ai_result is not None and isinstance(ai_result, dict):
                 # AI 選出了明確的最佳匹配
-                return format_found_response(ai_selected_part, brand, model, is_image=True)
+                return format_found_response(ai_result, brand, model, is_image=True)
         except RateLimitError as e:
             # 如果 AI 二次判斷遇到速率限制，直接拋出來
             raise
@@ -607,7 +633,7 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
             # AI 二次判斷失敗，繼續顯示相似備品
             print(f"AI 二次判斷失敗，顯示相似備品清單")
         
-        # AI 無法確定或失敗，顯示相似備品清單
+        # 預設：AI 無法確定或失敗，顯示相似備品清單
         return format_fuzzy_response(results, brand, model, is_image=True)
 
 # ─── Flask 路由 ─────────────────────────────────────────────────────────────────
