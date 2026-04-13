@@ -52,22 +52,44 @@ class RateLimitError(Exception):
         self.wait_seconds = wait_seconds
         super().__init__(f"Rate limit exceeded, retry after {wait_seconds}s")
 
-def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3):
+def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, timeout=10):
     """
     呼叫 Gemini API，遇到暫時性錯誤（503/500）時自動重試。
     遇到速率限制（429）時直接拋出 RateLimitError。
+    
+    Args:
+        contents: 傳送給 Gemini 的內容
+        model: 使用的模型名稱
+        max_retries: 最大重試次數
+        timeout: 單次呼叫的 timeout 秒數（預設 10 秒）
     """
+    import signal
+    
+    def timeout_handler(signum, frame):
+        raise TimeoutError(f"Gemini API 呼叫超時（{timeout} 秒）")
+    
     client = get_gemini_client()
     last_error = None
 
     for attempt in range(max_retries):
         try:
-            response = client.models.generate_content(
-                model=model,
-                contents=contents
-            )
-            return response.text
+            # 設定 timeout 保護
+            signal.signal(signal.SIGALRM, timeout_handler)
+            signal.alarm(timeout)
+            
+            try:
+                response = client.models.generate_content(
+                    model=model,
+                    contents=contents
+                )
+                signal.alarm(0)  # 取消 alarm
+                return response.text
+            finally:
+                signal.alarm(0)  # 確保取消 alarm
 
+        except TimeoutError as e:
+            print(f"Gemini API 呼叫超時：{str(e)}")
+            raise
         except Exception as e:
             last_error = e
             error_str = str(e)
@@ -219,7 +241,7 @@ def is_exact_match(queried_model, part):
 
 # ─── AI 二次判斷（從搜尋結果中選出最佳匹配）──────────────────────────────────────
 
-def ai_select_best_match(query_model, query_brand, results):
+def ai_select_best_match(query_model, query_brand, results, timeout=8):
     """
     使用 Gemini 從搜尋結果中選出最佳匹配。
     
@@ -232,8 +254,8 @@ def ai_select_best_match(query_model, query_brand, results):
     if not results or not query_model:
         return None
     
-    # 取前 10 筆結果
-    top_results = results[:10]
+    # 取前 5 筆結果（簡化以加快處理速度）
+    top_results = results[:5]
     
     # 組成備品清單文字
     parts_text = ""
@@ -258,7 +280,7 @@ def ai_select_best_match(query_model, query_brand, results):
 只回傳料號、NONE 或 UNCERTAIN，不要其他說明。"""
     
     try:
-        response = call_gemini_with_retry(prompt)
+        response = call_gemini_with_retry(prompt, timeout=timeout)
         result = response.strip().upper()
         
         # 檢查是否是 NONE（沒有相關備品）
@@ -554,7 +576,7 @@ def query_spare_parts_text(user_query):
     else:
         # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
         try:
-            ai_result = ai_select_best_match(model, brand, results)
+            ai_result = ai_select_best_match(model, brand, results, timeout=8)
             
             # 處理 AI 的回傳值
             if ai_result == "NONE":
@@ -566,12 +588,12 @@ def query_spare_parts_text(user_query):
             elif ai_result is not None and isinstance(ai_result, dict):
                 # AI 選出了明確的最佳匹配
                 return format_found_response(ai_result, brand, model, is_image=False)
-        except RateLimitError as e:
-            # 如果 AI 二次判斷遇到速率限制，直接拋出來
-            raise
+        except (TimeoutError, RateLimitError) as e:
+            # 如果 AI 二次判斷超時或速率限制，直接跳過，顯示相似備品清單
+            print(f"AI 二次判斷超時或限制，跳過並顯示相似備品清單")
         except Exception as e:
             # AI 二次判斷失敗，繼續顯示相似備品
-            print(f"AI 二次判斷失敗，顯示相似備品清單")
+            print(f"AI 二次判斷失敗：{str(e)[:100]}，顯示相似備品清單")
         
         # 預設：AI 無法確定或失敗，顯示相似備品清單
         return format_fuzzy_response(results, brand, model, is_image=False)
@@ -614,7 +636,7 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     else:
         # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
         try:
-            ai_result = ai_select_best_match(model, brand, results)
+            ai_result = ai_select_best_match(model, brand, results, timeout=8)
             
             # 處理 AI 的回傳值
             if ai_result == "NONE":
@@ -626,12 +648,12 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
             elif ai_result is not None and isinstance(ai_result, dict):
                 # AI 選出了明確的最佳匹配
                 return format_found_response(ai_result, brand, model, is_image=True)
-        except RateLimitError as e:
-            # 如果 AI 二次判斷遇到速率限制，直接拋出來
-            raise
+        except (TimeoutError, RateLimitError) as e:
+            # 如果 AI 二次判斷超時或速率限制，直接跳過，顯示相似備品清單
+            print(f"AI 二次判斷超時或限制，跳過並顯示相似備品清單")
         except Exception as e:
             # AI 二次判斷失敗，繼續顯示相似備品
-            print(f"AI 二次判斷失敗，顯示相似備品清單")
+            print(f"AI 二次判斷失敗：{str(e)[:100]}，顯示相似備品清單")
         
         # 預設：AI 無法確定或失敗，顯示相似備品清單
         return format_fuzzy_response(results, brand, model, is_image=True)
@@ -656,45 +678,91 @@ def callback():
     return 'OK'
 
 @handler.add(MessageEvent, message=TextMessage)
+@handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     """處理文字訊息"""
+    import time
+    start_time = time.time()
+    TIMEOUT_LIMIT = 25  # 25 秒超時限制
+    
     user_message = event.message.text.strip()
     user_id = event.source.user_id
     
     print(f"收到文字訊息：{user_message}（User ID：{user_id}）")
     
-    # 執行備品查詢
-    response_text = query_spare_parts_text(user_message)
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=response_text)
-    )
+    try:
+        # 執行備品查詢
+        response_text = query_spare_parts_text(user_message)
+        
+        # 檢查是否超時
+        elapsed = time.time() - start_time
+        if elapsed > TIMEOUT_LIMIT:
+            response_text = "查詢超時，請稍後再試。"
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=response_text)
+        )
+    except Exception as e:
+        print(f"文字查詢錯誤：{str(e)[:200]}")
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="查詢出錯，請稍後再試。")
+        )
+
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
     """處理圖片訊息"""
+    import time
+    start_time = time.time()
+    TIMEOUT_LIMIT = 25  # 25 秒超時限制
+    
     user_id = event.source.user_id
     print(f"收到圖片訊息，message_id：{event.message.id}（User ID：{user_id}）")
     
     try:
+        # 檢查是否已超時
+        elapsed = time.time() - start_time
+        if elapsed > TIMEOUT_LIMIT - 5:  # 提前 5 秒回覆
+            raise TimeoutError("圖片處理超時")
+        
         message_content = line_bot_api.get_message_content(event.message.id)
         image_bytes = message_content.content
         content_type = message_content.content_type or 'image/jpeg'
         mime_type = content_type.split(';')[0].strip()
         print(f"圖片 content_type：{content_type}，使用 mime_type：{mime_type}")
 
+        # 檢查是否已超時
+        elapsed = time.time() - start_time
+        if elapsed > TIMEOUT_LIMIT - 3:  # 提前 3 秒回覆
+            raise TimeoutError("圖片查詢超時")
+
         response_text = query_spare_parts_from_image(image_bytes, mime_type)
+        
+        # 檢查是否已超時
+        elapsed = time.time() - start_time
+        if elapsed > TIMEOUT_LIMIT:
+            response_text = "查詢超時，請稍後再試。"
+        
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=response_text)
         )
             
+    except TimeoutError as e:
+        print(f"圖片處理超時：{str(e)}")
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="查詢超時，請稍後再試。")
+        )
     except Exception as e:
-        print(f"圖片處理錯誤：{str(e)}")
+        print(f"圖片處理錯誤：{str(e)[:200]}")
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="無法辨識照片，請改用文字輸入料號或型號。")
         )
+
 
 @app.route("/health", methods=['GET'])
 def health_check():
