@@ -107,7 +107,6 @@ def load_spare_parts_data():
         return []
 
 SPARE_PARTS = load_spare_parts_data()
-GOOGLE_LENS_URL = "https://lens.google.com/"
 
 # ─── 料號直接查詢 ────────────────────────────────────────────────────────────────
 
@@ -242,7 +241,7 @@ def build_spec_search_link(brand, model):
 def format_found_response(part, brand, model, is_image=False):
     """
     查到備品時的回覆格式（情況 A：完全符合）。
-    - is_image=True：附產品規格搜尋連結和 Google Lens 連結（搜尋連結用規格型號）
+    - is_image=True：附產品規格搜尋連結
     - is_image=False：只顯示備品資訊，不附任何連結
     """
     spec = part.get('specification', '')
@@ -266,14 +265,13 @@ def format_found_response(part, brand, model, is_image=False):
         spec_url = build_spec_search_link(brand, spec_model)
         if spec_url:
             lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
-        lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
 
     return "\n".join(lines)
 
 def format_fuzzy_response(results, brand, model, is_image=False):
     """
     找到相似備品時的回覆格式（情況 B：相似符合）。
-    - is_image=True：附產品規格搜尋連結和 Google Lens 連結
+    - is_image=True：附產品規格搜尋連結
     - is_image=False：只顯示備品資訊，不附任何連結
     """
     identified = (f"{brand} {model}".strip()) if (brand or model) else ''
@@ -301,14 +299,13 @@ def format_fuzzy_response(results, brand, model, is_image=False):
         spec_url = build_spec_search_link(brand, model)
         if spec_url:
             lines.append(f"\n📋 產品規格查詢：\n{spec_url}")
-        lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
 
     return "\n".join(lines)
 
 def format_not_found_response(brand, model, is_image=False):
     """
     查無備品時的回覆格式（情況 C：完全找不到）。
-    - is_image=True：附產品規格搜尋連結和 Google Lens 連結
+    - is_image=True：附產品規格搜尋連結
     - is_image=False：只顯示查無結果訊息，不附任何連結
     """
     identified = (f"{brand} {model}".strip()) if (brand or model) else ''
@@ -466,7 +463,7 @@ def query_spare_parts_text(user_query):
 def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     """
     圖片查詢主流程。
-    圖片查詢會附產品規格搜尋連結（使用規格型號）和 Google Lens 連結。
+    圖片查詢會附產品規格搜尋連結（使用規格型號）。
     """
     try:
         info = extract_product_info_from_image(image_bytes, mime_type)
