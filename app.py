@@ -70,7 +70,6 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, ti
     """
     呼叫 Gemini API，遇到暫時性錯誤（503/500）時自動重試。
     遇到速率限制（429）時直接拋出 RateLimitError。
-    使用 concurrent.futures 實現多線程安全的 timeout。
     
     Args:
         contents: 傳送給 Gemini 的內容
@@ -78,18 +77,19 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, ti
         max_retries: 最大重試次數
         timeout: 單次呼叫的 timeout 秒數（預設 10 秒）
     """
+        
     client = get_gemini_client()
     last_error = None
 
     for attempt in range(max_retries):
         try:
+            # 使用多線程安全的 timeout 機制
             def _call():
                 return client.models.generate_content(
                     model=model,
                     contents=contents
                 )
             
-            # 使用多線程安全的 timeout 機制
             response = call_with_timeout(_call, timeout)
             return response.text
 
