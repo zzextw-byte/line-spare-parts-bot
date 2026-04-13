@@ -67,34 +67,23 @@ def call_with_timeout(func, timeout, *args, **kwargs):
     except FuturesTimeoutError:
         raise TimeoutError(f"Function call timed out after {timeout} seconds")
 
-# 全域查詢 deadline（用於多次 Gemini 呼叫共用總時限）
-import threading
-_query_deadline = threading.local()
-
-def set_query_deadline(timeout=28):
-    """設定本次查詢的 deadline（從現在起 timeout 秒後）"""
-    _query_deadline.value = time.time() + timeout
-
-def get_remaining_time():
-    """取得距離 deadline 的剩餘秒數"""
-    deadline = getattr(_query_deadline, 'value', None)
-    if deadline is None:
-        return 25  # 預設
-    return max(0, deadline - time.time())
-
-def call_gemini_with_retry(contents, model='gemini-2.5-flash'):
+def call_gemini_with_retry(contents, model='gemini-2.5-flash', deadline=None):
     """
     呼叫 Gemini API，使用 concurrent.futures 實作單次 timeout。
-    遇到 503/500 時在剩餘時間內持續重試（每次間隔 2 秒）。
+    遇到 503/500 時在 deadline 前持續重試（每次間隔 2 秒）。
     超過 deadline 才拋出 GeminiOverloadError。
     遇到速率限制（429）時直接拋出 RateLimitError。
+    deadline: 絕對時間戳（time.time() + N），若無則預設 25 秒。
     """
+    if deadline is None:
+        deadline = time.time() + 25
+
     attempt = 0
 
     while True:
-        remaining = get_remaining_time()
+        remaining = deadline - time.time()
         if remaining <= 2:
-            print(f"Gemini API 已超過查詢總時限，放棄重試")
+            print(f"Gemini API 已超過查詢總時限，放棄重試（已重試 {attempt} 次）")
             raise GeminiOverloadError()
 
         attempt += 1
@@ -289,7 +278,7 @@ def is_exact_match(queried_model, part):
 
 # ─── AI 二次判斷（從搜尋結果中選出最佳匹配）──────────────────────────────────────
 
-def ai_select_best_match(query_model, query_brand, results):
+def ai_select_best_match(query_model, query_brand, results, deadline=None):
     """
     使用 Gemini 從搜尋結果中選出最佳匹配。
     
@@ -328,7 +317,7 @@ def ai_select_best_match(query_model, query_brand, results):
 只回傳料號、NONE 或 UNCERTAIN，不要其他說明。"""
     
     try:
-        response = call_gemini_with_retry(prompt)
+        response = call_gemini_with_retry(prompt, deadline=deadline)
         result = response.strip().upper()
         
         # 檢查是否是 NONE（沒有相關備品）
@@ -491,7 +480,7 @@ def image_unreadable_response():
 
 # ─── Gemini 呼叫 ──────────────────────────────────────────────────────────────────
 
-def extract_product_info_from_text(user_query):
+def extract_product_info_from_text(user_query, deadline=None):
     """
     使用 Gemini 從用戶文字輸入中提取產品型號資訊。
     回傳 dict：{"brand": "...", "model": "...", "keywords": [...]}
@@ -510,7 +499,7 @@ def extract_product_info_from_text(user_query):
     )
 
     try:
-        result = call_gemini_with_retry(prompt)
+        result = call_gemini_with_retry(prompt, deadline=deadline)
         result = result.strip()
         # 移除 markdown code block（如果有）
         result = re.sub(r'^```(?:json)?\s*', '', result, flags=re.MULTILINE)
@@ -527,7 +516,7 @@ def extract_product_info_from_text(user_query):
         # fallback：直接用用戶輸入作為關鍵字
         return {"brand": "", "model": user_query.strip(), "keywords": [user_query.strip()]}
 
-def extract_product_info_from_image(image_bytes, mime_type='image/jpeg'):
+def extract_product_info_from_image(image_bytes, mime_type='image/jpeg', deadline=None):
     """
     使用 Gemini Vision 從圖片中提取產品型號資訊。
     回傳 dict：{"brand": "...", "model": "...", "keywords": [...]}
@@ -555,7 +544,7 @@ def extract_product_info_from_image(image_bytes, mime_type='image/jpeg'):
         "只回傳 JSON，不要其他說明。"
     )
 
-    result = call_gemini_with_retry([prompt_text, image_part])
+    result = call_gemini_with_retry([prompt_text, image_part], deadline=deadline)
     result = result.strip()
     print(f"Gemini 圖片辨識原始回應：{result[:300]}")
 
@@ -594,9 +583,12 @@ def query_spare_parts_text(user_query):
         print(f"料號直接命中：{part.get('part_number')}")
         return format_found_response(part, brand='', model='', is_image=False)
 
+    # 設定 28 秒總時限（LINE reply token 有效期約 30 秒）
+    deadline = time.time() + 28
+
     # Step 3：呼叫 Gemini 解析型號關鍵字
     try:
-        info = extract_product_info_from_text(user_query)
+        info = extract_product_info_from_text(user_query, deadline=deadline)
     except GeminiOverloadError:
         return "Gemini AI 目前過載中，請稍後再試一次。"
     except RateLimitError as e:
@@ -626,7 +618,7 @@ def query_spare_parts_text(user_query):
     else:
         # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
         try:
-            ai_result = ai_select_best_match(model, brand, results)
+            ai_result = ai_select_best_match(model, brand, results, deadline=deadline)
             
             # 處理 AI 的回傳值
             if ai_result == "NONE":
@@ -653,9 +645,12 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     """
     圖片查詢主流程。
     圖片查詢會附產品規格搜尋連結（使用規格型號）。
+    兩次 Gemini 呼叫共用 28 秒總時限。
     """
+    deadline = time.time() + 28
+
     try:
-        info = extract_product_info_from_image(image_bytes, mime_type)
+        info = extract_product_info_from_image(image_bytes, mime_type, deadline=deadline)
     except GeminiOverloadError:
         return "Gemini AI 目前過載中，請稍後再試一次。"
     except RateLimitError as e:
@@ -689,7 +684,7 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     else:
         # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
         try:
-            ai_result = ai_select_best_match(model, brand, results)
+            ai_result = ai_select_best_match(model, brand, results, deadline=deadline)
             
             # 處理 AI 的回傳值
             if ai_result == "NONE":
@@ -739,9 +734,6 @@ def handle_text_message(event):
     
     print(f"收到文字訊息：{user_message}（User ID：{user_id}）")
     
-    # 設定 28 秒總時限（LINE reply token 有效期約 30 秒）
-    set_query_deadline(28)
-    
     # 執行備品查詢
     response_text = query_spare_parts_text(user_message)
     line_bot_api.reply_message(
@@ -754,9 +746,6 @@ def handle_image_message(event):
     """處理圖片訊息"""
     user_id = event.source.user_id
     print(f"收到圖片訊息，message_id：{event.message.id}（User ID：{user_id}）")
-    
-    # 設定 28 秒總時限（LINE reply token 有效期約 30 秒，圖片辨識 + AI 二次判斷共用）
-    set_query_deadline(28)
     
     try:
         message_content = line_bot_api.get_message_content(event.message.id)
