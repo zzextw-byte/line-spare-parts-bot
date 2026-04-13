@@ -53,6 +53,11 @@ class RateLimitError(Exception):
         self.wait_seconds = wait_seconds
         super().__init__(f"Rate limit exceeded, retry after {wait_seconds}s")
 
+class GeminiOverloadError(Exception):
+    """Gemini 模型過載例外"""
+    def __init__(self):
+        super().__init__("Gemini AI 目前過載，請稍後再試。")
+
 def call_with_timeout(func, timeout, *args, **kwargs):
     """多線程安全的 timeout 機制"""
     try:
@@ -62,11 +67,12 @@ def call_with_timeout(func, timeout, *args, **kwargs):
     except FuturesTimeoutError:
         raise TimeoutError(f"Function call timed out after {timeout} seconds")
 
-def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, timeout=10):
+def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, timeout=25):
     """
     呼叫 Gemini API，使用 concurrent.futures 實作 timeout 機制。
-    遇到暫時性錯誤（503/500）時自動重試。
+    遇到 503 過載時直接拋出 GeminiOverloadError（不重試，直接告知用戶）。
     遇到速率限制（429）時直接拋出 RateLimitError。
+    遇到其他暫時性錯誤時自動重試。
     """
     last_error = None
 
@@ -85,7 +91,11 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, ti
             last_error = TimeoutError(f"Gemini API call timed out after {timeout} seconds")
             if attempt < max_retries - 1:
                 continue
-            raise last_error
+            # 超時也告知用戶
+            raise GeminiOverloadError()
+
+        except GeminiOverloadError:
+            raise
 
         except Exception as e:
             last_error = e
@@ -96,13 +106,17 @@ def call_gemini_with_retry(contents, model='gemini-2.5-flash', max_retries=3, ti
                 print(f"Gemini API 429 速率限制，建議等待 {wait_seconds} 秒")
                 raise RateLimitError(wait_seconds)
 
-            elif '503' in error_str or '500' in error_str:
+            elif '503' in error_str:
+                print(f"Gemini API 503 過載，直接通知用戶")
+                raise GeminiOverloadError()
+
+            elif '500' in error_str:
                 if attempt < max_retries - 1:
-                    wait_time = (attempt + 1) * 5
-                    print(f"Gemini API 服務暫時不可用，{wait_time} 秒後重試（第 {attempt + 1}/{max_retries} 次）")
+                    wait_time = (attempt + 1) * 2
+                    print(f"Gemini API 500 錯誤，{wait_time} 秒後重試（第 {attempt + 1}/{max_retries} 次）")
                     time.sleep(wait_time)
                 else:
-                    print(f"Gemini API 服務暫時不可用，已達最大重試次數")
+                    print(f"Gemini API 500 錯誤，已達最大重試次數")
                     raise
 
             else:
@@ -578,6 +592,8 @@ def query_spare_parts_text(user_query):
     # Step 3：呼叫 Gemini 解析型號關鍵字
     try:
         info = extract_product_info_from_text(user_query)
+    except GeminiOverloadError:
+        return "Gemini AI 目前過載中，請稍後再試一次。"
     except RateLimitError as e:
         return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
     except Exception as e:
@@ -617,9 +633,10 @@ def query_spare_parts_text(user_query):
             elif ai_result is not None and isinstance(ai_result, dict):
                 # AI 選出了明確的最佳匹配
                 return format_found_response(ai_result, brand, model, is_image=False)
+        except GeminiOverloadError:
+            return "Gemini AI 目前過載中，請稍後再試一次。"
         except RateLimitError as e:
-            # 如果 AI 二次判斷遇到速率限制，直接拋出來
-            raise
+            return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
         except Exception as e:
             # AI 二次判斷失敗，繼續顯示相似備品
             print(f"AI 二次判斷失敗，顯示相似備品清單")
@@ -634,6 +651,8 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     """
     try:
         info = extract_product_info_from_image(image_bytes, mime_type)
+    except GeminiOverloadError:
+        return "Gemini AI 目前過載中，請稍後再試一次。"
     except RateLimitError as e:
         return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
     except Exception as e:
@@ -677,9 +696,10 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
             elif ai_result is not None and isinstance(ai_result, dict):
                 # AI 選出了明確的最佳匹配
                 return format_found_response(ai_result, brand, model, is_image=True)
+        except GeminiOverloadError:
+            return "Gemini AI 目前過載中，請稍後再試一次。"
         except RateLimitError as e:
-            # 如果 AI 二次判斷遇到速率限制，直接拋出來
-            raise
+            return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
         except Exception as e:
             # AI 二次判斷失敗，繼續顯示相似備品
             print(f"AI 二次判斷失敗，顯示相似備品清單")
@@ -740,6 +760,12 @@ def handle_image_message(event):
             TextSendMessage(text=response_text)
         )
             
+    except GeminiOverloadError:
+        print(f"圖片處理：Gemini 過載")
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="Gemini AI 目前過載中，請稍後再試一次。")
+        )
     except Exception as e:
         print(f"圖片處理錯誤：{str(e)}")
         line_bot_api.reply_message(
