@@ -319,16 +319,12 @@ def format_not_found_response(brand, model, is_image=False):
         spec_url = build_spec_search_link(brand, model)
         if spec_url:
             lines.append(f"📋 產品規格查詢：\n{spec_url}")
-        lines.append(f"🔍 以圖搜尋更多資訊：{GOOGLE_LENS_URL}")
 
     return "\n".join(lines)
 
 def image_unreadable_response():
     """圖片完全無法辨識時的回覆"""
-    return (
-        "無法從照片辨識備品資訊，您可以使用 Google Lens 以圖搜尋：\n\n"
-        f"🔍 Google Lens（以圖搜圖）：{GOOGLE_LENS_URL}"
-    )
+    return "無法從照片辨識備品資訊，請改用文字輸入料號或型號。"
 
 
 
@@ -562,7 +558,7 @@ def handle_image_message(event):
         print(f"圖片處理錯誤：{str(e)}")
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f"無法辨識照片，您可以使用 Google Lens 以圖搜尋：\n\n🔍 Google Lens（以圖搜圖）：{GOOGLE_LENS_URL}")
+            TextSendMessage(text="無法辨識照片，請改用文字輸入料號或型號。")
         )
 
 @app.route("/health", methods=['GET'])
