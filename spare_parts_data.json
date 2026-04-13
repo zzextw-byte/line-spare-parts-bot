@@ -1,29 +1,5322 @@
 [
   {
-    "spare_part_id": "67C000067",
-    "part_number": "SCA000002",
-    "specification": "數位流量感測器 KEYENCE FD-Q32C（需搭配配料號#SCA001002、#SCA002002—詳購入）",
-    "warehouse_location": "辦公室",
-    "major_category": "入口旁儲位",
-    "minor_category": "001",
-    "quantity": 5
+    "part_number": "SH5139000",
+    "specification": "PLC模組 三菱 QX42",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "1"
   },
   {
-    "spare_part_id": "67H000097",
+    "part_number": "SH5060000",
+    "specification": "PLC模組 三菱  QJ71E71-100",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "2"
+  },
+  {
+    "part_number": "SH5080000",
+    "specification": "PLC模組 QJ71C24N-R4",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SA0173001",
+    "specification": "接著劑 施敏打硬 SUPER X NO.8008 (請註明所需顏色)",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SDX141001",
+    "specification": "通訊模組 三菱 QJ71C24N-R2",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "4"
+  },
+  {
+    "part_number": "SH5183000",
+    "specification": "PLC模組 三菱 FX5-485ADP",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "5"
+  },
+  {
+    "part_number": "SH5009000",
+    "specification": "PLC模組 三菱 FX2N-8ER-ES/UL",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "6"
+  },
+  {
+    "part_number": "SH5126000",
+    "specification": "PLC模組 三菱 FX2N-8EX-ES/UC",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "7"
+  },
+  {
+    "part_number": "SH5177000",
+    "specification": "PLC模組 三菱 FX3U-485ADP-MB",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "8"
+  },
+  {
+    "part_number": "SH5138000",
+    "specification": "PLC模組 三菱 QX41",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SH5063001",
+    "specification": "PLC模組 三菱 QX40 Input 24VDC",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "10"
+  },
+  {
+    "part_number": "SH5085001",
+    "specification": "PLC模組 三菱 QY4IP",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "11"
+  },
+  {
+    "part_number": "SH5164000",
+    "specification": "PLC模組 三菱 Q68ADI",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "12"
+  },
+  {
+    "part_number": "SH5184000",
+    "specification": "PLC模組 三菱 FX5-232ADP",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "13"
+  },
+  {
+    "part_number": "SH5013000",
+    "specification": "PLC模組 三菱 FX2N-8EYR-ES/UL",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "14"
+  },
+  {
+    "part_number": "SD0094000",
+    "specification": "PLC模組 三菱 FX2N-8AD",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "15"
+  },
+  {
+    "part_number": "SH5008000",
+    "specification": "PLC模組 三菱 FX2N-16EYR-ES/UL 09M223",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SH5141000",
+    "specification": "PLC模組 QY42P",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "17"
+  },
+  {
+    "part_number": "SH5045002",
+    "specification": "PLC模組 MITSUBISHI FX2N-16EX(液中曝光機用)",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "18"
+  },
+  {
+    "part_number": "SH0010000",
+    "specification": "PLC模組 三菱 FX3U-ENET-L (乙太網路模組)",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "19"
+  },
+  {
+    "part_number": "SK7058002",
+    "specification": "電源供應器 MEAN WELL SE-450-24 , 輸入:110-220V ,",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "20"
+  },
+  {
+    "part_number": "SH5016000",
+    "specification": "PLC模組 三菱 FX2N-16EX-ES/UL",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "21"
+  },
+  {
+    "part_number": "SAC249001",
+    "specification": "C2619026 真空密封膠條 台灣日合 PACKING GLAND , TYP",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "22"
+  },
+  {
+    "part_number": "SAC350001",
+    "specification": "C2619027 真空密封膠條 台灣日合 PACKING GLAND , TYP",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "23"
+  },
+  {
+    "part_number": "SDX228000",
+    "specification": "網路通訊模組 三菱 FX3U-ENET-ADP",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "24"
+  },
+  {
+    "part_number": "SC2135000",
+    "specification": "近接SENSOR KINTON KNS03N , DC10~30V",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "25"
+  },
+  {
+    "part_number": "SO1008M00",
+    "specification": "真空氣密耐熱膏 DOW CORNING 150g/條 (5.3oz) (最低訂",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "26"
+  },
+  {
+    "part_number": "SA0568000",
+    "specification": "公母端子(母) NICHIFU PC2005-F , 100個/包 , 日製",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "27"
+  },
+  {
+    "part_number": "SA0569000",
+    "specification": "公母端子(公) NICHIFU PC2005-M , 100個/包 , 日製",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "28"
+  },
+  {
+    "part_number": "SA0893001",
+    "specification": "電動起子 技友牌 RE-4800.SC(1/4) , DC 30V , 扭力:0.",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "29"
+  },
+  {
+    "part_number": "SA0B76002",
+    "specification": "過濾桶蓋固定把手組 塑寶 (NO.24~26) , 長度:130mm ,",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "30"
+  },
+  {
+    "part_number": "SB0600173",
+    "specification": "網路交換器 D-LINK DES-1005A , 5埠 , 傳輸率:10/100M",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "31"
+  },
+  {
+    "part_number": "SK0186000",
+    "specification": "伺服控制器 DELTA ASD-B0721-A (停產 , 無直接替代型",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "32"
+  },
+  {
+    "part_number": "SC1458000",
+    "specification": "光電SENSOR OMRON E3T-CD11 , 出線:2M (舊型號:E3HT-D",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "33"
+  },
+  {
+    "part_number": "SC1508002",
+    "specification": "光電SENSOR OMRON E3Z-LS63",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "34"
+  },
+  {
+    "part_number": "SKB001M00",
+    "specification": "[S]光電開關-入/出料用 SICK VTF18-4N1712",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "35"
+  },
+  {
+    "part_number": "SC2113000",
+    "specification": "近接SENSOR OMRON TL-N10ME1",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "36"
+  },
+  {
+    "part_number": "SC4076000",
+    "specification": "壓力SENSOR SMC ZSE20AF-R-01-J , 附:導線 (舊型號:ZS",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "37"
+  },
+  {
+    "part_number": "SD9005000",
+    "specification": "真空控制器 FESTO VADMI-200 , DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "38"
+  },
+  {
+    "part_number": "SD9027001",
+    "specification": "溫度控制器 OMRON E5CC-RX2ASM-802 , AC100~240V",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "39"
+  },
+  {
+    "part_number": "SB8041000",
+    "specification": "風扇 ORIX MD1225-24 , DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "40"
+  },
+  {
+    "part_number": "SK4016000",
+    "specification": "靜電消除器電極探針 KEYENCE OP-84293 , 4顆/包",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "41"
+  },
+  {
+    "part_number": "SK4026000",
+    "specification": "靜電消除器電極探針 KEYENCE OP-87420 , 5顆/包 (適用",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "42"
+  },
+  {
+    "part_number": "SO0007000",
+    "specification": "高溫潤滑油 YAMABALA MB19 70g/支 (最低訂量:5支)(高",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "43"
+  },
+  {
+    "part_number": "SP0B65000",
+    "specification": "耐酸鹼紮線帶 全冠牌 ALT-150M-B-AA , 150L*3.5W*1.3t (100條/包)",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "44"
+  },
+  {
+    "part_number": "SP0B67000",
+    "specification": "耐酸鹼紮線帶 全冠牌 ALT-380H-B-AA , 389L*8W*2t (100條/包)",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "45"
+  },
+  {
+    "part_number": "SP0601000",
+    "specification": "耐酸鹼紮線帶 全冠牌 ALT-250L-B-AA , 255L*5W*1.5t ,",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "46"
+  },
+  {
+    "part_number": "SP0702001",
+    "specification": "硬碟 創見 SSD-370S系列 , 512GB , 2.5吋 , SATA III",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "47"
+  },
+  {
+    "part_number": "SC1311000",
+    "specification": "光電 SENSOR SICK WTB4S-3N1361",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "48"
+  },
+  {
+    "part_number": "SP0600230",
+    "specification": "固態電譯SSR OMRON G3PA-210B-VD-X DC5-24 BY OMZ(舊型號#G3PA-210B-VD ,",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "49"
+  },
+  {
+    "part_number": "SB8021001",
+    "specification": "風扇 Orientalmotor T-MD1225-24G , DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "50"
+  },
+  {
+    "part_number": "SC8600007",
+    "specification": "光電放大器 KEYENCE FS-N41N",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "51"
+  },
+  {
+    "part_number": "SH5151002",
+    "specification": "PLC模組 三菱 Q61P",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "52"
+  },
+  {
+    "part_number": "SK1035000",
+    "specification": "08597999 電磁接觸器 SIEMENS 3RT2016-1BB42 , AC230/400V , 2.2/4KW , 線圈:DC24V , 接點:NC (舊型號:3RT1016-1BB42)",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "53"
+  },
+  {
+    "part_number": "SC1308001",
+    "specification": "光電放大器 KEYENCE FS-V21R",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "54"
+  },
+  {
+    "part_number": "SC8028000",
+    "specification": "光電放大器 KEYENCE FS2-62",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "55"
+  },
+  {
+    "part_number": "SH3024002",
+    "specification": "PLC SIEMENS SM331 AI 8*12 BIT 6ES7331-7KF02-0AB0 (AI模組)",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "56"
+  },
+  {
+    "part_number": "SK2148000",
+    "specification": "固態電驛SSR FOTEK ESR-60DA-H , 輸入:DC4~32V , 輸出",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "57"
+  },
+  {
+    "part_number": "SC1600001",
+    "specification": "光電SENSOR SICK WTB4T-3N1264 , 鐵氟龍包覆型",
+    "warehouse_location": "會議室",
+    "major_category": "A",
+    "minor_category": "58"
+  },
+  {
+    "part_number": "SH0032000",
+    "specification": "PLC模組 三菱 FX2N-20GM",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "1"
+  },
+  {
+    "part_number": "SH5174000",
+    "specification": "PLC模組 三菱 FX2NC-16EYR-T , 端子台式 (期貨60天)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "2"
+  },
+  {
+    "part_number": "SH0025001",
+    "specification": "PLC模組 三菱 FX2NC-16EX",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SD6004001",
+    "specification": "編碼器 OMRON E6C2-CWZ6C , DC5~24V , 解析度:1000P/R , 出線:2M",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "4"
+  },
+  {
+    "part_number": "SC1416001",
+    "specification": "SENSOR 廠牌: KFPS TYPE: TL-B5NE2",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "5"
+  },
+  {
+    "part_number": "SC2214001",
+    "specification": "近接SENSOR KFPS TL-B5NE1 , NPN NO型 , 3線式",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "6"
+  },
+  {
+    "part_number": "SKB600058",
+    "specification": "磁性感應開關 OMRON GLS-1 (含:GLS-S1、GLS-M1)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "6"
+  },
+  {
+    "part_number": "SK0074002",
+    "specification": "151202506 轉速傳送器 MT SERIES S4-RT , AC110V , I/P 60P/R , 0~10V (適用:揚博設備)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "7"
+  },
+  {
+    "part_number": "SC2231002",
+    "specification": "光電SENSOR KEYENCE PZ-G102N",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "8"
+  },
+  {
+    "part_number": "SB1028000",
+    "specification": "割刀馬達 Orientalmotor PK268M-02A (適用:HAKOTO 630壓膜機 等同P/N:4700516A1)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SH0004002",
+    "specification": "PLC模組 OMRON C200HW-PA209R",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SH2270002",
+    "specification": "PLC模組 OMRON CS1W-SCB41-V1",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SK1124002",
+    "specification": "電磁接觸器 FUJI SC-N1 , 110V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "10"
+  },
+  {
+    "part_number": "SD0600081",
+    "specification": "PLC模組 三菱 FX3U-1PG",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "11"
+  },
+  {
+    "part_number": "SH0026001",
+    "specification": "PLC模組 三菱 FX2NC-16EYT",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "12"
+  },
+  {
+    "part_number": "SH2045001",
+    "specification": "編碼器 OMORN E6B2-CWZ6C , 2000P/R",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "13"
+  },
+  {
+    "part_number": "SD0600076",
+    "specification": "PLC模組 三菱 A1SY10",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "14"
+  },
+  {
+    "part_number": "SC1271002",
+    "specification": "\"光電SENSOR SICK WS/WE100-2N1439 (包含:WS100-D1032、WE100-N1432) (舊型號:WS/WE100-N1439)\"",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "15"
+  },
+  {
+    "part_number": "SK2157000",
+    "specification": "繼電器(Relay) MY4N 24VDC",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SC1026000",
+    "specification": "光電SENSOR OMRON EE-SX671",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "17"
+  },
+  {
+    "part_number": "SC1600194",
+    "specification": "近接SENSOR OMRON E2E-X7D1-N , DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "18"
+  },
+  {
+    "part_number": "SC2265000",
+    "specification": "近接SENSOR KINTON X12-04N",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "19"
+  },
+  {
+    "part_number": "SH0031000",
+    "specification": "▲停產無替代品 PLC模組 三菱 FX2N-10GM",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "20"
+  },
+  {
+    "part_number": "SK2089002",
+    "specification": "EV-000000026-000 矽控整流器(固態電驛SSR) 瞬茂 SEMI",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "21"
+  },
+  {
+    "part_number": "SC1496000",
+    "specification": "光電SENSOR OMRON E3Z-LS61 (舊型號:E3S-LS5C4S)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "22"
+  },
+  {
+    "part_number": "SK2030001",
+    "specification": "繼電器 OMRON G2R-2-SND , DC24V(S) , 馬來西亞製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "23"
+  },
+  {
+    "part_number": "SH5083001",
+    "specification": "PLC模組 三菱 Q64AD",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "24"
+  },
+  {
+    "part_number": "SK0045000",
+    "specification": "電池 三菱 MR-BAT , 3.6V 1700mAh (日本原廠)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "25"
+  },
+  {
+    "part_number": "SK0287000",
+    "specification": "電池 三菱 MR-BAT6V1SET , 6V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "26"
+  },
+  {
+    "part_number": "SK0285000",
+    "specification": "電池 三菱 MR-J3BAT , 3.6V 2000mAh",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "27"
+  },
+  {
+    "part_number": "SH5135000",
+    "specification": "PLC模組 三菱 QJ61BT11N",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "28"
+  },
+  {
+    "part_number": "SP0414000",
+    "specification": "全白鐵管束 1/2\" (最低申請數量30個)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "29"
+  },
+  {
+    "part_number": "SP0410000",
+    "specification": "全白鐵管束 1\" (最低申請數量30個)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "29"
+  },
+  {
+    "part_number": "SP0412000",
+    "specification": "全白鐵管束 3/4\" (最低訂量:30個)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "29"
+  },
+  {
+    "part_number": "SH5001M00",
+    "specification": "PLC模組 三菱 Q64DAN",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "30"
+  },
+  {
+    "part_number": "SH5132000",
+    "specification": "PLC模組 三菱 Q68ADV",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "30"
+  },
+  {
+    "part_number": "SC4027002",
+    "specification": "壓力檢知sensor DB30.600 input:0~6 bar, output 4~20nA/ 2-wire supply 12~36VDC 1/4 PT(顯影用)(揚博DES線使用)廠牌:BD",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "31"
+  },
+  {
+    "part_number": "SH5051001",
+    "specification": "PLC模組 三菱 A1S64AD",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "32"
+  },
+  {
+    "part_number": "SK0178002",
+    "specification": "電磁接觸器 EATON DILM12-10 , 380V , 50/60HZ",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "33"
+  },
+  {
+    "part_number": "SE7321000",
+    "specification": "調速閥 PISCO SSNC10-02 , φ10 , 2分牙 , 材質:SUS31",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "34"
+  },
+  {
+    "part_number": "SK1600103",
+    "specification": "電磁接觸器 SIEMENS 3RT2017-1BB41 , DC24V , 接點:1NO",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "34"
+  },
+  {
+    "part_number": "SD3040001",
+    "specification": "溫度控制器 OMRON E5CC-QX2ASM-880 , AC110~240V (舊型號:E5CN-Q2T、E5CN-Q2MT-500、E5CC-QX2ASM-800 , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "35"
+  },
+  {
+    "part_number": "SD1019C01",
+    "specification": "計數器 OMRON H7CC-AD DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "36"
+  },
+  {
+    "part_number": "SC4037002",
+    "specification": "MG-000000803-000 風壓sensor 0-0, 25bar/EPDM/VA/2-L (舊P/N:MG-000000553-000停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "37"
+  },
+  {
+    "part_number": "SD0228001",
+    "specification": "1000270373SEQUENCE FA BASS 2 MODULE 廠牌:YOKOGAWA 型號:F3LR02-1W (適用 USHIO設備)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "38"
+  },
+  {
+    "part_number": "SG7008002",
+    "specification": "溫度控制器 OMRON E5CC-CX2ASM-804",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "39"
+  },
+  {
+    "part_number": "SD3023000",
+    "specification": "溫度控制器 OMRON E5CC-RW2AUM-800 (插入式) , AC100~240V , TEMP:MULTI-RANGE (替代舊型號:E5CN-R1TU、E5CZ-R2TU)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "40"
+  },
+  {
+    "part_number": "SA1600005",
+    "specification": "正齒輪 鴻翔 φ53.6*φ40*25T , 材質:MC藍色 (等同:連達P/N:RY-1654171-00-R0) (適用:RAYON黏塵機型RY906AT_工令TP001544)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "41"
+  },
+  {
+    "part_number": "SC2294C01",
+    "specification": "003015 SENSOR 伯東 (適用:HAKUTO 630NP 入料輸送檢知)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "42"
+  },
+  {
+    "part_number": "SG2176C02",
+    "specification": "數位流量計 FOTEK ATF-2N-100-RS",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "43"
+  },
+  {
+    "part_number": "SE4146000",
+    "specification": "電磁閥 CKD ADK11-20A-H5NDZ , AC100V , 含:銅出口閥 (舊型號:ADK11-20A-H5KZ , AC110V , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "44"
+  },
+  {
+    "part_number": "SE4704C01",
+    "specification": "022035 電磁閥 伯東 (適用:HAKUTO 630NP)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "45"
+  },
+  {
+    "part_number": "SAB280000",
+    "specification": "真空過濾器 CKD VRA2000-8",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "46"
+  },
+  {
+    "part_number": "SE4600025",
+    "specification": "電磁閥 CS-FLUIDPOWER HNSA-20-G2-220VAC , 3/4\"",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "46"
+  },
+  {
+    "part_number": "SE7589002",
+    "specification": "氣動球閥 burkert #96513381 X-PVBA-BALL-PVC/EPDM-1/2\"-W-NC (適用:敘豐Develop)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "47"
+  },
+  {
+    "part_number": "SG5001002",
+    "specification": "導電度計 BURKERT #00566604 , 8228-BC89-PDFF-C5-A-F1-K-BDN/DC-B*IS22 , 含:訊號接頭 #96502089 (舊型號:#431679 , Type:8226 , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "48"
+  },
+  {
+    "part_number": "SDX425001",
+    "specification": "★規格確認 CPU模組 YOKOGAWA F3RP51-2N (舊型號:F3RP51-3P , 停產) (適用:優志旺USHIO曝光機UX-5782SC-ASR01 , 請購時須提供原廠設備型號)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "49"
+  },
+  {
+    "part_number": "SE4600108",
+    "specification": "00250319 OXIDE冰水電磁閥 BURKET 6213-EV-A13,0BBMSRC85-K-230/56-16*HP00+NA38 230V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "50"
+  },
+  {
+    "part_number": "SC2106000",
+    "specification": "磁簧SENSOR MINDMAN RCE1 , 出線長度:2M",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "51"
+  },
+  {
+    "part_number": "SA1648002",
+    "specification": "00.028.0004.0000 鏈輪 瞬茂 CHAIN WHEEL / CPL / St.50 / Z49 / 3 / 8x7 / 32 /d20 (適用:瞬茂NTWC顯影線傳動軸側)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "52"
+  },
+  {
+    "part_number": "SP0661000",
+    "specification": "吸嘴 加耐力 S2-060-9 , 雙層式 , ID:φ3.7 , OD:φ10.9 , H:16.3 , 材質:矽膠 , 透明低印痕",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "53"
+  },
+  {
+    "part_number": "SC1673C02",
+    "specification": "光電SENSOR OMRON EE-SX972-C1 (適用:亞碩UVCP)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "54"
+  },
+  {
+    "part_number": "SH5221C02",
+    "specification": "PLC轉接模組 三菱 FX5-CNV-BUS (適用:防焊顯影線)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "54"
+  },
+  {
+    "part_number": "SC1600137",
+    "specification": "SMC D-A93 , 出線長度:3M",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "55"
+  },
+  {
+    "part_number": "SC2063001",
+    "specification": "近接SENSOR OMRON E2E-X10ME1",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "55"
+  },
+  {
+    "part_number": "SC0033000",
+    "specification": "磁簧SENSOR MINDMAN RCM , 出線:2M (未含SENSOR固定環",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "55"
+  },
+  {
+    "part_number": "SC0026000",
+    "specification": "磁簧SENSOR MINDMAN RCA",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "55"
+  },
+  {
+    "part_number": "SA9217002",
+    "specification": "天車升降導輪(含培零、軸心) 材質UPE 直徑40MM",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "56"
+  },
+  {
+    "part_number": "SL3102002",
+    "specification": "KE-000000082-002 無動力滾輪鏈條 瞬茂 FREE ROLLER CHAIN / 1.4571 / RCH1000",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "56"
+  },
+  {
+    "part_number": "SG0019002",
+    "specification": "EB-000000224-000 感溫棒 瞬茂 PT100 L:200mm",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "57"
+  },
+  {
+    "part_number": "SD3046002",
+    "specification": "溫度控制器 OMRON E5AN-C3MT-500-M",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "57"
+  },
+  {
+    "part_number": "SH5197C00",
+    "specification": "PLC模組 三菱 QD75P4N 24VDC 0.36A (適用:迅得投/收板機)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "58"
+  },
+  {
+    "part_number": "SH5161000",
+    "specification": "PLC模組 三菱 QD75P2N",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "58"
+  },
+  {
+    "part_number": "SE4171000",
+    "specification": "電磁閥 SMC VF3130-5D1-02 (舊型號:VF3130-5DB-02 , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "59"
+  },
+  {
+    "part_number": "SG1600015",
+    "specification": "Solenoid Valve Doubl雙閥螺線;SMC;SY5245-5FUE",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "59"
+  },
+  {
+    "part_number": "SC1309000",
+    "specification": "KEYENCE光透過型光纖模組  SENSOR;感應器;FU-31",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "60"
+  },
+  {
+    "part_number": "SC2011000",
+    "specification": "FOTEK 傳感器SU-07X",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "60"
+  },
+  {
+    "part_number": "SCB005000",
+    "specification": "\"雷射SENSOR KEYENCE IL-S065 距離:55~75mm , 精度:2μm\"",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "61"
+  },
+  {
+    "part_number": "SD4600012",
+    "specification": "轉速/頻率訊號變送器 S4-RT",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "61"
+  },
+  {
+    "part_number": "SG1100QD2",
+    "specification": "氣動閥 BURKERT #96500473 , 2030 A 15.0 EA PV, 020 Pmed 2bar , Pilot 3.5-10bar",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "61"
+  },
+  {
+    "part_number": "SE4600123",
+    "specification": "burkert 電磁閥6012 C 1.2 FKM PA",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "62"
+  },
+  {
+    "part_number": "SH5150002",
+    "specification": "PLC模組 三菱 QJ71C24N-R4",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "62"
+  },
+  {
+    "part_number": "SH5155002",
+    "specification": "PLC模組   三菱 Q68ADV",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "62"
+  },
+  {
+    "part_number": "SE4057001",
+    "specification": "burkert 電磁閥 ID-No 00507442",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "63"
+  },
+  {
+    "part_number": "SH5084001",
+    "specification": "PLC模組 三菱 Q68DAVN",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "63"
+  },
+  {
+    "part_number": "SH5175Q00",
+    "specification": "MITSUBISHI Q-PLC CPU模組(Q03UDVCPU)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "63"
+  },
+  {
+    "part_number": "SE3017000",
+    "specification": "空壓快速接頭直三通 QUICK 3-PASS (適用:空壓管路落點)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "64"
+  },
+  {
+    "part_number": "SE4576000",
+    "specification": "CKD 電磁閥 AB31-02-3-03AB,DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "65"
+  },
+  {
+    "part_number": "SK0166002",
+    "specification": "E2081C031 編碼器 亞碩 OMRON E6B2-CWZ6C , 200P/R ,",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "65"
+  },
+  {
+    "part_number": "SE1E42000",
+    "specification": "雙導桿滑台氣缸 MCGD-03-32-30",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "66"
+  },
+  {
+    "part_number": "SKC600008",
+    "specification": "BUSSMANN 皿型保險絲40ET",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "66"
+  },
+  {
+    "part_number": "SE4018M00",
+    "specification": "burkert 電磁閥 ID-No 00429126",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "67"
+  },
+  {
+    "part_number": "SE4731C02",
+    "specification": "burkert 電磁閥 ID-No 00501916",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "67"
+  },
+  {
+    "part_number": "SG6003C02",
+    "specification": "\"電導度計錶頭 EC-410(適用:永煜SR-EPG DePd除鈀線)\"",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "68"
+  },
+  {
+    "part_number": "SK0289000",
+    "specification": "靜電消除器電纜線 KEYENCE SJ-C2U , 長度:2M (適用:靜電消除器SJ系列)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "68"
+  },
+  {
+    "part_number": "SG1600018",
+    "specification": "比例控制閥 SMC ITV3050-314BS-X23",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "69"
+  },
+  {
+    "part_number": "SE0030000",
+    "specification": "真空產生器 SMC ZU07SA (舊型號# ZU07S)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "70"
+  },
+  {
+    "part_number": "SG2600002",
+    "specification": "E30521800-001 數位式流量計 亞碩 FOTEK KTS-40-NON-P",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "71"
+  },
+  {
+    "part_number": "SD4600039",
+    "specification": "轉速傳送器 TAIK S4-RT , AC220V , 輸入:60P/R、100RPM (12V) , 輸出:DC4~20mA",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "72"
+  },
+  {
+    "part_number": "SC8600004",
+    "specification": "伺服控制器 FUJI RYS201S3-LSS",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "73"
+  },
+  {
+    "part_number": "SC8082000",
+    "specification": "KEYENCE放大器模組 IL-1000",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "74"
+  },
+  {
+    "part_number": "SF0195002",
+    "specification": "凌偉 ENOMOTO MW901EEA-EC , AC100V (適用:分析儀CHEMiROBO)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "74"
+  },
+  {
+    "part_number": "SC1537002",
+    "specification": "光電SENSOR FOTEK CDR-10XS , DC10~30V (訂製品,感應距離<10cm,訂購時請註明感應距離)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "75"
+  },
+  {
+    "part_number": "SK1600109",
+    "specification": "電磁接觸器 FUJI SC-4-1 , 220V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "76"
+  },
+  {
+    "part_number": "SG4100001",
+    "specification": "壓機真空檢知器 APG100-XM-NW16(舊型號:APGX-M-NW16/ALI、APG100-XM-NW16 , 停產) (新型號EDWARDS APG200 XM NW16 (期貨:8~10週) )",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "77"
+  },
+  {
+    "part_number": "SP0144002",
+    "specification": "KE-000000083-002 鏈條全目接頭 瞬茂 CONNECTION PIECE / V4A / RCH1000 / F.KE-82-002 (舊型號:KE-000000083-000 鏈條全目接頭 connection piece / 1.4301 / F.KE-82)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "77"
+  },
+  {
+    "part_number": "SB8003001",
+    "specification": "風扇 KAKU KA1238HA2SAT , AC220V , 4\"",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "78"
+  },
+  {
+    "part_number": "SC2003000",
+    "specification": "E300113E2-132 近接SENSOR OMRON E2E-X18ME1 短牙",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "79"
+  },
+  {
+    "part_number": "SD8042002",
+    "specification": "液位控制器 OMRON 61F-G2 , AC110/220V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "80"
+  },
+  {
+    "part_number": "SK2600006",
+    "specification": "繼電器 OMRON MY2N , AC100/110V , 日本製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "80"
+  },
+  {
+    "part_number": "SK2146000",
+    "specification": "繼電器 IDEC RR2P-U , DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "81"
+  },
+  {
+    "part_number": "SK2141002",
+    "specification": "繼電器 IDEC RU2S-C-D24 , DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "81"
+  },
+  {
+    "part_number": "SC8051001",
+    "specification": "光電放大器 KEYENCE LV-21AP",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "82"
+  },
+  {
+    "part_number": "SD8011000",
+    "specification": "ELECTRODE HOLDER OMRON PS-5S",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "82"
+  },
+  {
+    "part_number": "SA5012002",
+    "specification": "37.004.7019.0002 鏈條全目接頭 瞬茂 CONNECTION PIEC",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "83"
+  },
+  {
+    "part_number": "SA0837002",
+    "specification": "KR-000000012-000 鏈輪 瞬茂 CHAIN WHEEL/PE/Z=16/D=2",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "83"
+  },
+  {
+    "part_number": "SAC103000",
+    "specification": "O型環 G-25 , ID:φ24.4*線徑φ3.1 , 材質:EPDM , 硬",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "84"
+  },
+  {
+    "part_number": "SAC094002",
+    "specification": "O型環 G-25 , ID:φ24.4*3.1t  , 材質:VITON , 棕色",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "84"
+  },
+  {
+    "part_number": "SE7207000",
+    "specification": "193139 節流閥 FESTO GRLA-M5-QS-6-D , M5牙 , φ6",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "84"
+  },
+  {
+    "part_number": "SD0098002",
+    "specification": "蹼輪轉子亞碩DVCP   J11009銅槽流量計 FOTEK 用  蹼輪",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "85"
+  },
+  {
+    "part_number": "SC9011002",
+    "specification": "極限開關 OMRON WLD18-N ( 舊型號# WLD-Q )",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "86"
+  },
+  {
+    "part_number": "SG2110002",
+    "specification": "流量計 LORRIC(和旺昌) F101 PSU 20LPM (V) 1/2\"南亞 , 插管式",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "86"
+  },
+  {
+    "part_number": "SH2291000",
+    "specification": "PLC模組 OMRON CRT1-ID16",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "86"
+  },
+  {
+    "part_number": "SG4600029",
+    "specification": "單面充油直立式壓力錶 華記 BC-A , 2-1/2\" , 0~10kg/c㎡ , 1/4\"PT外牙 , 材質:SUS316",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "87"
+  },
+  {
+    "part_number": "SG4007002",
+    "specification": "PP隔膜壓力錶 華記 GS-AC , 2-1/2\" , 0~2KG/0.2MPa ,",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "87"
+  },
+  {
+    "part_number": "SG2089002",
+    "specification": "E30520000-002 電子式流量計錶頭 亞碩 FOTEK KTM-A ,",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "87"
+  },
+  {
+    "part_number": "SK2038000",
+    "specification": "積熱電驛 FUJI TR-0N , 7~11A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "88"
+  },
+  {
+    "part_number": "SK1600044",
+    "specification": "積熱電驛 FUJI TR-0N , 0.64~0.96A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "88"
+  },
+  {
+    "part_number": "SK1600040",
+    "specification": "積熱電驛 FUJI TR-0N , 9~13A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "88"
+  },
+  {
+    "part_number": "SK1140001",
+    "specification": "積熱電驛 FUJI TR-0N , 2.8~4.2A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "88"
+  },
+  {
+    "part_number": "SD0205002",
+    "specification": "Module TYPE: HFRDO-32A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "89"
+  },
+  {
+    "part_number": "SE1D08002",
+    "specification": "MCJQ-11-40-25M-RCE1",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "89"
+  },
+  {
+    "part_number": "SD0201002",
+    "specification": "FAST INPUT BOARD PART:HFRDI-1616 ( MAKER: Hanmi )",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "89"
+  },
+  {
+    "part_number": "SD8036000",
+    "specification": "繼電器 OMRON 61F-11 , 日本製 (適用:液位控制器61F-G",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "90"
+  },
+  {
+    "part_number": "SK2600007",
+    "specification": "繼電器 OMRON MY2N , AC200/220V , 日本製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "90"
+  },
+  {
+    "part_number": "SK2134001",
+    "specification": "繼電器 OMRON MY2N , DC24V , 日本製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "90"
+  },
+  {
+    "part_number": "SK1092000",
+    "specification": "電磁接觸器 FUJI SC-0 110V (NO)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "91"
+  },
+  {
+    "part_number": "SAC248001",
+    "specification": "C2619025 真空密封膠條 台灣日合 PACKING GLAND , TYPE: L=3280 (適用:羅門哈斯CVP-600真空壓膜機)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "92"
+  },
+  {
+    "part_number": "SK0688Q00",
+    "specification": "\" S-RIT10401700 時規皮帶 40-T10-1700\"",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "92"
+  },
+  {
+    "part_number": "SM2333001",
+    "specification": "真空緩衝膠條 摩頓 CVP600 L=3140",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "92"
+  },
+  {
+    "part_number": "SM2331001",
+    "specification": "真空緩衝膠條 摩頓 CVP600 L=2860",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "92"
+  },
+  {
+    "part_number": "SM2332001",
+    "specification": "真空緩衝膠條 摩頓 CVP600 L=3080",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "92"
+  },
+  {
+    "part_number": "SC1452001",
+    "specification": "SMC Sensor D-M9N",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "93"
+  },
+  {
+    "part_number": "SC9066000",
+    "specification": "OMRON ABF-R開關 TZ-1G V22",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "93"
+  },
+  {
+    "part_number": "SD0261001",
+    "specification": "HMTPAR061 通訊介面卡 ANCN-01C-YE (舊型號# HMTPAR025 通訊介面卡 韓美(HANMI) ANML-01CN) (適用:韓美切割機sawing&placement-3500F)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "93"
+  },
+  {
+    "part_number": "SJ1195000",
+    "specification": "\" S-RIT10401960 時規皮帶 40-T10-1960\"",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "93"
+  },
+  {
+    "part_number": "SE1A75000",
+    "specification": "汽缸 KOGANEI CS-SGDAQ32*50-ZE155B2-56W",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "94"
+  },
+  {
+    "part_number": "SE7238001",
+    "specification": "\"真空閥 SMC XLC-50H0-2 (舊型號:XLC-50H0-1) (適用:ABF壓合機)\"",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "94"
+  },
+  {
+    "part_number": "SAD127000",
+    "specification": "LKFX-010019-00 聯軸器 DISCO(迪思科) Coupling φ14*φ14 (適用:DISCO切割機DFD-6361)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "95"
+  },
+  {
+    "part_number": "SA0F27000",
+    "specification": "LKFX-010013-0 擋塊 DISCO(迪思科) Stopper (X,6361) (適用:DISCO切割機DFD-6361)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "95"
+  },
+  {
+    "part_number": "SD0186002",
+    "specification": "HMTEXP000 FAST Analog Output 8P TYPE: HFAO-08",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "95"
+  },
+  {
+    "part_number": "SM2284002",
+    "specification": "LKFY-510040-1 Y軸防水簾 DISCO FLAT BELLOWS(Y)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "95"
+  },
+  {
+    "part_number": "SKB257000",
+    "specification": "漏電斷路器 FUJI EW100EAG , 3P60A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "96"
+  },
+  {
+    "part_number": "SK0601000",
+    "specification": "積熱電驛 三菱 TH-T18KP , 4~6A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "96"
+  },
+  {
+    "part_number": "SK0679000",
+    "specification": "積熱電驛 三菱 TH-T18 , 2.8~4.4A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "96"
+  },
+  {
+    "part_number": "SH5202000",
+    "specification": "PLC模組 三菱 QD62",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "97"
+  },
+  {
+    "part_number": "SH5193000",
+    "specification": "Q-PLC電源模組 三菱 Q62DAN 24VDC 0.15A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "97"
+  },
+  {
+    "part_number": "SH5032000",
+    "specification": "●集團有庫存 , ▲停產 , PLC模組 三菱 FX3G-60MT/ES-A (舊型號:FX1N-60MT , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "97"
+  },
+  {
+    "part_number": "SB5188002",
+    "specification": "PF18-0200-25S3 馬達",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "98"
+  },
+  {
+    "part_number": "SC1449001",
+    "specification": "SMC D-A93 , 出線長度:50cm",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "99"
+  },
+  {
+    "part_number": "SC7023000",
+    "specification": "\"SUNTEX(尚泰) 四極式電導度計探頭 8-244-10 電導度計探頭 (用於高電導及藥水，範圍大於100us/cm )\"",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "100"
+  },
+  {
+    "part_number": "SC1581000",
+    "specification": "BE Sensor IC + P20A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "100"
+  },
+  {
+    "part_number": "SAB299002",
+    "specification": "FILTRAFINE 不銹鋼濾罐 IDVIOS-3/4TN-CB-3",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "101"
+  },
+  {
+    "part_number": "SK1600101",
+    "specification": "電磁接觸器 FUJI SC-4-0 , 110V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "102"
+  },
+  {
+    "part_number": "SK1600075",
+    "specification": "電磁接觸器 FUJI SC-4-0 , 220V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "102"
+  },
+  {
+    "part_number": "SK1138001",
+    "specification": "積熱電驛 FUJI TR-0N , 0.8~1.2A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "102"
+  },
+  {
+    "part_number": "SK0139002",
+    "specification": "EM-000000370-000 馬達 ANIMATICS SV23165DT-SGG1/CLASS5->C4/PROFIBUS SCHMID",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "103"
+  },
+  {
+    "part_number": "SC2011000",
+    "specification": "光電SENSOR FOTEK SU-07X , DC10~30V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "104"
+  },
+  {
+    "part_number": "SC1397000",
+    "specification": "SENSOR 廠牌: OMRON TYPE: E32-D32",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "104"
+  },
+  {
+    "part_number": "SE4356000",
+    "specification": "Amlsco電磁閥RBS52-02",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "104"
+  },
+  {
+    "part_number": "SKE010000",
+    "specification": "雷射位移感測器纜線 KEYENCE OP-87056 , 長度:2M",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "104"
+  },
+  {
+    "part_number": "SN2149001",
+    "specification": "ASM 零組件 C+P20A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "104"
+  },
+  {
+    "part_number": "SC1600046",
+    "specification": "SENSOR;感應器;FU-32",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "104"
+  },
+  {
+    "part_number": "SG5038002",
+    "specification": "E80020060-P03 整流器顯示錶 亞碩 NWB3000S10-PFC , D",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "105"
+  },
+  {
+    "part_number": "SK1600033",
+    "specification": "積熱電驛 FUJI TR-0N , 4~6A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "106"
+  },
+  {
+    "part_number": "SG2151C02",
+    "specification": "流量計 FLOW Master YTLNZ 450-GA-S , 24VDC 4-20mA Class 2 Source 熱線式 (適用:億鴻SAP DSM)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "107"
+  },
+  {
+    "part_number": "SC0204002",
+    "specification": "burkert 流量感測器 FLOW : 5E30/8030",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "108"
+  },
+  {
+    "part_number": "SE1316001",
+    "specification": "汽缸 MINDMAN MCGS-03-50-25-S2 (舊型號:MCGB-03-50-2",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "108"
+  },
+  {
+    "part_number": "SD0300000",
+    "specification": "I/O模組 ODEAR(歐迪爾) DY32R-K5",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "109"
+  },
+  {
+    "part_number": "SK2140000",
+    "specification": "●集團有庫存 , ▲停產 , 繼電器 OMRON MY2N-GS , DC24V , GS:大陸製 (舊型號:MY2N-J)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "109"
+  },
+  {
+    "part_number": "SK2168000",
+    "specification": "繼電器 IDEC RU4S-C-D24 , DC24V , 最低訂量:10個",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "109"
+  },
+  {
+    "part_number": "SE1480002",
+    "specification": "汽缸 SMC CDQ2B50-30DMZ-A93",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "110"
+  },
+  {
+    "part_number": "SD7049000",
+    "specification": "人機介面 PRO-FACE PFXGP4301TADW , DC24V (舊型號:GP37W2-BG41-24V、AST3301-B1-D24、GP2301-LG41-24V、GP2300-LG41-24V、GP270-LG11-24V , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "111"
+  },
+  {
+    "part_number": "SK0046000",
+    "specification": "保險絲座上蓋 TEND TFB-101N , AC110/220V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "112"
+  },
+  {
+    "part_number": "SK0204000",
+    "specification": "保險絲座 TEND TFBR-101 , 10A , 1P",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "112"
+  },
+  {
+    "part_number": "SAE007C02",
+    "specification": "22671C5210 柱導輪 外徑16φ, 內徑6φ,長度14L 材質:PEEK (適用:敘豐水平水洗線)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "112"
+  },
+  {
+    "part_number": "SKC049001",
+    "specification": "玻璃保險絲 GIN SING 3A , 30mm (5個/只=盒 , 系統單位無法改盒)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "113"
+  },
+  {
+    "part_number": "SK7002000",
+    "specification": "電源供應器 MEAN WELL LRS-50-24 , 輸入:AC100~240V , 輸出:DC24V , 52.8W (舊型號:S-50-24、NES50-24)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "113"
+  },
+  {
+    "part_number": "SK1090000",
+    "specification": "電磁接觸器 FUJI SC-03 , 220V , NO型",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "113"
+  },
+  {
+    "part_number": "SF3131000",
+    "specification": "MP-F-204-SCV-BP 馬達",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "114"
+  },
+  {
+    "part_number": "SK7009000",
+    "specification": "電源供應器 MEAN WELL S-150-24",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "115"
+  },
+  {
+    "part_number": "SK7105000",
+    "specification": "電源供應器 MEAN WELL LRS-100-24 , 輸入:AC100~240V , 輸出:DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "115"
+  },
+  {
+    "part_number": "SE1626000",
+    "specification": "汽缸 MINDMAN MGTU-50-30-S2-RCI",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "117"
+  },
+  {
+    "part_number": "SE1369002",
+    "specification": "汽缸 MINDMAN MCQA-11-50-60M-FB-S2-YSA20",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "117"
+  },
+  {
+    "part_number": "SE1373002",
+    "specification": "B40315065-041 汽缸 亞碩 APMATIC GTC-50*65-S2-RK07",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "118"
+  },
+  {
+    "part_number": "SE4692Q00",
+    "specification": "氣動二口球閥 APMATIC TSB-20-2 1/2\"-HC 材質:鋁合金(",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "119"
+  },
+  {
+    "part_number": "SB3600003",
+    "specification": "●有庫存 , 伺服馬達 FUJI GYC152DC1-SA , 停產",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "120"
+  },
+  {
+    "part_number": "SE7302002",
+    "specification": "氣動隔膜閥 BURKERT #00154799 , 2030 A 20,0 EA PD D",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "121"
+  },
+  {
+    "part_number": "SN2169001",
+    "specification": "吸嘴 妙德 PJG-6-N , 雙層式 , ID:φ4 , OD:φ6 , H:9 , 材質:NBR (最低訂量:100)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "122"
+  },
+  {
+    "part_number": "SK2600035",
+    "specification": "繼電器 OMRON LY2N , DC24V , 日本製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "123"
+  },
+  {
+    "part_number": "SK2171000",
+    "specification": "繼電器 OMRON MY2N , DC100/110V(S) , 日本製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "123"
+  },
+  {
+    "part_number": "SK2169000",
+    "specification": "繼電器 OMRON MY4N , DC100/110V(S) , 日本製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "124"
+  },
+  {
+    "part_number": "SK2170000",
+    "specification": "繼電器 OMRON MY4N , AC100/110V(S) , 日本製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "124"
+  },
+  {
+    "part_number": "SK2600023",
+    "specification": "繼電器 OMRON MY4N , AC200/220V , 日本製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "125"
+  },
+  {
+    "part_number": "SK2085000",
+    "specification": "繼電器 OMRON MKS3P , DC24V , 大陸製 (舊型號:MK3P-I , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "125"
+  },
+  {
+    "part_number": "SK2067000",
+    "specification": "繼電器座 OMRON PYFZ-08 (舊型號:PYF08A , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "126"
+  },
+  {
+    "part_number": "SK2011000",
+    "specification": "繼電器 OMRON LY2N-D2 , DC24V , 日本製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "127"
+  },
+  {
+    "part_number": "SK0524000",
+    "specification": "斷路器 士林 BHA32C16 , 2P , 16A , 230/400V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "128"
+  },
+  {
+    "part_number": "SH5176Q00",
+    "specification": "PLC模組 三菱 FX5U-32MT/ES",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "129"
+  },
+  {
+    "part_number": "SH5159002",
+    "specification": "PLC模組 三菱 QY10",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "130"
+  },
+  {
+    "part_number": "SG1013002",
+    "specification": "A002-100-9500 氣動隔膜閥 BURKERT #00262744 ( 2030-",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "131"
+  },
+  {
+    "part_number": "SC4101002",
+    "specification": "壓力感測器 DELTA DPA10N-P 12~24V -100~1000kPa NPN output +4~20mA 外孔1/8PT 內孔M5 (等同:敘豐P/N:17-10-5T-00-005)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "133"
+  },
+  {
+    "part_number": "SP0318002",
+    "specification": "EA-000000599-000 控制模組 SIEMENS 6ES7321-1BL00-0AA0",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "134"
+  },
+  {
+    "part_number": "SC4013000",
+    "specification": "壓力SENSOR SMC ISE40-01-22 ( 替代型號:ISE40A-01-R )",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "135"
+  },
+  {
+    "part_number": "SJ6197001",
+    "specification": "時規皮帶 MEGADYNE 10-T5-365 , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "136"
+  },
+  {
+    "part_number": "SJ6281000",
+    "specification": "時規皮帶 BANDO 10-T5-410 , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "136"
+  },
+  {
+    "part_number": "SJ6600014",
+    "specification": "時規皮帶 BANDO 10-T5-305 , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "136"
+  },
+  {
+    "part_number": "SP0764000",
+    "specification": "傳動筒狀磁石RY-0874205-00-R2",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "137"
+  },
+  {
+    "part_number": "SG0077002",
+    "specification": "SUNTEX 分析儀(電導度傳送器) EC-4310",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "139"
+  },
+  {
+    "part_number": "SG4104002",
+    "specification": "空氣攪拌錶頭 廠牌: 億鴻 TYPE: NART-DNO-INB",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "140"
+  },
+  {
+    "part_number": "SP0892000",
+    "specification": "玉將 遮蔽養生膠帶2700",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "140"
+  },
+  {
+    "part_number": "SH5069000",
+    "specification": "PLC模組 三菱 FX3U-16MR/ES-A (舊型號:FX2N-16MR)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "141"
+  },
+  {
+    "part_number": "SH5199000",
+    "specification": "PLC模組 三菱 QH42P",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "142"
+  },
+  {
+    "part_number": "SH5166000",
+    "specification": "PLC模組 三菱 QD75D4N (可替代:QD75D4)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "142"
+  },
+  {
+    "part_number": "SH5205C01",
+    "specification": "CC-LINK模組 三菱 Q04UDVCPU",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "143"
+  },
+  {
+    "part_number": "SH5059000",
+    "specification": "PLC模組 三菱 Q62P",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "143"
+  },
+  {
+    "part_number": "SH5074000",
+    "specification": "PLC模組 三菱 FX2N-8EYT",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "144"
+  },
+  {
+    "part_number": "SH5101000",
+    "specification": "▲停產 , PLC模組 三菱 Q02HCPU",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "144"
+  },
+  {
+    "part_number": "SD0600125",
+    "specification": "PLC模組 三菱 FX3U-64MR-ES/A (舊型號:FX2N-64MR-ES)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "145"
+  },
+  {
+    "part_number": "SD0600131",
+    "specification": "PLC模組底板 三菱 A1S52B",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "146"
+  },
+  {
+    "part_number": "SJ6245000",
+    "specification": "時規皮帶 BANDO 10-T5-200 , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "146"
+  },
+  {
+    "part_number": "SJ6111002",
+    "specification": "時規皮帶 MEGADYNE 15-T5-185 , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "147"
+  },
+  {
+    "part_number": "SJ6289000",
+    "specification": "時規皮帶 PRETECH 10-T5-475 , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "147"
+  },
+  {
+    "part_number": "SJ6217000",
+    "specification": "時規皮帶 MEGADYNE 10-T5-525 , 材質:PU",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "147"
+  },
+  {
+    "part_number": "SJ6262000",
+    "specification": "FT5152050OPEN 時規皮帶 迅得 T5-15W-2050L-OPEN , 材質:PU鋼絲 , 灰白色 (適用:迅得SBC-1000B暫存機)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "148"
+  },
+  {
+    "part_number": "SJ6098002",
+    "specification": "RI-000001560-000 時規皮帶 義大利ELATECH PU+鋼絲OPEN 15T5/5米 (5.5M)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "148"
+  },
+  {
+    "part_number": "SJ6039002",
+    "specification": "時規皮帶 SYNCHROFLEX 10-T5-260 , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "148"
+  },
+  {
+    "part_number": "SJ6233001",
+    "specification": "018045 時規皮帶(無齒型) 伯東 NOK 0010-F12-01300D-FY (適用:伯東HAKUTO-630壓膜機)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "149"
+  },
+  {
+    "part_number": "SJ1240C00",
+    "specification": "時規皮帶 PRETECH 10-T5-325",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "150"
+  },
+  {
+    "part_number": "SJ6600007",
+    "specification": "時規皮帶 BANDO 25-T10-530 , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "150"
+  },
+  {
+    "part_number": "SJ6214001",
+    "specification": "時規皮帶 BANDO 15-T5-510 , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "150"
+  },
+  {
+    "part_number": "SJ6248000",
+    "specification": "時規皮帶 BANDO 15-T5-325 , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "150"
+  },
+  {
+    "part_number": "SP0600231",
+    "specification": "固態電譯SSR OMRON G3PA-220B-VD , 輸入:DC5~24V , 輸出:20A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "151"
+  },
+  {
+    "part_number": "SG4029002",
+    "specification": "單面充油直立式壓力錶 華記 BC-A , 2-1/2\" , 0~2kg/c㎡ , 1/4\"PT外牙 , 材質:SUS316",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "152"
+  },
+  {
+    "part_number": "SD0169002",
+    "specification": "S-E025100120 兩片減之錶頭 TBMB-Y11Y 接點輸出可設定倍率 (迅得SL-111投板機用)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "152"
+  },
+  {
+    "part_number": "SK0009000",
+    "specification": "電池 三菱 A6BAT (PLC使用)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "152"
+  },
+  {
+    "part_number": "SE1931001",
+    "specification": "氣動夾爪 SMC MHS4-32D",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "153"
+  },
+  {
+    "part_number": "SAC321002",
+    "specification": "O型環 AS-376 , 內徑:φ247.02 , 線徑:φ5.33 , 材質:VITON",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "153"
+  },
+  {
+    "part_number": "SAC328002",
+    "specification": "O型環 AS-376 , 內徑:φ247.02 , 線徑:φ5.33 , 材質:EPDM",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "153"
+  },
+  {
+    "part_number": "SA1600023",
+    "specification": "502501324105021 左旋主動齒輪 揚博 M2.5*10T*15D短半月拋光 , 材質:SUS316",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "153"
+  },
+  {
+    "part_number": "SK0082000",
+    "specification": "蜂鳴器 TEND TBY-110 , AC110V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "153"
+  },
+  {
+    "part_number": "SC0103000",
+    "specification": "蜂鳴器 TEND TBY-24D , DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "153"
+  },
+  {
+    "part_number": "SE0193001",
+    "specification": "緩衝器 CEC FC2525",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "154"
+  },
+  {
+    "part_number": "SK0121000",
+    "specification": "按鈕開關保護蓋 DECA S50-011-12 , 角度:180度 (適用:DECA P16LMT1-lab照光按鈕開關)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "155"
+  },
+  {
+    "part_number": "SC1323001",
+    "specification": "OMRON ZX1-LD50A61 2M 本體 (不含金具 )",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "155"
+  },
+  {
+    "part_number": "SK7042000",
+    "specification": "電源供應器 MEAN WELL NES-150-24(LRS-150-24)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "155"
+  },
+  {
+    "part_number": "SK2600028",
+    "specification": "繼電器座 OMRON P2CF-11 , 日本製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "156"
+  },
+  {
+    "part_number": "SK0468000",
+    "specification": "繼電器座 OMRON PF083A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "156"
+  },
+  {
+    "part_number": "SK2600029",
+    "specification": "繼電器座 OMRON PF113A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "156"
+  },
+  {
+    "part_number": "SK1600102",
+    "specification": "電磁接觸器 FUJI SC-03 , 110V , NO型",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "156"
+  },
+  {
+    "part_number": "SK1141000",
+    "specification": "電磁接觸器 FUJI SC-0 , 220V , NO型",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "157"
+  },
+  {
+    "part_number": "SK1144000",
+    "specification": "電磁接觸器 FUJI SC-N1 , 220V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "157"
+  },
+  {
+    "part_number": "SK1600017",
+    "specification": "電磁接觸器 FUJI SC-N2S , AC220V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "157"
+  },
+  {
+    "part_number": "SKB162000",
+    "specification": "無熔絲開關 FUJI BW50EAG , 3P15A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "158"
+  },
+  {
+    "part_number": "SKB284000",
+    "specification": "無熔絲開關 FUJI BW32AAG , 3P15A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "158"
+  },
+  {
+    "part_number": "SK1114000",
+    "specification": "無熔絲開關 FUJI BW32AAG , 2P5A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "158"
+  },
+  {
+    "part_number": "SKB172000",
+    "specification": "無熔絲開關 FUJI EW32SAG , 3P30A (舊型號:EG53B、EG33AC , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "159"
+  },
+  {
+    "part_number": "SKB163000",
+    "specification": "無熔絲開關 FUJI BW50EAG , 3P20A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "159"
+  },
+  {
+    "part_number": "SKB180000",
+    "specification": "無熔絲開關 廠牌: TECO TYPE: TO-50EC 3P50A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "159"
+  },
+  {
+    "part_number": "SN1002000",
+    "specification": "S-COMP0088C00 吸嘴金具組 迅得 (KA(C4A_變1061003(8))) (適用:迅得機型SUR-118_工令I4603-01)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "160"
+  },
+  {
+    "part_number": "SD3059002",
+    "specification": "EN-000000335-000 溫度控制器 JUMO 701150/8-01-0253-2001-25/005.058",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "160"
+  },
+  {
+    "part_number": "SA3112002",
+    "specification": "噴嘴 IKEUCHI(中日) 1/4MVVP9020 , 材質:PP , 射出件",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "160"
+  },
+  {
+    "part_number": "SA8105002",
+    "specification": "504300332101400 滾輪片 揚博 φ32*10*14t , 材質:PP (適用:揚博前處理線_工令95196、98075)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "161"
+  },
+  {
+    "part_number": "SA8104002",
+    "specification": "504300333102500 滾輪片 揚博 φ33*10*25t , 材質:PP (適用:揚博前處理線_工令95196、98075)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "161"
+  },
+  {
+    "part_number": "SA1891C02",
+    "specification": "502502804101000 左旋從動齒輪(吸水) 揚博 M2.5*10T*D10*18L(半月) , 止付螺絲孔M6*1個 , 材質:CL (適用:揚博工令99112)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "162"
+  },
+  {
+    "part_number": "SA8106002",
+    "specification": "504310333102500 滾輪片 揚博 φ33*10*20+5t(φ50) , 材質:PP (適用:揚博前處理線_工令95196、98075)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "162"
+  },
+  {
+    "part_number": "SKB220000",
+    "specification": "漏電斷路器 FUJI EW63EAG , 3P60A",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "163"
+  },
+  {
+    "part_number": "SD0299000",
+    "specification": "I/O模組 ODEAR(歐迪爾) DSSXY32L",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "163"
+  },
+  {
+    "part_number": "SK1600104",
+    "specification": "電磁接觸器 Schneider LC1D18M7 , 220V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "163"
+  },
+  {
+    "part_number": "SK1157001",
+    "specification": "電磁接觸器 TECO CU-11 , 3φ220/380V , 接點:1a",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "163"
+  },
+  {
+    "part_number": "SK0400000",
+    "specification": "馬達欠相保護器 ANV APR-3L , AC110~480V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "163"
+  },
+  {
+    "part_number": "SE4600097",
+    "specification": "電磁閥 SMC SY5140-5FUE , DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "164"
+  },
+  {
+    "part_number": "SK2112000",
+    "specification": "繼電器 OMRON G2R-1-SND , DC24V(S) , 馬來西亞製",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "164"
+  },
+  {
+    "part_number": "SKC029000",
+    "specification": "陶瓷保險絲 BUSSMANN C14G10 , 690V , 10A , 尺寸:φ14*51 (最低訂量:10支的倍數)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "164"
+  },
+  {
+    "part_number": "SJ6215001",
+    "specification": "時規皮帶 MITSUBOSHI(三星) S3M-375 , W:10mm , 材質:PU鋼絲",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "165"
+  },
+  {
+    "part_number": "SK7138000",
+    "specification": "電源供應器 MEAN WELL EDR-120-24 , 輸入:AC100~240V , 輸出:DC24V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "165"
+  },
+  {
+    "part_number": "SD3020000",
+    "specification": "溫度控制器 OMRON E5CC-RX2ASM-880 (安裝型) , AC100~240V , TEMP:MULTI-RANGE (舊型號:E5CN-R2T、E5CZ-R2MT、E5CN-R2MT-500、E5CC-RX2ASM-800 , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "165"
+  },
+  {
+    "part_number": "SP0600129",
+    "specification": "電動起子 技友牌 CY-16C.SC , DC30V , 扭力:2~25kgf-cm , 1000rpm , 起子頭須加工",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "166"
+  },
+  {
+    "part_number": "SC1274002",
+    "specification": "光電SENSOR OMRON E3Z-R61",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "167"
+  },
+  {
+    "part_number": "SG4116001",
+    "specification": "壓力SENSOR DELTA DPA01M-P , 範圍:-100~100KPa , 輸出:1~5V (內含傳輸線)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "167"
+  },
+  {
+    "part_number": "SK7113000",
+    "specification": "電源供應器 MEAN WELL LRS-50-12 (舊型號:RS-50-12)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "168"
+  },
+  {
+    "part_number": "SE1A73000",
+    "specification": "汽缸 CHELIC SCR20*10",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "168"
+  },
+  {
+    "part_number": "SJ1146002",
+    "specification": "SC-50-42-008.425-00 電動起子頭 瞬茂 , 材質:SUS304",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "168"
+  },
+  {
+    "part_number": "SG4484C02",
+    "specification": "SS-CM21/25-0/10DZ6M 數位式PP隔膜壓力錶 華記 SS-CM21 0~10KG 線長5米 膜片:VITON 接口1/2\"PT (適用:揚博科技前處理A線B線)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "169"
+  },
+  {
+    "part_number": "SG4485C00",
+    "specification": "數位壓力錶 FOTEK PRS-P10K-RS-PP-12FNPT-M12-4C 0~10Kpa 接頭:M12 接口:1/2\"PT 材質:PP 後方出線(適用:揚博前處理)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "169"
+  },
+  {
+    "part_number": "SC1600192",
+    "specification": "光電SENSOR SICK GTB2S-N1331 (舊型號:WT2S-N131S10)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "169"
+  },
+  {
+    "part_number": "SK7098001",
+    "specification": "電源供應器 MEAN WELL LRS-35-5 (舊型號# RS-35-5)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "170"
+  },
+  {
+    "part_number": "SK7051000",
+    "specification": "電源供應器 MEAN WELL RS-25-5 , 輸入:AC100~240V , 輸出:DC5V",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "170"
+  },
+  {
+    "part_number": "SK7600010",
+    "specification": "電源供應器 MEAN WELL  RS-15-12 (舊型號:S-15-12)",
+    "warehouse_location": "會議室",
+    "major_category": "B",
+    "minor_category": "170"
+  },
+  {
+    "part_number": "SL1203001",
+    "specification": "伯東壓膜輪原廠培林SMT 6008RS6008RS",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "1"
+  },
+  {
+    "part_number": "SL1204001",
+    "specification": "滾珠培林 SMT 6007RS (適用:伯東Hakuto壓膜滾輪)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "1"
+  },
+  {
+    "part_number": "SL1205001",
+    "specification": "滾珠培林 SMT 6006RS (適用:伯東Hakuto壓膜滾輪)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "1"
+  },
+  {
+    "part_number": "SL1286000",
+    "specification": "滾珠培林 NSK F608ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "2"
+  },
+  {
+    "part_number": "SL1285000",
+    "specification": "滾珠培林 NSK F609ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "2"
+  },
+  {
+    "part_number": "SA8099000",
+    "specification": "樹脂培林輪 連達 DR30H10 (287839 TOK D-6200) (適用:RAYON黏塵機RY-1106系列)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "2"
+  },
+  {
+    "part_number": "SM2338002",
+    "specification": "連座培林 FYH UFL000",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "2"
+  },
+  {
+    "part_number": "SL1195001",
+    "specification": "滾珠培林 EZO F6800ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SL1121000",
+    "specification": "滾珠培林 NSK 6800ZZCM , 游隙:4~11μm",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SL1224000",
+    "specification": "滾珠培林 NSK 6001ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SA9600027",
+    "specification": "滾珠培林 NSK SS6201ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "4"
+  },
+  {
+    "part_number": "SL1270001",
+    "specification": "滾珠培林 NSK 6801ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "4"
+  },
+  {
+    "part_number": "SA9600017",
+    "specification": "滾珠培林 NSK SS6202ZZ (完整型號:6202-H-20T1XZZ*MA)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "5"
+  },
+  {
+    "part_number": "SL1066000",
+    "specification": "滾珠培林 NSK 6000ZZCM",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "5"
+  },
+  {
+    "part_number": "SL1170001",
+    "specification": "滾珠培林 NSK F688ZZ (完整型號:F688AZZ1MC3)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "5"
+  },
+  {
+    "part_number": "SL3144001",
+    "specification": "線性培林 THK LM-8",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "6"
+  },
+  {
+    "part_number": "SL3139000",
+    "specification": "線性培林 THK LM8SUU",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "6"
+  },
+  {
+    "part_number": "SL3111001",
+    "specification": "線性培林 THK LMF30UU",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "6"
+  },
+  {
+    "part_number": "SL1006000",
+    "specification": "滾珠培林 NSK 6902ZZ1CM",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "7"
+  },
+  {
+    "part_number": "SL1235000",
+    "specification": "滾珠培林 NSK 6901ZZ (完整型號:6901ZZ2)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "7"
+  },
+  {
+    "part_number": "SL1133001",
+    "specification": "滾珠培林 NMB L1280ZZ , ID:φ8 , OD:φ12 , t:3.5 (適用:達航HITACHI鑽孔機QIC)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "7"
+  },
+  {
+    "part_number": "SL4045000",
+    "specification": "陶瓷培林 6002 , ID:φ15 , OD:φ32 , t:9",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "8"
+  },
+  {
+    "part_number": "SA9600038",
+    "specification": "滾珠培林 NSK 6903-H-20T1XZZ*MA (SS6903ZZ)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "8"
+  },
+  {
+    "part_number": "SL1041000",
+    "specification": "滾珠培林 NSK 6900ZZ (完整型號:6900ZZ1CM)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "8"
+  },
+  {
+    "part_number": "SL1219000",
+    "specification": "滾珠培林 GOK 6001Z",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SA9600036",
+    "specification": "滾珠培林 NSK SS6801ZZ (完整型號:6801-H-20ZZ1*MA)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SP0610001",
+    "specification": "滾珠培林 NSK SS6902ZZ (完整型號:6902-H-20T1XZZ1*MA)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SL1085000",
+    "specification": "NSK培林 6002ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "10"
+  },
+  {
+    "part_number": "SL1294000",
+    "specification": "滾珠培林 GOK F698ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "10"
+  },
+  {
+    "part_number": "SL1140001",
+    "specification": "NSK培林 6804ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "11"
+  },
+  {
+    "part_number": "SL1236000",
+    "specification": "NSK培林 6902Z",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "12"
+  },
+  {
+    "part_number": "SP0609001",
+    "specification": "滾珠培林 NSK SS6901ZZ (完整型號:6901-H-20T1XZZ2*MA)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "13"
+  },
+  {
+    "part_number": "SL1117000",
+    "specification": "滾珠培林 NSK 6802ZZCM",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "13"
+  },
+  {
+    "part_number": "SE1H10000",
+    "specification": "汽缸 SMC CDM2B40-75AZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "14"
+  },
+  {
+    "part_number": "SE1D28000",
+    "specification": "汽缸 SMC CDM2B40-50AZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "14"
+  },
+  {
+    "part_number": "SE1C77002",
+    "specification": "汽缸 MINDMAN MCSS-6-10-AS",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "15"
+  },
+  {
+    "part_number": "SE1600183",
+    "specification": "汽缸 SMC CU20-40D",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SE1600171",
+    "specification": "汽缸 SMC CDQSB20-25DC",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SE1F64000",
+    "specification": "汽缸 CHELIC TD16*10",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "17"
+  },
+  {
+    "part_number": "SE1G07000",
+    "specification": "汽缸 SMC MXQR6-30A",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "17"
+  },
+  {
+    "part_number": "SE1G24000",
+    "specification": "汽缸 SMC CUJB20-5S",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "17"
+  },
+  {
+    "part_number": "SE1F98000",
+    "specification": "汽缸 SMC MXQR6L-30A",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "18"
+  },
+  {
+    "part_number": "SE1600054",
+    "specification": "汽缸 SMC CDU16-15D",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "18"
+  },
+  {
+    "part_number": "SE1742001",
+    "specification": "汽缸 MINDMAN MCGB-03-16-30",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "19"
+  },
+  {
+    "part_number": "SE1055001",
+    "specification": "Mindman 汽缸MCGB-03-16-20",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "19"
+  },
+  {
+    "part_number": "SE1394001",
+    "specification": "汽缸 CHELIC SCR32*20",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "20"
+  },
+  {
+    "part_number": "SE1E16000",
+    "specification": "CHELIC 汽缸 機械夾HDM20",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "20"
+  },
+  {
+    "part_number": "SE1648001",
+    "specification": "汽缸 MINDMAN MCDA-03-25-60",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "21"
+  },
+  {
+    "part_number": "SE1815002",
+    "specification": "下料機手指夾板汽缸MCMJ-11-16-75M-D-S2-YSA20",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "21"
+  },
+  {
+    "part_number": "SE1021000",
+    "specification": "汽缸 KOGANEI BDA16*30",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "22"
+  },
+  {
+    "part_number": "SE1817002",
+    "specification": "汽缸 MINDMAN MCDA-03-25-100",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "22"
+  },
+  {
+    "part_number": "SE1B79000",
+    "specification": "SMC 汽缸 MGQM16-30",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "22"
+  },
+  {
+    "part_number": "SE1F83000",
+    "specification": "EJTM-910037-10 汽缸(WCS1) 瀚益 , 附:磁簧SENSOR (適用:DISCO_HANMI切割機DFD6361)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "23"
+  },
+  {
+    "part_number": "SE1995002",
+    "specification": "汽缸 MINDMAN MCGB-03-16-10-RCE1*2",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "23"
+  },
+  {
+    "part_number": "SE1336002",
+    "specification": "汽缸 SMC CDQ2B50-30DZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "24"
+  },
+  {
+    "part_number": "SE1210002",
+    "specification": "汽缸 MINDMAN MCGB-03-16-75",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "24"
+  },
+  {
+    "part_number": "SE1A00001",
+    "specification": "汽缸 SMC MHY2-10D2",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "25"
+  },
+  {
+    "part_number": "SE1I04C01",
+    "specification": "汽缸 SMC MGPL20-40Z 1.0MPa (適用:印刷機/植球機)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "25"
+  },
+  {
+    "part_number": "SE1244000",
+    "specification": "汽缸 FESTO ADVU-16-15-A-P-A",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "26"
+  },
+  {
+    "part_number": "SE1781001",
+    "specification": "汽缸 MINDMAN MCSS-8-10-A",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "26"
+  },
+  {
+    "part_number": "SE1G25000",
+    "specification": "汽缸 SMC CDUJB12-10D",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "26"
+  },
+  {
+    "part_number": "SE1F78000",
+    "specification": "汽缸 SMC MGPL16-10Z (舊型號:MGPL16-10)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "27"
+  },
+  {
+    "part_number": "SE1769000",
+    "specification": "汽缸 SMC CU16-40D",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "27"
+  },
+  {
+    "part_number": "SE1911001",
+    "specification": "汽缸 SMC CDQSB20-10DC",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "28"
+  },
+  {
+    "part_number": "SE1E98000",
+    "specification": "汽缸 SMC MXS6-50",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "28"
+  },
+  {
+    "part_number": "SE1F14000",
+    "specification": "汽缸 CHELIC TD10*10",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "29"
+  },
+  {
+    "part_number": "SE1414000",
+    "specification": "汽缸 CHELIC SCL32*20 (不含磁簧SENSOR)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "29"
+  },
+  {
+    "part_number": "SE1C06000",
+    "specification": "汽缸 CHELIC MDX08*10-BM1",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "29"
+  },
+  {
+    "part_number": "SE1600110",
+    "specification": "汽缸 SMC MGPM16-30Z (舊型號:MGPM16-30)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "30"
+  },
+  {
+    "part_number": "SA9600014",
+    "specification": "培林 EZO SS6004ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "30"
+  },
+  {
+    "part_number": "SL1292000",
+    "specification": "滾珠培林 NMB 626ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "30"
+  },
+  {
+    "part_number": "SL1075000",
+    "specification": "滾珠培林 NSK 6904ZZCM",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "31"
+  },
+  {
+    "part_number": "SL1163000",
+    "specification": "滾珠培林 NSK 6901DDU",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "31"
+  },
+  {
+    "part_number": "SA9600018",
+    "specification": "滾珠培林 NSK SS6904ZZ (完整型號:6904-H-20T1XZZ*MA)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "32"
+  },
+  {
+    "part_number": "SL1079000",
+    "specification": "滾珠培林 NSK 6010ZZCM , 游隙:12~22μm",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "32"
+  },
+  {
+    "part_number": "SL1015000",
+    "specification": "滾珠培林 SKF 6000ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "33"
+  },
+  {
+    "part_number": "SA9311001",
+    "specification": "滾珠培林 NSK 6805ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "33"
+  },
+  {
+    "part_number": "SL1081000",
+    "specification": "滾珠培林 NSK 6903ZZCM",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "33"
+  },
+  {
+    "part_number": "SL1223000",
+    "specification": "滾珠培林 NSK 6000ZCM",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "34"
+  },
+  {
+    "part_number": "SL1291000",
+    "specification": "滾珠培林 NSK 6801VV",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "34"
+  },
+  {
+    "part_number": "SL1003M00",
+    "specification": "[M]BEARING , FL678ZZ(SUS)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "34"
+  },
+  {
+    "part_number": "SL1210001",
+    "specification": "滾珠培林 NSK MR128ZZ1MC3E , ID:φ8 , OD:φ12 , t:3.5 (等同:滾珠培林 NTN 678ZZ)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "35"
+  },
+  {
+    "part_number": "SA9363001",
+    "specification": "滾珠培林 MISUMI 6002ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "35"
+  },
+  {
+    "part_number": "SL1149000",
+    "specification": "滾珠培林 NSK 604ZZMC3E",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "35"
+  },
+  {
+    "part_number": "SA9315001",
+    "specification": "滾珠培林 NSK 606ZZMC3 , 游隙:5~10μm",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "36"
+  },
+  {
+    "part_number": "SL1166000",
+    "specification": "滾珠培林 NMB LF1480ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "36"
+  },
+  {
+    "part_number": "SL1262000",
+    "specification": "S-C696ZZ1軸承 TYPE: 696ZZ1",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "36"
+  },
+  {
+    "part_number": "SA9600024",
+    "specification": "滾珠培林 NSK SS6005ZZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "37"
+  },
+  {
+    "part_number": "SE1G03000",
+    "specification": "汽缸 SMC MGPL16-40Z (舊型號:MGPL16-40)",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "38"
+  },
+  {
+    "part_number": "SE1D29000",
+    "specification": "汽缸 SMC CDM2B25-25AZ",
+    "warehouse_location": "會議室",
+    "major_category": "C",
+    "minor_category": "38"
+  },
+  {
+    "part_number": "SI5003002",
+    "specification": "變頻器 三菱 FR-D740-120-NA (舊型號:FR-S540-5.5K ,",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SI5031000",
+    "specification": "變頻器 三菱 FR-D740-050-NA",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SIA026002",
+    "specification": "三菱 變頻器 FR-D740-012-NA",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SIA022000",
+    "specification": "變頻器 DELTA VFD2A8MS21ANSAA (舊型號:VFD004M21A , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SI5009002",
+    "specification": "609082033000000 變頻器 三菱 FR-D740-022-NA (舊型號:FR-S540E-0.75K , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SI5022000",
+    "specification": "變頻器 三菱 FR-E740-170-NA , 歐規 (可替代:FR-E740-7.5K , 日規) (舊型號:FR-E540-7.5K , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SI5002001",
+    "specification": "變頻器 三菱 FR-D720-070-NA (舊型號:FR-S520-1.5K , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SI5006002",
+    "specification": "變頻器 三菱 FR-D720-100-NA , 歐規 (舊型號:FR-S520E-2.2K , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SI5004002",
+    "specification": "變頻器 三菱 FR-E740-016-NA (舊型號:FR-S540-0.4K , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SI5032000",
+    "specification": "變頻器 三菱 FR-E740-040-NA , 歐規 (可替代:FR-E740-1.5K , 日規) (舊型號:FR-E540-1.5K , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SI5033000",
+    "specification": "變頻器 三菱 FR-E740-060-NA",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SD5110001",
+    "specification": "伺服控制器 三菱 MR-J2S-100B",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SD5135000",
+    "specification": "伺服控制器 三菱 MR-J2S-200B",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第二層"
+  },
+  {
+    "part_number": "SID012000",
+    "specification": "變頻器 士林 SS2-043-0.75K (舊型號:SH-040-0.75KBC ,",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SI0013002",
+    "specification": "E40326160-4 變頻器 亞碩 士林 SS2-043-0.4K",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SI0040002",
+    "specification": "變頻器 SIEMENS 6SE6440-2UD31-5DB1 (舊型號停產6SE6440-2AD31-5DA1)",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SI0021002",
+    "specification": "EN-000000271-000 變頻器 SIEMENS 6SE6420-2AD25-5CA1 (等同:6SE6420-2UD25-5CA1) (適用:瞬茂設備)",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SIA038000",
+    "specification": "▲停產 , 變頻器 DELTA VFD004S43A",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SI0051000",
+    "specification": "變頻器 HITACHI WJ200-007HF",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SIA029000",
+    "specification": "變頻器 DELTA VFD055B43A",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SI5043000",
+    "specification": "變頻器 三菱 FR-D740-036-NA",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SI5008002",
+    "specification": "變頻器 三菱 FR-D740-080-NA (舊型號:FR-S540E-3.7K , 停產)",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SI5035000",
+    "specification": "變頻器 三菱 FR-D740-160-NA",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SI5005002",
+    "specification": "變頻器 三菱 FR-E740-230-NA",
+    "warehouse_location": "會議室",
+    "major_category": "布幕後層架",
+    "minor_category": "第三層"
+  },
+  {
+    "part_number": "SCA000002",
+    "specification": "數位流量感測器 KEYENCE FD-Q32C (需搭配料號#SCA001002、#SCA002002一併購入)",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "1"
+  },
+  {
     "part_number": "SH5079000",
     "specification": "PLC模組 三菱 FX3U-48MT/ES-A",
     "warehouse_location": "辦公室",
-    "major_category": "入口旁儲位",
-    "minor_category": "001",
-    "quantity": 2
+    "major_category": "入口旁櫃位",
+    "minor_category": "1"
   },
   {
-    "spare_part_id": "67H000098",
     "part_number": "SH5056001",
     "specification": "PLC模組 三菱 FX2N-8EX-ES/UL",
     "warehouse_location": "辦公室",
-    "major_category": "入口旁儲位",
-    "minor_category": "001",
-    "quantity": 1
+    "major_category": "入口旁櫃位",
+    "minor_category": "1"
+  },
+  {
+    "part_number": "SD7027000",
+    "specification": "PLC模組 三菱 Q38B",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "1"
+  },
+  {
+    "part_number": "SH5203000",
+    "specification": "PLC模組底板 三菱 Q35B",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "1"
+  },
+  {
+    "part_number": "SH2257000",
+    "specification": "PLC模組底板 三菱 Q612B",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "1"
+  },
+  {
+    "part_number": "SC0227C00",
+    "specification": "二維條碼讀取器 KEYENCE SR-X300 (附:控制纜線 OP-88683 10M、OP-87232 10M、OP-88764、安裝支架 OP-88698)",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "2"
+  },
+  {
+    "part_number": "SE4193000",
+    "specification": "電磁閥 CKD ADK11-25A-02H AC110V 附線盒附燈 (期貨35天)",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SH5179000",
+    "specification": "PLC模組 三菱 FX5-16EYR/ES",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SH5115000",
+    "specification": "PLC模組 三菱 Q03UDCPU",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SH5117000",
+    "specification": "PLC模組 三菱 FX5-8AD",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SK0249000",
+    "specification": "●集團有庫存 , ▲與料號#SH5086001重複 , PLC模組 三菱 QY42P",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SH5073000",
+    "specification": "PLC模組 三菱 FX3U-232ADP-MB",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SD9047C00",
+    "specification": "真空控制器 SMC ZL3M06-K15LOZ-VAMW",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "4"
+  },
+  {
+    "part_number": "SH5149002",
+    "specification": "●集團有庫存 , ▲與料號#SH2256000重複 , PLC模組底板 三菱 Q312B",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "4"
+  },
+  {
+    "part_number": "SH5024000",
+    "specification": "PLC模組 三菱 FX3UC-64MT/D (舊型號:FX2NC-64MT)",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "4"
+  },
+  {
+    "part_number": "SH5162000",
+    "specification": "PLC模組 三菱 QJ71MB91",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "4"
+  },
+  {
+    "part_number": "SH5047001",
+    "specification": "PLC模組 三菱 A1SJ71UC24-R2",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "5"
+  },
+  {
+    "part_number": "SD0600054",
+    "specification": "●集團有庫存 , ▲與料號#SH5104000重複 , PLC模組 三菱 A1SJ71UC24-R4",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "5"
+  },
+  {
+    "part_number": "SH5195000",
+    "specification": "PLC模組 三菱 FX5U-80MT/ES",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "6"
+  },
+  {
+    "part_number": "SH5093001",
+    "specification": "PLC模組 三菱 FX3U-16CCL-M",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "6"
+  },
+  {
+    "part_number": "SH5100000",
+    "specification": "PLC模組 三菱 FX3U-64MT/ES-A (舊型號:FX2N-64MT)",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "7"
+  },
+  {
+    "part_number": "SB0600209",
+    "specification": "PLC模組 OMRON CJ1W-AD081-V1",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "8"
+  },
+  {
+    "part_number": "SH5190000",
+    "specification": "PLC模組 三菱 FX5U-64MT/ES",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "8"
+  },
+  {
+    "part_number": "SKA002001",
+    "specification": "018021 煞車離合器 伯東 MAGNETIC CLUTCH BRAKE MINEBEA MC-50B , DC24V (適用:HAKUTO壓膜機)",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SC7025000",
+    "specification": "導電度計電極 SUNTEX 8-241",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SE7690000",
+    "specification": "調速閥 PISCO JSC6-M5A",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SE7438000",
+    "specification": "調速閥 PISCO JSMU4 , φ4",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SG0045001",
+    "specification": "調節閥 廠牌: PISCO TYPE: JSC4-M3A",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SH5064001",
+    "specification": "PLC模組底板 三菱 Q68B",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "10"
+  },
+  {
+    "part_number": "SK0384000",
+    "specification": "S-EC017000401 人機介面 PRO-FACE  PFXGP4402WADW , 7吋寬螢幕 (舊型號:GC-4401W , 彩色7吋(Z101))",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "10"
+  },
+  {
+    "part_number": "SD7046002",
+    "specification": "人機介面 PRO-FACE GP4501-TADW",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "10"
+  },
+  {
+    "part_number": "SE1C62000",
+    "specification": "汽缸 CHELIC STMS25*150",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "11"
+  },
+  {
+    "part_number": "SD5210000",
+    "specification": "伺服驅動器 三菱 MR-JE-40AS",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "11"
+  },
+  {
+    "part_number": "SD5222000",
+    "specification": "伺服驅動器 三菱 MR-JE-70AS , 3φAC200~240V , 0.75KW",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "11"
+  },
+  {
+    "part_number": "SC0209000",
+    "specification": "二維條碼讀取器 KEYENCE SR-2000 (附:控制纜線 OP-87528 , 5米、Ethernet電攬 OP-87231 , 5米、安裝支架 OP-87866)",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "12"
+  },
+  {
+    "part_number": "SH5167000",
+    "specification": "PLC模組 三菱 FX3U-128MT/ES-A",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "13"
+  },
+  {
+    "part_number": "SC1312000",
+    "specification": "PLC模組 OMRON CS1W-DA08C (等同:亞碩P/N:E50612083)",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "13"
+  },
+  {
+    "part_number": "SH2255000",
+    "specification": "PLC模組 OMRON CS1W-OD231",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "13"
+  },
+  {
+    "part_number": "SH2264002",
+    "specification": "E509112ZZ PLC模組 OMRON CS1W-CT041 (適用:亞碩DVCP)",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "13"
+  },
+  {
+    "part_number": "SK2152000",
+    "specification": "TOKIWA固態電驛SSC-3050HL",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "14"
+  },
+  {
+    "part_number": "SH5065000",
+    "specification": "PLC模組 三菱 FX3U-80MR",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "14"
+  },
+  {
+    "part_number": "SH5050001",
+    "specification": "PLC模組 三菱 A1S61PN",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SB0600180",
+    "specification": "伺服模組;A1SD75M3",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SH5026000",
+    "specification": "PLC模組 三菱 A2USHCPU-S1",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SD0600107",
+    "specification": "PLC 模組A1SY42",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SK0258000",
+    "specification": "通訊模組 三菱 GP070-MD11",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SD0600130",
+    "specification": "PLC模組底板 三菱 A1S38B",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SD0318Q00",
+    "specification": "MITSUBISHI 定位模組 QD77MS16, J4 SIMPLE MOTION UNIT;16軸",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SK0248000",
+    "specification": "PLC模組 三菱 QJ71C24N-R2",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SH5172000",
+    "specification": "PLC模組 三菱 Q20UDEHCPU",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SH5086001",
+    "specification": "PLC模組 三菱 QY42P",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SH5023000",
+    "specification": "PLC模組 三菱 FX3U-128MR/ES-A (舊型號:FX2N-128MR)",
+    "warehouse_location": "辦公室",
+    "major_category": "入口旁櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SP0782000",
+    "specification": "高速鋼螺旋絲攻 M2.5 , 10支/盒 , 自動排屑",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "1"
+  },
+  {
+    "part_number": "SP0793000",
+    "specification": "高速鋼螺旋絲攻 M8 , 10支/盒 , 自動排屑",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "2"
+  },
+  {
+    "part_number": "SP0795000",
+    "specification": "高速鋼直柄鑽頭 φ2 , 10支/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "3"
+  },
+  {
+    "part_number": "SP0786000",
+    "specification": "高速鋼直柄鑽頭 φ6 , 10支/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "4"
+  },
+  {
+    "part_number": "SE0255000",
+    "specification": "省力快速接頭SPV4",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "5"
+  },
+  {
+    "part_number": "SE0071000",
+    "specification": "調速閥 KUOIN JSC4-M5",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "6"
+  },
+  {
+    "part_number": "SE0074000",
+    "specification": "調速閥 KUOIN JSC6-M5",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "7"
+  },
+  {
+    "part_number": "SE0072000",
+    "specification": "調速閥 JSC4-01",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "8"
+  },
+  {
+    "part_number": "SE0075000",
+    "specification": "調速閥 KUOIN JSC6-01",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "9"
+  },
+  {
+    "part_number": "SE0078000",
+    "specification": "調速閥 KUOIN JSC8-01",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "10"
+  },
+  {
+    "part_number": "SE3059000",
+    "specification": "調速閥 KUOIN JSC10-01",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "11"
+  },
+  {
+    "part_number": "SE0073000",
+    "specification": "調速閥 JSC4-02",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "12"
+  },
+  {
+    "part_number": "SE0076000",
+    "specification": "調速閥 JSC6-02",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "13"
+  },
+  {
+    "part_number": "SE0079000",
+    "specification": "調速閥 KUOIN JSC8-02",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "14"
+  },
+  {
+    "part_number": "SE0081000",
+    "specification": "調速閥 KUOIN  JSC10-02",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "15"
+  },
+  {
+    "part_number": "SE0084000",
+    "specification": "調速閥 KUOIN JSC12-02",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "16"
+  },
+  {
+    "part_number": "SE0077000",
+    "specification": "調速閥 JSC6-03",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "17"
+  },
+  {
+    "part_number": "SE0080000",
+    "specification": "調速閥 JSC8-03",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "18"
+  },
+  {
+    "part_number": "SE0082000",
+    "specification": "調速閥 KUOIN JSC10-03",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "19"
+  },
+  {
+    "part_number": "SE0085000",
+    "specification": "調速閥 JSC12-03",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "20"
+  },
+  {
+    "part_number": "SP0783000",
+    "specification": "高速鋼螺旋絲攻 M3 , 10支/盒 , 自動排屑",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "21"
+  },
+  {
+    "part_number": "SP0794000",
+    "specification": "高速鋼螺旋絲攻 M10 , 10支/盒 , 自動排屑",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "22"
+  },
+  {
+    "part_number": "SP0796000",
+    "specification": "高速鋼直柄鑽頭 φ2.5 , 10支/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "23"
+  },
+  {
+    "part_number": "SP0787000",
+    "specification": "高速鋼直柄鑽頭 φ7 , 10支/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "24"
+  },
+  {
+    "part_number": "SE0254000",
+    "specification": "省力快速接頭SPV6",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "25"
+  },
+  {
+    "part_number": "SE3066000",
+    "specification": "調速閥 KUOIN JSC8-04",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "26"
+  },
+  {
+    "part_number": "SE0083000",
+    "specification": "調速閥 JSC10-04",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "27"
+  },
+  {
+    "part_number": "SE0086000",
+    "specification": "調速閥 JSC12-04",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "28"
+  },
+  {
+    "part_number": "SE0121000",
+    "specification": "省力快速接頭 SPL4-M5 , φ4 , M5牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "29"
+  },
+  {
+    "part_number": "SE0124000",
+    "specification": "省力快速接頭 SPL6-M5 , φ6 , M5牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "30"
+  },
+  {
+    "part_number": "SE0122000",
+    "specification": "省力快速接頭 SPL4-01 , φ4 , 1分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "31"
+  },
+  {
+    "part_number": "SE0125000",
+    "specification": "省力快速接頭 SPL6-01 , φ6 , 1分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "32"
+  },
+  {
+    "part_number": "SE0129000",
+    "specification": "省力快速接頭 SPL8-01 , φ8 , 1分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "33"
+  },
+  {
+    "part_number": "SE0133000",
+    "specification": "省力快速接頭 SPL10-01 , φ10 , 1分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "34"
+  },
+  {
+    "part_number": "SE0123000",
+    "specification": "省力快速接頭 SPL4-02 , φ4 , 2分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "35"
+  },
+  {
+    "part_number": "SE0126000",
+    "specification": "省力快速接頭 SPL6-02 , φ6 , 2分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "36"
+  },
+  {
+    "part_number": "SE0130000",
+    "specification": "省力快速接頭 SPL8-02 , φ8 , 2分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "37"
+  },
+  {
+    "part_number": "SE0134000",
+    "specification": "省力快速接頭 SPL10-02 , φ10 , 2分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "38"
+  },
+  {
+    "part_number": "SE0137000",
+    "specification": "省力快速接頭 SPL12-02 , φ12 , 2分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "39"
+  },
+  {
+    "part_number": "SE0127000",
+    "specification": "省力快速接頭 SPL6-03 , φ6 , 3分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "40"
+  },
+  {
+    "part_number": "SP0790000",
+    "specification": "高速鋼螺旋絲攻 M4 , 10支/盒 , 自動排屑",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "41"
+  },
+  {
+    "part_number": "SE0149000",
+    "specification": "省力快速接頭SPY4",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "42"
+  },
+  {
+    "part_number": "SP0781000",
+    "specification": "高速鋼直柄鑽頭 φ3.3 , 10支/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "43"
+  },
+  {
+    "part_number": "SP0788000",
+    "specification": "高速鋼直柄鑽頭 φ8 , 5支/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "44"
+  },
+  {
+    "part_number": "SE0253000",
+    "specification": "省力快速接頭SPV8",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "45"
+  },
+  {
+    "part_number": "SE0131000",
+    "specification": "省力快速接頭 SPL8-03 , φ8 , 3分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "47"
+  },
+  {
+    "part_number": "SE0135000",
+    "specification": "省力快速接頭 SPL10-03 , φ10 , 3分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "48"
+  },
+  {
+    "part_number": "SE0138000",
+    "specification": "省力快速接頭 SPL12-03 , φ12 , 3分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "49"
+  },
+  {
+    "part_number": "SE0132000",
+    "specification": "省力快速接頭 SPL8-04 , φ8 , 4分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "50"
+  },
+  {
+    "part_number": "SE0136000",
+    "specification": "省力快速接頭 SPL10-04 , φ10 , 4分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "51"
+  },
+  {
+    "part_number": "SE0139000",
+    "specification": "省力快速接頭 SPL12-04 , φ12 , 4分牙",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "52"
+  },
+  {
+    "part_number": "SE0154000",
+    "specification": "省力快速接頭SPA4",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "53"
+  },
+  {
+    "part_number": "SE0155000",
+    "specification": "省力快速接頭SPA6",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "54"
+  },
+  {
+    "part_number": "SE0156000",
+    "specification": "省力快速接頭SPA8",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "55"
+  },
+  {
+    "part_number": "SE0157000",
+    "specification": "省力快速接頭SPA10",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "56"
+  },
+  {
+    "part_number": "SE0158000",
+    "specification": "省力快速接頭SPA12",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "57"
+  },
+  {
+    "part_number": "SE0159000",
+    "specification": "快速接頭 PISCO SPC4-M5 直型 φ4mm M5*0.8牙 材質:相當於SUS303",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "58"
+  },
+  {
+    "part_number": "SE0162000",
+    "specification": "省力快速接頭 SPC6-M5 , φ6 , M5牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "59"
+  },
+  {
+    "part_number": "SE0160000",
+    "specification": "省力快速接頭 SPC4-01 , φ4 , 1分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "60"
+  },
+  {
+    "part_number": "SP0791000",
+    "specification": "高速鋼螺旋絲攻 M5 , 10支/盒 , 自動排屑",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "61"
+  },
+  {
+    "part_number": "SE0150000",
+    "specification": "省力快速接頭SPY6",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "62"
+  },
+  {
+    "part_number": "SP0780000",
+    "specification": "高速鋼直柄鑽頭 φ4.2 , 10支/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "63"
+  },
+  {
+    "part_number": "SP0789000",
+    "specification": "高速鋼直柄鑽頭 φ9 , 5支/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "64"
+  },
+  {
+    "part_number": "SE0252000",
+    "specification": "省力快速接頭SPV10",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "65"
+  },
+  {
+    "part_number": "SE0163000",
+    "specification": "省力快速接頭 SPC6-01 , φ6 , 1分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "66"
+  },
+  {
+    "part_number": "SE0167000",
+    "specification": "省力快速接頭 SPC8-01 , φ8 , 1分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "67"
+  },
+  {
+    "part_number": "SE0171000",
+    "specification": "省力快速接頭 SPC10-01 , φ10 , 1分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "68"
+  },
+  {
+    "part_number": "SE0164000",
+    "specification": "省力快速接頭 SPC6-02 , φ6 , 2分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "69"
+  },
+  {
+    "part_number": "SE0168000",
+    "specification": "省力快速接頭 SPC8-02 , φ8 , 2分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "70"
+  },
+  {
+    "part_number": "SE0172000",
+    "specification": "省力快速接頭 SPC10-02 , φ10 , 2分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "71"
+  },
+  {
+    "part_number": "SE0175000",
+    "specification": "省力快速接頭 SPC12-02 , φ12 , 2分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "72"
+  },
+  {
+    "part_number": "SE0165000",
+    "specification": "省力快速接頭 SPC6-03 , φ6 , 3分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "73"
+  },
+  {
+    "part_number": "SE0169000",
+    "specification": "省力快速接頭 SPC8-03 , φ8 , 3分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "74"
+  },
+  {
+    "part_number": "SE0173000",
+    "specification": "省力快速接頭 SPC10-03 , φ10 , 3分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "75"
+  },
+  {
+    "part_number": "SE0176000",
+    "specification": "省力快速接頭 SPC12-03 , φ12 , 3分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "76"
+  },
+  {
+    "part_number": "SE0166000",
+    "specification": "省力快速接頭 SPC6-04 , φ6 , 4分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "77"
+  },
+  {
+    "part_number": "SE0170000",
+    "specification": "省力快速接頭 SPC8-04 , φ8 , 4分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "78"
+  },
+  {
+    "part_number": "SE0174000",
+    "specification": "省力快速接頭 SPC10-04 , φ10 , 4分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "79"
+  },
+  {
+    "part_number": "SE0177000",
+    "specification": "省力快速接頭 SPC12-04 , φ12 , 4分牙 , 材質:非SUS304 , 台製品",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "80"
+  },
+  {
+    "part_number": "SP0792000",
+    "specification": "高速鋼螺旋絲攻 M6 , 10支/盒 , 自動排屑",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "81"
+  },
+  {
+    "part_number": "SE0151000",
+    "specification": "省力快速接頭SPY8",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "82"
+  },
+  {
+    "part_number": "SP0785000",
+    "specification": "高速鋼直柄鑽頭 φ5 , 10支/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "83"
+  },
+  {
+    "part_number": "SP0779000",
+    "specification": "高速鋼直柄鑽頭 φ10 , 5支/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "84"
+  },
+  {
+    "part_number": "SE0112000",
+    "specification": "省力快速接頭SPE4",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "86"
+  },
+  {
+    "part_number": "SE0113000",
+    "specification": "省力快速接頭SPE6",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "87"
+  },
+  {
+    "part_number": "SE0114000",
+    "specification": "省力快速接頭SPE8",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "88"
+  },
+  {
+    "part_number": "SE0115000",
+    "specification": "省力快速接頭SPE10",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "89"
+  },
+  {
+    "part_number": "SE0116000",
+    "specification": "省力快速接頭SPE12",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "90"
+  },
+  {
+    "part_number": "SE0144000",
+    "specification": "省力快速接頭SPU4",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "91"
+  },
+  {
+    "part_number": "SE0145000",
+    "specification": "省力快速接頭 KUOIN  SPU6",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "92"
+  },
+  {
+    "part_number": "SE0146000",
+    "specification": "省力快速接頭SPU8 廠牌:S.L",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "93"
+  },
+  {
+    "part_number": "SE0147000",
+    "specification": "省力快速接頭 KUOIN SPU10",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "94"
+  },
+  {
+    "part_number": "SE0148000",
+    "specification": "省力快速接頭SPU12",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "95"
+  },
+  {
+    "part_number": "SE0117000",
+    "specification": "省力快速接頭 SPG6-4",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "96"
+  },
+  {
+    "part_number": "SE0118000",
+    "specification": "省力快速接頭SPG8-6",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "97"
+  },
+  {
+    "part_number": "SE0119000",
+    "specification": "省力快速接頭SPG10-8",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "98"
+  },
+  {
+    "part_number": "SE0120000",
+    "specification": "省力快速接頭SPG12-10",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "99"
+  },
+  {
+    "part_number": "SA0600243",
+    "specification": "內六角螺絲 M3*5 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "106"
+  },
+  {
+    "part_number": "SA0B60000",
+    "specification": "內六角螺絲 M3*10 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "107"
+  },
+  {
+    "part_number": "SA0B61000",
+    "specification": "內六角螺絲 M3*15 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "108"
+  },
+  {
+    "part_number": "SA0B62000",
+    "specification": "內六角螺絲 M3*20 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "109"
+  },
+  {
+    "part_number": "SA0B71000",
+    "specification": "內六角螺絲 M3*25 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "110"
+  },
+  {
+    "part_number": "SA0949000",
+    "specification": "內六角螺絲 M3*30 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "111"
+  },
+  {
+    "part_number": "SA0B55000",
+    "specification": "內六角螺絲 M3*40 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "112"
+  },
+  {
+    "part_number": "SA0D17000",
+    "specification": "內六角螺絲 M4*5 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "113"
+  },
+  {
+    "part_number": "SA0B57000",
+    "specification": "內六角螺絲 M4*10 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "114"
+  },
+  {
+    "part_number": "SA0B58000",
+    "specification": "內六角螺絲 M4*15 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "115"
+  },
+  {
+    "part_number": "SA0263000",
+    "specification": "內六角螺絲 M4*20 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "116"
+  },
+  {
+    "part_number": "SA0264000",
+    "specification": "內六角螺絲 M4*25 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "117"
+  },
+  {
+    "part_number": "SA0265000",
+    "specification": "內六角螺絲 M4*30 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "118"
+  },
+  {
+    "part_number": "SA0C67000",
+    "specification": "內六角螺絲 M4*40 , 材質:SUS304 , 非全牙 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "119"
+  },
+  {
+    "part_number": "SA0C39000",
+    "specification": "內六角螺絲 M4*60 , 材質:SUS304 , 非全牙 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "120"
+  },
+  {
+    "part_number": "SA0B66000",
+    "specification": "內六角螺絲 M5*10 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "126"
+  },
+  {
+    "part_number": "SA0B63000",
+    "specification": "內六角螺絲 M5*15 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "127"
+  },
+  {
+    "part_number": "SA0267000",
+    "specification": "內六角螺絲 M5*20 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "128"
+  },
+  {
+    "part_number": "SA0268000",
+    "specification": "內六角螺絲 M5*25 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "129"
+  },
+  {
+    "part_number": "SA0269000",
+    "specification": "內六角螺絲 M5*30 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "130"
+  },
+  {
+    "part_number": "SA0270000",
+    "specification": "內六角螺絲 M5*40 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "131"
+  },
+  {
+    "part_number": "SA0C65000",
+    "specification": "內六角螺絲 M5*60 , 材質:SUS304 , 非全牙 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "132"
+  },
+  {
+    "part_number": "SA0C64000",
+    "specification": "內六角螺絲 M6*10 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "133"
+  },
+  {
+    "part_number": "SA0B68000",
+    "specification": "內六角螺絲 M6*15 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "134"
+  },
+  {
+    "part_number": "SA0273000",
+    "specification": "內六角螺絲 M6*20 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "135"
+  },
+  {
+    "part_number": "SA0274000",
+    "specification": "內六角螺絲 M6*25 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "136"
+  },
+  {
+    "part_number": "SA0275000",
+    "specification": "內六角螺絲 M6*30 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "137"
+  },
+  {
+    "part_number": "SA0276000",
+    "specification": "內六角螺絲 M6*40 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "138"
+  },
+  {
+    "part_number": "SA0B69000",
+    "specification": "內六角螺絲 M6*60 , 材質:SUS304 , 非全牙 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "139"
+  },
+  {
+    "part_number": "SA0278000",
+    "specification": "內六角螺絲 M8*12 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "140"
+  },
+  {
+    "part_number": "SA0B67000",
+    "specification": "內六角螺絲 M8*15 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "146"
+  },
+  {
+    "part_number": "SA0279000",
+    "specification": "內六角螺絲 M8*20 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "147"
+  },
+  {
+    "part_number": "SA0280000",
+    "specification": "內六角螺絲 M8*25 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "148"
+  },
+  {
+    "part_number": "SA0281000",
+    "specification": "內六角螺絲 M8*30 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "149"
+  },
+  {
+    "part_number": "SA0282000",
+    "specification": "內六角螺絲 M8*40 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "150"
+  },
+  {
+    "part_number": "SA0C63000",
+    "specification": "內六角螺絲 M8*60 , 材質:SUS304 , 非全牙 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "151"
+  },
+  {
+    "part_number": "SA0D15000",
+    "specification": "內六角螺絲 M10*16 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "152"
+  },
+  {
+    "part_number": "SA0284000",
+    "specification": "內六角螺絲 M10*20 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "153"
+  },
+  {
+    "part_number": "SA0286000",
+    "specification": "內六角螺絲 M10*30 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "154"
+  },
+  {
+    "part_number": "SA0287000",
+    "specification": "內六角螺絲 M10*40 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "155"
+  },
+  {
+    "part_number": "SA0B59000",
+    "specification": "內六角螺絲 M10*60 , 材質:SUS304 , 非全牙 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "156"
+  },
+  {
+    "part_number": "SA0B90000",
+    "specification": "外六角螺絲 M4*10 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "157"
+  },
+  {
+    "part_number": "SA0B91000",
+    "specification": "外六角螺絲 M4*20 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "158"
+  },
+  {
+    "part_number": "SA0B64000",
+    "specification": "外六角螺絲 M4*30 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "159"
+  },
+  {
+    "part_number": "SA0D14000",
+    "specification": "外六角螺絲 M4*40 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "160"
+  },
+  {
+    "part_number": "SA0B92000",
+    "specification": "外六角螺絲 M5*10 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "166"
+  },
+  {
+    "part_number": "SA0B93000",
+    "specification": "外六角螺絲 M5*20 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "167"
+  },
+  {
+    "part_number": "SA0B94000",
+    "specification": "外六角螺絲 M5*30 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "168"
+  },
+  {
+    "part_number": "SA0B95000",
+    "specification": "外六角螺絲 M5*40 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "169"
+  },
+  {
+    "part_number": "SA0C04000",
+    "specification": "外六角螺絲 M5*60 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "170"
+  },
+  {
+    "part_number": "SA0C08000",
+    "specification": "外六角螺絲 M6*10 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "171"
+  },
+  {
+    "part_number": "SA0C09000",
+    "specification": "外六角螺絲 M6*20 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "172"
+  },
+  {
+    "part_number": "SA0C14000",
+    "specification": "外六角螺絲 M6*30 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "173"
+  },
+  {
+    "part_number": "SA0C16000",
+    "specification": "外六角螺絲 M6*60 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "175"
+  },
+  {
+    "part_number": "SA0B97000",
+    "specification": "外六角螺絲 M8*10 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "176"
+  },
+  {
+    "part_number": "SA0C13000",
+    "specification": "外六角螺絲 M8*20 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "177"
+  },
+  {
+    "part_number": "SA0C34000",
+    "specification": "外六角螺絲 M8*30 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "178"
+  },
+  {
+    "part_number": "SA0B96000",
+    "specification": "外六角螺絲 M8*40 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "179"
+  },
+  {
+    "part_number": "SA0C23000",
+    "specification": "外六角螺絲 M8*60 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "180"
+  },
+  {
+    "part_number": "SA0C10000",
+    "specification": "外六角螺絲 M10*12 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "186"
+  },
+  {
+    "part_number": "SA0C11000",
+    "specification": "外六角螺絲 M10*20 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "187"
+  },
+  {
+    "part_number": "SA0C38000",
+    "specification": "外六角螺絲 M10*30 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "188"
+  },
+  {
+    "part_number": "SA0C32000",
+    "specification": "外六角螺絲 M10*40 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "189"
+  },
+  {
+    "part_number": "SA0C33000",
+    "specification": "外六角螺絲 M10*60 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "190"
+  },
+  {
+    "part_number": "SA0D22000",
+    "specification": "白鐵大扁圓頭十字螺絲 M5*10 (最低訂量:100支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "191"
+  },
+  {
+    "part_number": "SA0D33000",
+    "specification": "白鐵大扁圓頭十字螺絲 M5*20",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "192"
+  },
+  {
+    "part_number": "SA0071000",
+    "specification": "白鐵大扁圓頭十字螺絲 M6*8 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "193"
+  },
+  {
+    "part_number": "SA0070000",
+    "specification": "白鐵大扁圓頭十字螺絲 M6*10",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "194"
+  },
+  {
+    "part_number": "SA0C69000",
+    "specification": "白鐵大扁圓頭十字螺絲 M6*12",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "195"
+  },
+  {
+    "part_number": "SA0C74000",
+    "specification": "白鐵大扁圓頭十字螺絲 M6*15",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "196"
+  },
+  {
+    "part_number": "SA0B99000",
+    "specification": "華司 M3 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "206"
+  },
+  {
+    "part_number": "SA0B98000",
+    "specification": "華司 M4 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "207"
+  },
+  {
+    "part_number": "SA0C25000",
+    "specification": "華司 M5 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "208"
+  },
+  {
+    "part_number": "SA0C20000",
+    "specification": "華司 M6 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "209"
+  },
+  {
+    "part_number": "SA0C24000",
+    "specification": "華司 M8 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "210"
+  },
+  {
+    "part_number": "SA0C21000",
+    "specification": "華司 M10 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "211"
+  },
+  {
+    "part_number": "SA0C18000",
+    "specification": "華司 M12 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "212"
+  },
+  {
+    "part_number": "SA0C41000",
+    "specification": "白鐵軸用C型扣環 S-8 , 內徑:7.4mm",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "213"
+  },
+  {
+    "part_number": "SA0700000",
+    "specification": "白鐵軸用C型扣環 S-12 , 內徑:11.1mm",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "214"
+  },
+  {
+    "part_number": "SA0677000",
+    "specification": "白鐵軸用C型扣環 S-15 , 內徑:13.8mm",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "215"
+  },
+  {
+    "part_number": "SA0974001",
+    "specification": "●集團有庫存 , ▲與料號#SP0681000重複 , 軸用C型扣環 MISUMI S-20 , 內徑:18.5mm , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "216"
+  },
+  {
+    "part_number": "SA0699000",
+    "specification": "白鐵軸用C型扣環 S-25 , 內徑:23.2mm",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "217"
+  },
+  {
+    "part_number": "SA0920000",
+    "specification": "●集團有庫存 , ▲與料號#SA0A19001重複 , 白鐵軸用C型扣環 S-30",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "218"
+  },
+  {
+    "part_number": "SA0636001",
+    "specification": "白鐵軸用C型扣環 S-35",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "219"
+  },
+  {
+    "part_number": "SA0600155",
+    "specification": "白鐵軸用C型扣環 S-40",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "220"
+  },
+  {
+    "part_number": "SA0938000",
+    "specification": "螺帽 M3 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "226"
+  },
+  {
+    "part_number": "SA0294000",
+    "specification": "螺帽 M4 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "227"
+  },
+  {
+    "part_number": "SA0295000",
+    "specification": "螺帽 M5 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "228"
+  },
+  {
+    "part_number": "SA0296000",
+    "specification": "螺帽 M6 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "229"
+  },
+  {
+    "part_number": "SA0297000",
+    "specification": "螺帽 M8 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "230"
+  },
+  {
+    "part_number": "SA0298000",
+    "specification": "螺帽 M10 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "231"
+  },
+  {
+    "part_number": "SA0299000",
+    "specification": "螺帽 M12 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "232"
+  },
+  {
+    "part_number": "SA0D29000",
+    "specification": "皿頭十字螺絲 M3*6 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "233"
+  },
+  {
+    "part_number": "SA0A99000",
+    "specification": "皿頭十字螺絲 M3*10 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "234"
+  },
+  {
+    "part_number": "SA0C05000",
+    "specification": "皿頭十字螺絲 M3*30 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "235"
+  },
+  {
+    "part_number": "SA0D28000",
+    "specification": "皿頭十字螺絲 M4*5 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "236"
+  },
+  {
+    "part_number": "SA0D27000",
+    "specification": "皿頭內六角螺絲 M5*6 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "237"
+  },
+  {
+    "part_number": "SA0C06000",
+    "specification": "皿頭十字螺絲 M5*10 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "238"
+  },
+  {
+    "part_number": "SA0C07000",
+    "specification": "皿頭十字螺絲 M5*16 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "239"
+  },
+  {
+    "part_number": "SA0C00000",
+    "specification": "皿頭十字螺絲 M5*20 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "240"
+  },
+  {
+    "part_number": "SA0C17000",
+    "specification": "彈簧華司 M3 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "246"
+  },
+  {
+    "part_number": "SA0C37000",
+    "specification": "彈簧華司 M4 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "247"
+  },
+  {
+    "part_number": "SA0C26000",
+    "specification": "彈簧華司 M5 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "248"
+  },
+  {
+    "part_number": "SA0C27000",
+    "specification": "彈簧華司 M6 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "249"
+  },
+  {
+    "part_number": "SA0C28000",
+    "specification": "彈簧華司 M8 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "250"
+  },
+  {
+    "part_number": "SA0C29000",
+    "specification": "彈簧華司 M10 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "251"
+  },
+  {
+    "part_number": "SA0C35000",
+    "specification": "彈簧華司 M12 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "252"
+  },
+  {
+    "part_number": "SA0C01000",
+    "specification": "皿頭十字螺絲 M5*25 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "253"
+  },
+  {
+    "part_number": "SA0C02000",
+    "specification": "皿頭十字螺絲 M5*30 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "254"
+  },
+  {
+    "part_number": "SA0D26000",
+    "specification": "皿頭內六角螺絲 M6*8 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "255"
+  },
+  {
+    "part_number": "SA0500000",
+    "specification": "皿頭十字螺絲 M6*12 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "256"
+  },
+  {
+    "part_number": "SA0B70000",
+    "specification": "皿頭十字螺絲 M6*15 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "257"
+  },
+  {
+    "part_number": "SA0932002",
+    "specification": "皿頭十字螺絲 M6*20 , 材質:SUS304 (最低訂量:100的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "258"
+  },
+  {
+    "part_number": "SA0C62000",
+    "specification": "皿頭十字螺絲 M6*30 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "259"
+  },
+  {
+    "part_number": "SA0D25000",
+    "specification": "皿頭內六角螺絲 M8*10 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "260"
+  },
+  {
+    "part_number": "SA0C36000",
+    "specification": "止付螺絲 M2*2 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "266"
+  },
+  {
+    "part_number": "SA0C22000",
+    "specification": "止付螺絲 M3*3 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "267"
+  },
+  {
+    "part_number": "SA0C19000",
+    "specification": "止付螺絲 M4*4 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "268"
+  },
+  {
+    "part_number": "SM1008002",
+    "specification": "止付螺絲 M5*5 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "269"
+  },
+  {
+    "part_number": "SA0B25000",
+    "specification": "止付螺絲 M6*6 , 材質:SUS316 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "270"
+  },
+  {
+    "part_number": "SA0600237",
+    "specification": "止付螺絲 M8*8 , 材質:SUS304",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "271"
+  },
+  {
+    "part_number": "SA0C03000",
+    "specification": "止付螺絲 M10*10 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "272"
+  },
+  {
+    "part_number": "SA0D24000",
+    "specification": "皿頭十字螺絲 M8*15 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "274"
+  },
+  {
+    "part_number": "SA0D23000",
+    "specification": "皿頭內六角螺絲 M8*25 , 材質:SUS304 (最低訂量:50的倍數)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "275"
+  },
+  {
+    "part_number": "SA0D13000",
+    "specification": "皿頭十字螺絲 M8*30 , 材質:SUS304 (最低訂量:50支)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "276"
+  },
+  {
+    "part_number": "SKC080000",
+    "specification": "玻璃保險絲 GIN SING 3A 20mm (100支/盒)",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "279"
+  },
+  {
+    "part_number": "SK0243000",
+    "specification": "Y型端子 CALY1.25-3Y , 線徑1.25mm , 螺孔M3 , 100個/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "286"
+  },
+  {
+    "part_number": "SK0238000",
+    "specification": "Y型端子 CALY2-4Y , 線徑2.0mm , 螺孔M4 , 100個/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "287"
+  },
+  {
+    "part_number": "SK0230000",
+    "specification": "Y型端子 CALY3.5-5Y , 線徑3.5mm , 螺孔M5 , 100個/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "288"
+  },
+  {
+    "part_number": "SK0224000",
+    "specification": "Y型端子 CALY5.5-5Y , 線徑5.5mm , 螺孔M5 , 100個/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "289"
+  },
+  {
+    "part_number": "SK0247000",
+    "specification": "O型端子 CALY1.25-3 ,  線徑1.25m㎡ , 螺孔M3 , 100個/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "290"
+  },
+  {
+    "part_number": "SK0234000",
+    "specification": "O型端子 CALY2-4 , 線徑2.0m㎡ , 螺孔M4 , 100個/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "291"
+  },
+  {
+    "part_number": "SK0227000",
+    "specification": "O型端子 CALY3.5-5 , 線徑3.5m㎡ , 螺孔M5 , 100個/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "292"
+  },
+  {
+    "part_number": "SK0206000",
+    "specification": "O型端子 CALY5.5-6 , 線徑5.5m㎡ , 螺孔M6 , 100個/包",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "293"
+  },
+  {
+    "part_number": "SA0C77000",
+    "specification": "白鐵華司面鑽尾螺絲 #8*1/2\"",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "294"
+  },
+  {
+    "part_number": "SA0C75000",
+    "specification": "白鐵華司面鑽尾螺絲 #8*3/4\"",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "295"
+  },
+  {
+    "part_number": "SA0C76000",
+    "specification": "白鐵華司面鑽尾螺絲 #8*5/8\"",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "296"
+  },
+  {
+    "part_number": "SA0C68000",
+    "specification": "白鐵華司面鑽尾螺絲 #8*1\"",
+    "warehouse_location": "辦公室",
+    "major_category": "工具牆櫃位",
+    "minor_category": "297"
   }
 ]
