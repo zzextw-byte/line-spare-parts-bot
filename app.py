@@ -284,14 +284,18 @@ def format_fuzzy_response(results, brand, model, is_image=False):
     )
     lines = [header, ""]
 
-    for i, (part, score, matched) in enumerate(results[:3]):
+    for i, (part, score, matched) in enumerate(results[:3], start=1):
         lines.append(
+            f"{i}.\n"
             f"料號：{part.get('part_number', '')}\n"
             f"規格：{part.get('specification', '')}\n"
             f"倉庫位置：{part.get('warehouse_location', '')}\n"
             f"大分類儲位：{part.get('major_category', '')}\n"
             f"小分類儲位：{part.get('minor_category', '')}"
         )
+        # 在每筆之間加空行（除了最後一筆）
+        if i < len(results[:3]):
+            lines.append("")
 
     if is_image:
         spec_url = build_spec_search_link(brand, model)
