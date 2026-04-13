@@ -583,12 +583,12 @@ def query_spare_parts_text(user_query):
         print(f"料號直接命中：{part.get('part_number')}")
         return format_found_response(part, brand='', model='', is_image=False)
 
-    # 設定 28 秒總時限（LINE reply token 有效期約 30 秒）
-    deadline = time.time() + 28
+    # 第一次：Gemini 解析型號，給 28 秒
+    deadline_parse = time.time() + 28
 
     # Step 3：呼叫 Gemini 解析型號關鍵字
     try:
-        info = extract_product_info_from_text(user_query, deadline=deadline)
+        info = extract_product_info_from_text(user_query, deadline=deadline_parse)
     except GeminiOverloadError:
         return "Gemini AI 目前過載中，請稍後再試一次。"
     except RateLimitError as e:
@@ -617,8 +617,10 @@ def query_spare_parts_text(user_query):
         return format_found_response(best_part, brand, model, is_image=False)
     else:
         # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
+        # 第二次：AI 比對，給獨立 15 秒（過載時 fallback 顯示模糊結果）
+        deadline_ai = time.time() + 15
         try:
-            ai_result = ai_select_best_match(model, brand, results, deadline=deadline)
+            ai_result = ai_select_best_match(model, brand, results, deadline=deadline_ai)
             
             # 處理 AI 的回傳值
             if ai_result == "NONE":
@@ -630,10 +632,9 @@ def query_spare_parts_text(user_query):
             elif ai_result is not None and isinstance(ai_result, dict):
                 # AI 選出了明確的最佳匹配
                 return format_found_response(ai_result, brand, model, is_image=False)
-        except GeminiOverloadError:
-            return "Gemini AI 目前過載中，請稍後再試一次。"
-        except RateLimitError as e:
-            return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
+        except (GeminiOverloadError, RateLimitError) as e:
+            # AI 二次判斷過載或速率限制，fallback 顯示模糊結果
+            print(f"AI 二次判斷過載/限速，顯示相似備品清單")
         except Exception as e:
             # AI 二次判斷失敗，繼續顯示相似備品
             print(f"AI 二次判斷失敗，顯示相似備品清單")
@@ -645,12 +646,13 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
     """
     圖片查詢主流程。
     圖片查詢會附產品規格搜尋連結（使用規格型號）。
-    兩次 Gemini 呼叫共用 28 秒總時限。
+    第一次圖片辨識給 28 秒，第二次 AI 比對給獨立 15 秒（過載時 fallback 顯示模糊結果）。
     """
-    deadline = time.time() + 28
+    # 第一次：圖片辨識，給 28 秒
+    deadline_img = time.time() + 28
 
     try:
-        info = extract_product_info_from_image(image_bytes, mime_type, deadline=deadline)
+        info = extract_product_info_from_image(image_bytes, mime_type, deadline=deadline_img)
     except GeminiOverloadError:
         return "Gemini AI 目前過載中，請稍後再試一次。"
     except RateLimitError as e:
@@ -683,8 +685,10 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
         return format_found_response(best_part, brand, model, is_image=True)
     else:
         # 不是 exact_match，用 AI 二次判斷從前 10 筆中選出最佳匹配
+        # 第二次：AI 比對，給獨立 15 秒（過載時 fallback 顯示模糊結果）
+        deadline_ai = time.time() + 15
         try:
-            ai_result = ai_select_best_match(model, brand, results, deadline=deadline)
+            ai_result = ai_select_best_match(model, brand, results, deadline=deadline_ai)
             
             # 處理 AI 的回傳值
             if ai_result == "NONE":
@@ -696,10 +700,9 @@ def query_spare_parts_from_image(image_bytes, mime_type='image/jpeg'):
             elif ai_result is not None and isinstance(ai_result, dict):
                 # AI 選出了明確的最佳匹配
                 return format_found_response(ai_result, brand, model, is_image=True)
-        except GeminiOverloadError:
-            return "Gemini AI 目前過載中，請稍後再試一次。"
-        except RateLimitError as e:
-            return f"目前查詢請求太頻繁，請等待約 {e.wait_seconds} 秒後再試一次。"
+        except (GeminiOverloadError, RateLimitError) as e:
+            # AI 二次判斷過載或速率限制，fallback 顯示模糊結果
+            print(f"AI 二次判斷過載/限速，顯示相似備品清單")
         except Exception as e:
             # AI 二次判斷失敗，繼續顯示相似備品
             print(f"AI 二次判斷失敗，顯示相似備品清單")
