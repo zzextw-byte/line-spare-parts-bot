@@ -318,7 +318,7 @@ def ai_select_best_match(query_model, query_brand, results, deadline=None):
 只回傳料號、NONE 或 UNCERTAIN，不要其他說明。"""
     
     try:
-        response = call_gemini_with_retry(prompt, model='gemini-2.0-flash', deadline=deadline)
+        response = call_gemini_with_retry(prompt, model='gemini-2.5-flash-lite', deadline=deadline)
         result = response.strip().upper()
         
         # 檢查是否是 NONE（沒有相關備品）
@@ -500,7 +500,7 @@ def extract_product_info_from_text(user_query, deadline=None):
     )
 
     try:
-        result = call_gemini_with_retry(prompt, model='gemini-2.0-flash', deadline=deadline)
+        result = call_gemini_with_retry(prompt, model='gemini-2.5-flash-lite', deadline=deadline)
         result = result.strip()
         # 移除 markdown code block（如果有）
         result = re.sub(r'^```(?:json)?\s*', '', result, flags=re.MULTILINE)
